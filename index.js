@@ -1,14 +1,16 @@
 const rootPrefix = '.',
-  configProvider = require(rootPrefix + '/lib/configProvider');
+  configProvider = require(rootPrefix + '/lib/configProvider'),
+  formatPayload = require(rootPrefix + '/middlewares/formatPayload');
 
 class SlackAdmin {
   constructor(appConfigs, whitelistedChannelIds) {
-    configProvider.setConfig(appConfigs);
+    configProvider.set('app_config',appConfigs);
+    configProvider.set('whitelisted_channel_ids',whitelistedChannelIds);
   }
 
   get middlewares() {
     return {
-      formatPayload: null,
+      formatPayload: formatPayload,
       sanitizeBodyAndQuery: null,
       extractSlackParams: null,
       validateSignature: null,
