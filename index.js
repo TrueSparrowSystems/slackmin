@@ -3,7 +3,7 @@ const rootPrefix = '.',
 
 class SlackAdmin {
   constructor(appConfigs, whitelistedChannelIds) {
-
+    configProvider.setConfig(appConfigs);
   }
 
   get middlewares() {
@@ -12,7 +12,12 @@ class SlackAdmin {
       sanitizeBodyAndQuery: null,
       extractSlackParams: null,
       validateSignature: null,
-      validateSlackUser: null
+      validateSlackUser: null,
+      validateSlackChannel: null,
+      validateSlackApiAppId: null,
+      extractResponseUrlFromPayload: null,
+      extractText: null,
+      extractResponseUrlFromBody: null
     }
   }
 }
