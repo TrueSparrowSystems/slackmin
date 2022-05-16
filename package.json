@@ -1,0 +1,19 @@
+{
+  "name": "slack-admin",
+  "version": "1.0.0",
+  "description": "npm package for easily providing admin abilities to slack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PLG-Works/slack-admin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PLG-Works/slack-admin/issues"
+  },
+  "homepage": "https://github.com/PLG-Works/slack-admin#readme"
+}
