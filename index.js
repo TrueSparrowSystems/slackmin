@@ -2,6 +2,7 @@ const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
   extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
+  extractText = require(rootPrefix + '/middlewares/extractText'),
   extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams');
   
 
@@ -21,7 +22,7 @@ class SlackAdmin {
       validateSlackChannel: null,
       validateSlackApiAppId: null,
       extractResponseUrlFromPayload: extractResponseUrlFromPayload,
-      extractText: null,
+      extractText: extractText,
       extractResponseUrlFromBody: null
     }
   }
