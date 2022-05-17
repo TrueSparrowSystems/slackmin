@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/PLG-Works/slack-admin/issues"
   },
-  "homepage": "https://github.com/PLG-Works/slack-admin#readme"
+  "homepage": "https://github.com/PLG-Works/slack-admin#readme",
+  "dependencies": {
+    "sanitize-html": "^2.7.0"
+  }
 }
