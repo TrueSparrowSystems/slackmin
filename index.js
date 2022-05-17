@@ -5,7 +5,8 @@ const rootPrefix = '.',
   extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
   extractText = require(rootPrefix + '/middlewares/extractText'),
   extractResponseUrlFromBody = require(rootPrefix + '/middlewares/extractResponseUrlFromBody'),
-  extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams');
+  extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams'),
+  parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams');
   
 
 class SlackAdmin {
@@ -27,7 +28,8 @@ class SlackAdmin {
       validateSlackApiAppId: null,
       extractResponseUrlFromPayload: extractResponseUrlFromPayload,
       extractText: extractText,
-      extractResponseUrlFromBody: extractResponseUrlFromBody
+      extractResponseUrlFromBody: extractResponseUrlFromBody,
+      parseApiParameters: parseApiParameters
     }
   }
 }
