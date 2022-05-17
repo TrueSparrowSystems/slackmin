@@ -36,6 +36,36 @@ class SlackAdmin {
       extractTriggerId: extractTriggerId
     }
   }
+
+  get interactiveEndpointMiddlewares(){
+    return [
+      formatPayload,
+      sanitizer.sanitizeBodyAndQuery,
+      extractSlackParams,
+      authenticator.validateSlackSignature,
+      authenticator.validateSlackUser,
+      sanitizer.sanitizeDynamicUrlParams,
+      sanitizer.sanitizeHeaderParams,
+      authenticator.validateSlackApiAppId,
+      extractTriggerId,
+      extractResponseUrlFromPayload,
+      parseApiParameters
+    ]
+  }
+
+  get slashCommandMiddlewares(){
+    return [
+      formatPayload,
+      sanitizer.sanitizeBodyAndQuery,
+      extractSlackParams,
+      authenticator.validateSlackSignature,
+      authenticator.validateSlackUser,
+      authenticator.validateSlackChannel,
+      extractText, 
+      extractResponseUrlFromBody
+    ]
+  }
+
 }
 
 module.exports = SlackAdmin;
