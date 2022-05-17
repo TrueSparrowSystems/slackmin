@@ -1,6 +1,8 @@
 const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
-  formatPayload = require(rootPrefix + '/middlewares/formatPayload');
+  formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
+  extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams');
+  
 
 class SlackAdmin {
   constructor(appConfigs, whitelistedChannelIds) {
@@ -12,7 +14,7 @@ class SlackAdmin {
     return {
       formatPayload: formatPayload,
       sanitizeBodyAndQuery: null,
-      extractSlackParams: null,
+      extractSlackParams: extractSlackParams,
       validateSignature: null,
       validateSlackUser: null,
       validateSlackChannel: null,
