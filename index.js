@@ -26,7 +26,7 @@ class SlackAdmin {
       sanitizeHeaderParams: sanitizer.sanitizeHeaderParams,
       extractSlackParams: extractSlackParams,
       validateSignature: authenticator.validateSlackSignature,
-      validateSlackUser: authenticator.validateSlackApiAppId,
+      validateSlackUser: authenticator.validateSlackUser,
       validateSlackChannel: authenticator.validateSlackChannel,
       validateSlackApiAppId: authenticator.validateSlackApiAppId,
       extractResponseUrlFromPayload: extractResponseUrlFromPayload,
