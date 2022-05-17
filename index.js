@@ -6,13 +6,16 @@ const rootPrefix = '.',
   extractText = require(rootPrefix + '/middlewares/extractText'),
   extractResponseUrlFromBody = require(rootPrefix + '/middlewares/extractResponseUrlFromBody'),
   extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams'),
-  parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams');
-  
+  parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
+  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator');
+
 
 class SlackAdmin {
   constructor(appConfigs, whitelistedChannelIds) {
     configProvider.set('app_config',appConfigs);
     configProvider.set('whitelisted_channel_ids',whitelistedChannelIds);
+    configProvider.set('domain', domain);
+
   }
 
   get middlewares() {
@@ -22,10 +25,10 @@ class SlackAdmin {
       sanitizeDynamicUrlParams: sanitizer.sanitizeDynamicUrlParams,
       sanitizeHeaderParams: sanitizer.sanitizeHeaderParams,
       extractSlackParams: extractSlackParams,
-      validateSignature: null,
-      validateSlackUser: null,
-      validateSlackChannel: null,
-      validateSlackApiAppId: null,
+      validateSignature: authenticator.validateSlackSignature,
+      validateSlackUser: authenticator.validateSlackApiAppId,
+      validateSlackChannel: authenticator.validateSlackChannel,
+      validateSlackApiAppId: authenticator.validateSlackApiAppId,
       extractResponseUrlFromPayload: extractResponseUrlFromPayload,
       extractText: extractText,
       extractResponseUrlFromBody: extractResponseUrlFromBody,
