@@ -11,11 +11,10 @@ const rootPrefix = '.',
 
 
 class SlackAdmin {
-  constructor(appConfigs, whitelistedChannelIds) {
+  constructor(appConfigs, whitelistedChannelIds, domain) {
     configProvider.set('app_config',appConfigs);
     configProvider.set('whitelisted_channel_ids',whitelistedChannelIds);
     configProvider.set('domain', domain);
-
   }
 
   get middlewares() {
