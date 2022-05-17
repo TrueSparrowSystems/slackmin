@@ -1,0 +1,18 @@
+class ExtractResponseUrlFromPayload {
+    constructor() {}
+    /**
+     * Extract response_url from interactive routes. This middleware should only be used with interactive routes.
+     *
+     * @param {object} req
+     * @param {object} res
+     * @param {function} next
+     */
+    extractResponseUrlFromPayload (req, res, next) {
+        const slackPayload = req.body.payload;
+        req.decodedParams.response_url = slackPayload.response_url;
+    
+        next();
+    };
+}
+
+module.exports = new ExtractResponseUrlFromPayload().extractResponseUrlFromPayload;
