@@ -1,5 +1,6 @@
 const rootPrefix = '../..',
   SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
+  configProvider = require(rootPrefix + '/lib/configProvider'),
   responseHelper = require(rootPrefix + '/lib/formatter/responseHelper');
 
 /**
@@ -54,7 +55,7 @@ class ValidateSlackUser extends SlackAuthenticationBase {
   _prepareResponse() {
     const oThis = this;
 
-    return responseHelper.successWithData({ current_admin: oThis.adminData });
+    return responseHelper.successWithData({ });
   }
 
   /**
@@ -68,7 +69,14 @@ class ValidateSlackUser extends SlackAuthenticationBase {
   async _validateSlackUser() {
     const oThis = this;
 
-    // Todo:: @Shraddha slack-admin-development implement this
+    const whiteListedUser = configProvider.getFor('whitelisted_users');
+
+    if(!whiteListedUser.includes(oThis.slackId)) {
+      throw new Error(`Invalid  SlackId :: ${oThis.slackId}`);
+    }
+
+
+
   }
 }
 
