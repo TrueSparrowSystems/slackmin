@@ -1,6 +1,7 @@
 const rootPrefix = '../..',
   ValidateSlackApiAppId = require(rootPrefix + '/middlewares/authentication/ApiAppId'),
   ValidateSlackChannel = require(rootPrefix + '/middlewares/authentication/Channel'),
+  ValidateSlackSignature = require(rootPrefix + '/middlewares/authentication/Signature'),
   ValidateSlackUser = require(rootPrefix + '/middlewares/authentication/User');
 
 /**
