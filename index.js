@@ -8,7 +8,9 @@ const rootPrefix = '.',
   extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams'),
   parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
   extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
-  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator');
+  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
+  Message = require(rootPrefix + '/lib/slack/Message'),
+  Modal = require(rootPrefix + '/lib/slack/Modal');
 
 
 class SlackAdmin {
@@ -65,6 +67,13 @@ class SlackAdmin {
       extractText, 
       extractResponseUrlFromBody
     ]
+  }
+
+  get interactiveElements(){
+    return {
+      Message: Message,
+      Modal: Modal
+    }
   }
 
 }
