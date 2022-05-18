@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 const rootPrefix = '../..',
-  CommonValidators = require(rootPrefix + '/lib/validators/Common'),
+  CommonValidators = require(rootPrefix + '/lib/validator/Common'),
   SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp');
 
