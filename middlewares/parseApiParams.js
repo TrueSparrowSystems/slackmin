@@ -1,4 +1,4 @@
-const rootPrefix = '../..',
+const rootPrefix = '..',
         slackConstants = require(rootPrefix + '/lib/constants/slackConstants'),
         responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
         ParseViewSubmissionApiParams = require(rootPrefix + '/lib/slack/ParseViewActionsApiParams'),
