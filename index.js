@@ -1,6 +1,7 @@
 const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
+  assignParams = require(rootPrefix + '/middlewares/assignParams'),
   sanitizer = require(rootPrefix + '/helpers/sanitizer'),
   extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
   extractText = require(rootPrefix + '/middlewares/extractText'),
@@ -25,6 +26,7 @@ class SlackAdmin {
     return {
       formatPayload: formatPayload,
       sanitizeBodyAndQuery: sanitizer.sanitizeBodyAndQuery,
+      assignParams: assignParams,
       sanitizeDynamicUrlParams: sanitizer.sanitizeDynamicUrlParams,
       sanitizeHeaderParams: sanitizer.sanitizeHeaderParams,
       extractSlackParams: extractSlackParams,
@@ -44,6 +46,7 @@ class SlackAdmin {
     return [
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
+      assignParams,
       extractSlackParams,
       authenticator.validateSlackSignature,
       authenticator.validateSlackUser,
@@ -64,7 +67,7 @@ class SlackAdmin {
       authenticator.validateSlackSignature,
       authenticator.validateSlackUser,
       authenticator.validateSlackChannel,
-      extractText, 
+      extractText,
       extractResponseUrlFromBody
     ]
   }
