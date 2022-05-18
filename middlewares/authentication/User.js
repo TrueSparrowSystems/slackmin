@@ -1,10 +1,6 @@
-const rootPrefix = '../../..',
-  CommonValidators = require(rootPrefix + '/lib/validators/Common'),
-  SlackAuthenticationBase = require(rootPrefix + '/lib/authentication/slack/Base'),
-  AdminDetailsByIdsCache = require(rootPrefix + '/lib/cacheManagement/multi/admin/AdminDetailsByIds'),
-  AdminIdsBySlackIdsCache = require(rootPrefix + '/lib/cacheManagement/multi/admin/AdminIdsBySlackIds'),
-  logger = require(rootPrefix + '/lib/logger/customConsoleLogger'),
-  responseHelper = require(rootPrefix + '/lib/formatter/response');
+const rootPrefix = '../..',
+  SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
+  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper');
 
 /**
  * Class to validate slack user.
@@ -32,7 +28,7 @@ class ValidateSlackUser extends SlackAuthenticationBase {
 
     oThis.slackId = oThis.slackRequestParams.slack_id;
 
-    logger.log('Slack ID: ', oThis.slackId);
+    console.log('Slack ID: ', oThis.slackId);
 
     oThis.adminData = {};
   }

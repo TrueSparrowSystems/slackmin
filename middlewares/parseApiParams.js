@@ -20,9 +20,9 @@ class ParseApiParams {
      */
     async parse (req, res, next) {
     const payload = req.body.payload;
-  
+
     let apiParamsResponse;
-  
+
     // TODO
     if (payload.type === slackConstants.viewSubmissionPayloadType) {
       apiParamsResponse = await new ParseViewSubmissionApiParams({
@@ -39,30 +39,30 @@ class ParseApiParams {
         api_error_identifier: 'invalid_params',
         debug_options: { slackPayload: payload }
       });
-  
+
       return responseHelper.renderApiResponse(errorObj, res, errorConfig);
     }
-  
+
     if (apiParamsResponse.isFailure()) {
       return responseHelper.renderApiResponse(apiParamsResponse, res, errorConfig);
     }
-  
+
     const apiParamsData = apiParamsResponse.data;
-  
+
     console.log('The apiParamsData data is : ', apiParamsData);
-  
+
     // Assign apiParams to internalDecodedParams.
     const internalDecodedApiParams = {};
     Object.assign(internalDecodedApiParams, apiParamsData.hiddenParams);
     if (apiParamsData.apiParams) {
       Object.assign(internalDecodedApiParams, apiParamsData.apiParams);
     }
-  
+
     // eslint-disable-next-line require-atomic-updates
     req.internalDecodedParams.apiName = apiParamsData.action;
     // eslint-disable-next-line require-atomic-updates
     Object.assign(req.decodedParams, internalDecodedApiParams);
-  
+
     next();
   };
 }

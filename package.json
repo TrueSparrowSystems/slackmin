@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/PLG-Works/slack-admin#readme",
   "dependencies": {
-    "sanitize-html": "^2.7.0",
-    "@moxiedotxyz/base": "1.0.0"
+    "@moxiedotxyz/base": "1.0.0",
+    "sanitize-html": "^2.7.0"
   }
 }

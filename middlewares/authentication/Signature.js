@@ -3,9 +3,8 @@ const crypto = require('crypto');
 const rootPrefix = '../..',
   CommonValidators = require(rootPrefix + '/lib/validators/Common'),
   SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
-  slackAppConstants = require(rootPrefix + '/lib/globalConstant/slackApp'),
-  logger = require(rootPrefix + '/lib/logger/customConsoleLogger'),
-  slackConstants = require(rootPrefix + '/lib/globalConstant/slack');
+  slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
+  logger = require(rootPrefix + '/lib/logger/customConsoleLogger');
 
 /**
  * Class to validate signature request from slack.
