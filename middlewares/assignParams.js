@@ -42,6 +42,8 @@ class AssignParams{
      */
     req.internalDecodedParams = {};
 
+    console.log("middleware :: assignParams :: ", req.decodedParams);
+
     next();
   };
 

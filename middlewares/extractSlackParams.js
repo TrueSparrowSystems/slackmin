@@ -25,6 +25,7 @@ class ExtractSlackParams {
 
         req.internalDecodedParams.api_app_id = req.body.api_app_id;
 
+        console.log("middleware :: extractSlackParams :: ", slackRequestParams);
         next();
     };
 }

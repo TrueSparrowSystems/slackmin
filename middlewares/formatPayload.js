@@ -43,6 +43,7 @@ class PayloadFormatter{
      * @param {function} next
      */
     formatPayload (req, res, next) {
+        console.log("middleware :: formatPayload :: ", req.body.payload);
         const oThis = this;
         if (req.body.payload) {
             const payload = JSON.parse(req.body.payload);

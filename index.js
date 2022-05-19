@@ -23,6 +23,8 @@ class SlackAdmin {
     configProvider.set('domain', domain);
     configProvider.set('whitelisted_users', whitelistedUsers);
     slackAppConstants.setSlackAppConfigById();
+
+    console.log("SlackAdmin :: ", configProvider.getFor('app_config'));
   }
 
   get middlewares() {
