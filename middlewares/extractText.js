@@ -16,4 +16,8 @@ class ExtractText {
     };
 }
 
-module.exports = new ExtractText().extractText;
+const _instance = new ExtractText();
+
+module.exports = (...args) => {
+    _instance.extractText(...args);
+}

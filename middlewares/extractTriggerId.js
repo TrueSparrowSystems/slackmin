@@ -18,4 +18,8 @@ class ExtractTriggerId {
     };
 }
 
-module.exports = new ExtractTriggerId().extractTriggerId;
+const _instance = new ExtractTriggerId();
+
+module.exports = (...args) => {
+    _instance.extractTriggerId(...args);
+}

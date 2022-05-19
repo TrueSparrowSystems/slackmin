@@ -67,4 +67,8 @@ class ParseApiParams {
   };
 }
 
-module.exports = new ParseApiParams().parse;
+const _instance = new ParseApiParams();
+
+module.exports = (...args) => {
+    _instance.parse(...args);
+}

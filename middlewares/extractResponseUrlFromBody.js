@@ -16,4 +16,8 @@ class ExtractResponseUrlFromBody {
     };
 }
 
-module.exports = new ExtractResponseUrlFromBody().extractResponseUrlFromBody;
+const _instance = new ExtractResponseUrlFromBody();
+
+module.exports = (...args) => {
+    _instance.extractResponseUrlFromBody(...args);
+}

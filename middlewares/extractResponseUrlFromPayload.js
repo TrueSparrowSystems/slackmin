@@ -15,4 +15,8 @@ class ExtractResponseUrlFromPayload {
     };
 }
 
-module.exports = new ExtractResponseUrlFromPayload().extractResponseUrlFromPayload;
+const _instance = new ExtractResponseUrlFromPayload();
+
+module.exports = (...args) => {
+    _instance.extractResponseUrlFromPayload(...args);
+}
