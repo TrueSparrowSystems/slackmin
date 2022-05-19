@@ -93,7 +93,7 @@ class SlackAuthenticationBase {
       domain = oThis.slackRequestParams.team_domain;
     }
 
-    const isValidSlackDomain = domain === configProvider.getFor(domain);
+    const isValidSlackDomain = domain === configProvider.getFor('domain');
 
     if (!isValidSlackDomain) {
       throw new Error(`Invalid slack request params :: ${oThis.slackRequestParams}`);
