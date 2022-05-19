@@ -47,7 +47,7 @@ class SlackAuthenticationBase {
     } catch (error) {
       console.log('Slack authentication failed.');
 
-      throw new Error(`Body :: ${oThis.body}, headers:: ${ oThis.requestHeaders}`);
+      throw new Error(`rawBody :: ${oThis.rawBody}, headers:: ${ oThis.requestHeaders}`);
     }
 
     return oThis._prepareResponse();
