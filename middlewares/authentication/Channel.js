@@ -58,6 +58,8 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
       throw new Error(`Invalid  channelId :: ${oThis.channelId}`);
     }
 
+    console.log("configs :: ", configs)
+
   }
 
 

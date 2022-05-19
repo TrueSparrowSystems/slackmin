@@ -52,9 +52,11 @@ class ValidateSlackApiAppId extends SlackAuthenticationBase {
   async _validateSlackApiAppId() {
     const oThis = this;
 
-    if (!CommonValidators.isVarNullOrUndefined(oThis.apiAppId)) {
+    if (CommonValidators.isVarNullOrUndefined(oThis.apiAppId)) {
       throw new Error(`Invalid  apiAppId :: ${oThis.apiAppId}`);
     }
+
+    console.log("_validateSlackApiAppId : ",oThis.apiAppId);
   }
 }
 

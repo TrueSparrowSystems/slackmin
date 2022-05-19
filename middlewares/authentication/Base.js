@@ -127,7 +127,7 @@ class SlackAuthenticationBase {
 
     const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
 
-    const requestTimestamp = oThis.requestHeaders['x-slack-request-timestamp'];
+    const requestTimestamp = Number(oThis.requestHeaders['x-slack-request-timestamp']);
     const eventExpiryTimestamp = 5 * 60;
 
     if (
