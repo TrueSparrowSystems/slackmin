@@ -3,16 +3,17 @@ const rootPrefix = '.',
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
   formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
   assignParams = require(rootPrefix + '/middlewares/assignParams'),
-  sanitizer = require(rootPrefix + '/helpers/sanitizer'),
+  sanitizer = require(rootPrefix + '/lib/helpers/sanitizer'),
   extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
   extractText = require(rootPrefix + '/middlewares/extractText'),
   extractResponseUrlFromBody = require(rootPrefix + '/middlewares/extractResponseUrlFromBody'),
   extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams'),
   parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
   extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
-  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
-  Message = require(rootPrefix + '/lib/slack/Message'),
-  Modal = require(rootPrefix + '/lib/slack/Modal');
+  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator');
+
+  //Message = require(rootPrefix + '/lib/slack/Message'),
+ // Modal = require(rootPrefix + '/lib/slack/Modal');
 
 
 class SlackAdmin {
