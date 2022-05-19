@@ -56,6 +56,8 @@ class PayloadFormatter{
 
 }
 
+const _instance = new PayloadFormatter();
 
-
-module.exports = new PayloadFormatter().formatPayload;
+module.exports = (...args) => {
+    _instance.formatPayload(...args);
+}
