@@ -28,7 +28,7 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
 
     oThis.channelId = oThis.slackRequestParams.channel_id;
 
-    logger.log('Channel ID: ', oThis.channelId);
+    console.log('Channel ID: ', oThis.channelId);
   }
 
   /**
