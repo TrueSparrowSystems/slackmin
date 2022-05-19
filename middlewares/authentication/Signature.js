@@ -27,7 +27,6 @@ class ValidateSlackSignature extends SlackAuthenticationBase {
       version = splitRequestHeaderSignature[0],
       signature = splitRequestHeaderSignature[1];
 
-    // Todo:: Do we need slack constants??
     if (version !== 'v0') {
       throw new Error(`Invalid slack api version :: ${version}`);
     }
@@ -56,7 +55,6 @@ class ValidateSlackSignature extends SlackAuthenticationBase {
     const oThis = this;
 
     const appId = oThis.slackRequestParams.api_app_id;
-    // Todo:: slack-admin-development, Review this
     const signingSecret = slackAppConstants.getSigningSecretForAppId(appId);
 
     const signatureString = `${version}:${requestTimestamp}:${oThis.rawBody}`;

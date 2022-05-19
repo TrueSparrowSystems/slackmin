@@ -1,5 +1,6 @@
 const rootPrefix = '../..',
   CommonValidators = require(rootPrefix + '/lib/validator/Common'),
+  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
   configProvider = require(rootPrefix + '/lib/configProvider');
 
 /**
@@ -46,8 +47,13 @@ class SlackAuthenticationBase {
       await oThis._performSpecificValidations();
     } catch (error) {
       console.log('Slack authentication failed.');
+      console.log(`rawBody :: ${oThis.rawBody}, headers:: ${ oThis.requestHeaders}`);
 
-      throw new Error(`rawBody :: ${oThis.rawBody}, headers:: ${ oThis.requestHeaders}`);
+      return responseHelper.error({
+        internal_error_identifier: 'l_a_sr_p_1',
+        api_error_identifier: 'unauthorized_api_request',
+        debug_options: { body: oThis.rawBody, headers: oThis.requestHeaders }
+      });
     }
 
     return oThis._prepareResponse();
@@ -119,7 +125,6 @@ class SlackAuthenticationBase {
   async _validateRequestTimestamp() {
     const oThis = this;
 
-    // Todo:: slack-admin-development  Verify  _validateRequestTimestamp
     const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
 
     const requestTimestamp = oThis.requestHeaders['x-slack-request-timestamp'];
@@ -151,8 +156,7 @@ class SlackAuthenticationBase {
    * @private
    */
   _prepareResponse() {
-    // Todo:: slack-admin-development Use response helper
-    return {};
+    return responseHelper.successWithData({});
   }
 }
 
