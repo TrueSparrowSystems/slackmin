@@ -53,8 +53,8 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
     const oThis = this;
 
     const configs = configProvider.getFor('whitelisted_channel_ids');
-    let index = configs.indexOf(oThis.channelId);
-    if(index == -1) {
+    let allowedChannel = configs[oThis.channelId];
+    if(!allowedChannel) {
       throw new Error(`Invalid  channelId :: ${oThis.channelId}`);
     }
 

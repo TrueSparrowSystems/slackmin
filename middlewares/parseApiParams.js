@@ -39,12 +39,13 @@ class ParseApiParams {
         api_error_identifier: 'invalid_params',
         debug_options: { slackPayload: payload }
       });
-
-      return responseHelper.renderApiResponse(errorObj, res, errorConfig);
+      // check if errorConfig required
+      return responseHelper.renderApiResponse(errorObj, res);
     }
 
+    // check if errorConfig required
     if (apiParamsResponse.isFailure()) {
-      return responseHelper.renderApiResponse(apiParamsResponse, res, errorConfig);
+      return responseHelper.renderApiResponse(apiParamsResponse, res);
     }
 
     const apiParamsData = apiParamsResponse.data;
