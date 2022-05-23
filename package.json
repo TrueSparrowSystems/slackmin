@@ -1,6 +1,6 @@
 {
-  "name": "slack-admin",
-  "version": "1.0.3",
+  "name": "slackmin",
+  "version": "1.0.0",
   "description": "npm package for easily providing admin abilities to slack",
   "main": "index.js",
   "scripts": {
@@ -18,7 +18,7 @@
   "homepage": "https://github.com/PLG-Works/slack-admin#readme",
   "dependencies": {
     "@moxiedotxyz/base": "1.0.0",
-    "sanitize-html": "^2.7.0",
+    "sanitize-html": "2.7.0",
     "slack": "11.0.2",
     "uuid": "8.3.2",
     "html-entities": "2.1.0",
