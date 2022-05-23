@@ -94,12 +94,18 @@ router.use(
 ## Components
 
 ### Message Preview
+```
+const message = new slackAdmin.interactiveElements.Message();
+```
 - Section
 - Actions
 - Divider
 - Input 
 - Header
 ### Modal Preview
+```
+const modal = new slackAdmin.interactiveElements.Modal(appId, text);
+```
 - Section
 - Actions
 - Divider
