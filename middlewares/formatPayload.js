@@ -1,3 +1,7 @@
+/**
+ * Class for formatting and preprocessing payload
+ * @class PayloadFormatter
+ */
 class PayloadFormatter{
     constructor(){}
 
@@ -8,6 +12,7 @@ class PayloadFormatter{
      *
      * @returns {string|boolean|number|Array}
      */
+
     _preprocessSlackPayload(params){
         const oThis = this;
 

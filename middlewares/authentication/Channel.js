@@ -6,21 +6,18 @@ const rootPrefix = '../..',
  * Class to validate slack channel.
  *
  * @class ValidateSlackChannel
+ *
+ * @param {object} params
+ * @param {string} params.rawBody
+ * @param {object} params.requestHeaders
+ * @param {object} params.slackRequestParams
+ * @param {string} params.slackRequestParams.channel_id
+ *
+ * @augments SlackAuthenticationBase
+ *
  */
 class ValidateSlackChannel extends SlackAuthenticationBase {
-  /**
-   * Constructor to validate slack channel.
-   *
-   * @param {object} params
-   * @param {string} params.rawBody
-   * @param {object} params.requestHeaders
-   * @param {object} params.slackRequestParams
-   * @param {string} params.slackRequestParams.channel_id
-   *
-   * @augments SlackAuthenticationBase
-   *
-   * @constructor
-   */
+
   constructor(params) {
     super(params);
 
