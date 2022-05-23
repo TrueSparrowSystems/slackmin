@@ -100,6 +100,7 @@ const message = new slackAdmin.interactiveElements.Message();
 - Section
 - Actions
 - Divider
+- Context
 - Input 
 - Header
 ### Modal Preview
@@ -109,6 +110,7 @@ const modal = new slackAdmin.interactiveElements.Modal(appId, text);
 - Section
 - Actions
 - Divider
+- Context
 - Input 
 - Header
 
