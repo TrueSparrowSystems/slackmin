@@ -66,7 +66,6 @@ class ValidateSlackSignature extends SlackAuthenticationBase {
     if (!crypto.timingSafeEqual(Buffer.from(signature, 'utf-8'), Buffer.from(computedSignature, 'utf-8'))) {
       console.log('Invalid signature');
       throw new Error(`Invalid signature :: ${signature}`);
-
     }
   }
 }

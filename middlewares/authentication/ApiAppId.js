@@ -56,7 +56,7 @@ class ValidateSlackApiAppId extends SlackAuthenticationBase {
       throw new Error(`Invalid  apiAppId :: ${oThis.apiAppId}`);
     }
 
-    console.log("_validateSlackApiAppId : ",oThis.apiAppId);
+    console.log('_validateSlackApiAppId : ', oThis.apiAppId);
   }
 }
 

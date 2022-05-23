@@ -55,7 +55,7 @@ class ValidateSlackUser extends SlackAuthenticationBase {
   _prepareResponse() {
     const oThis = this;
 
-    return responseHelper.successWithData({ });
+    return responseHelper.successWithData({});
   }
 
   /**
@@ -71,12 +71,9 @@ class ValidateSlackUser extends SlackAuthenticationBase {
 
     const whiteListedUser = configProvider.getFor('whitelisted_users');
 
-    if(!whiteListedUser.includes(oThis.slackId)) {
+    if (!whiteListedUser.includes(oThis.slackId)) {
       throw new Error(`Invalid  SlackId :: ${oThis.slackId}`);
     }
-
-
-
   }
 }
 

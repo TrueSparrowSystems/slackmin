@@ -10,7 +10,6 @@ const rootPrefix = '../..',
  * @class
  */
 class Authenticator {
-
   /**
    * Function to validate slack Api app ID.
    * This method won't be called in case of slash command routes routes. This will be called only for interactive routes.
@@ -33,7 +32,7 @@ class Authenticator {
     }
 
     next();
-  };
+  }
 
   /**
    * Function to validate slack channel.
@@ -57,7 +56,7 @@ class Authenticator {
     }
 
     next();
-  };
+  }
 
   /**
    * Function to validate slack signature.
@@ -69,7 +68,7 @@ class Authenticator {
    * @returns {Promise<void>}
    */
   async validateSlackSignature(req, res, next) {
-    console.log('req================',req.rawBody, req.headers, req.body );
+    console.log('req================', req.rawBody, req.headers, req.body);
     const authResponse = await new ValidateSlackSignature({
       rawBody: req.rawBody,
       requestHeaders: req.headers,
@@ -81,7 +80,7 @@ class Authenticator {
     }
 
     next();
-  };
+  }
 
   /**
    * Function to validate slack user.
@@ -92,7 +91,7 @@ class Authenticator {
    *
    * @returns {Promise<void>}
    */
-   async validateSlackUser(req, res, next) {
+  async validateSlackUser(req, res, next) {
     const authResponse = await new ValidateSlackUser({
       rawBody: req.rawBody,
       requestHeaders: req.headers,
@@ -103,9 +102,7 @@ class Authenticator {
       return res.status(200).json('Something went wrong.');
     }
     next();
-  };
-
+  }
 }
 
 module.exports = new Authenticator();
-

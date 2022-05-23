@@ -17,7 +17,6 @@ const rootPrefix = '../..',
  *
  */
 class ValidateSlackChannel extends SlackAuthenticationBase {
-
   constructor(params) {
     super(params);
 
@@ -51,15 +50,12 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
 
     const configs = configProvider.getFor('whitelisted_channel_ids');
     let allowedChannel = configs[oThis.channelId];
-    if(!allowedChannel) {
+    if (!allowedChannel) {
       throw new Error(`Invalid  channelId :: ${oThis.channelId}`);
     }
 
-    console.log("configs :: ", configs)
-
+    console.log('configs :: ', configs);
   }
-
-
 }
 
 module.exports = ValidateSlackChannel;

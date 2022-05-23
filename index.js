@@ -15,11 +15,10 @@ const rootPrefix = '.',
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
 
-
 class SlackAdmin {
   constructor(appConfigs, whitelistedChannelIds, domain, whitelistedUsers) {
-    configProvider.set('app_config',appConfigs);
-    configProvider.set('whitelisted_channel_ids',whitelistedChannelIds);
+    configProvider.set('app_config', appConfigs);
+    configProvider.set('whitelisted_channel_ids', whitelistedChannelIds);
     configProvider.set('domain', domain);
     configProvider.set('whitelisted_users', whitelistedUsers);
     slackAppConstants.setSlackAppConfigById();
@@ -43,10 +42,10 @@ class SlackAdmin {
       extractResponseUrlFromBody: extractResponseUrlFromBody,
       parseApiParameters: parseApiParameters,
       extractTriggerId: extractTriggerId
-    }
+    };
   }
 
-  get interactiveEndpointMiddlewares(){
+  get interactiveEndpointMiddlewares() {
     return [
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
@@ -60,10 +59,10 @@ class SlackAdmin {
       extractTriggerId,
       extractResponseUrlFromPayload,
       parseApiParameters
-    ]
+    ];
   }
 
-  get slashCommandMiddlewares(){
+  get slashCommandMiddlewares() {
     return [
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
@@ -73,16 +72,15 @@ class SlackAdmin {
       authenticator.validateSlackChannel,
       extractText,
       extractResponseUrlFromBody
-    ]
+    ];
   }
 
-  get interactiveElements(){
+  get interactiveElements() {
     return {
       Message: Message,
       Modal: Modal
-    }
+    };
   }
-
 }
 
 module.exports = SlackAdmin;
