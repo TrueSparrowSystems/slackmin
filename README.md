@@ -1,5 +1,16 @@
 # slackmin
-npm package
+
+## What is slackmin?
+An npm package that is used to integrate with your slack app that does the work of admin. You can perform CRUD operations within slack channel itself without the need for any web interface for admin dashboard.
+
+## Why slackmin?
+An easy way to integrate admin operations in your slack app which reduces dev effort of building admin dashboards.
+
+## slackmin installation
+
+```
+npm install slackmin
+```
 
 ## slackmin usage
 
@@ -24,6 +35,8 @@ module.exports = slackAdmin;
 ```
 
 ## slackmin middleware usage
+
+For detailed guide of middlewares
 
 ```
 const {
@@ -77,3 +90,25 @@ router.use(
   extractResponseUrlFromBody
 );
 ```
+
+## Components
+
+### Message Preview
+- Section
+- Actions
+- Divider
+- Input 
+- Header
+### Modal Preview
+- Section
+- Actions
+- Divider
+- Input 
+- Header
+
+## Notes
+To overcome the limitation of single slack app providing only 25 '/' commands, we can provide multiple slack apps in the config.
+
+## Limitations
+- No component for datatable in Slack
+- Currently has only Message and Modal preview
