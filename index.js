@@ -1,6 +1,7 @@
 const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
+  slackWrapper = require(rootPrefix + '/lib/slack/Wrapper'),
   formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
   assignParams = require(rootPrefix + '/middlewares/assignParams'),
   sanitizer = require(rootPrefix + '/lib/helpers/sanitizer'),
@@ -22,8 +23,7 @@ class SlackAdmin {
     configProvider.set('domain', domain);
     configProvider.set('whitelisted_users', whitelistedUsers);
     slackAppConstants.setSlackAppConfigById();
-
-    console.log("SlackAdmin :: ", configProvider.getFor('app_config'));
+    slackWrapper.init();
   }
 
   get middlewares() {
