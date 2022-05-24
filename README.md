@@ -22,8 +22,8 @@ const slackAdmin = new Slackmin(
   [
     {
       id: '<slack_app_id>',
-      secret: '<slack_secret>',
-      bot_token: '<slack_token>'
+      secret: '<slack_signing_secret>',
+      bot_token: '<slack_bot_user_oauth_token>'
     }
   ],
   { '<channel_id>': '1' }, // whitelisted channels
@@ -94,15 +94,23 @@ router.use(
 ## Components
 
 ### Message Preview
+```
+const message = new slackAdmin.interactiveElements.Message();
+```
 - Section
 - Actions
 - Divider
+- Context
 - Input 
 - Header
 ### Modal Preview
+```
+const modal = new slackAdmin.interactiveElements.Modal(appId, text);
+```
 - Section
 - Actions
 - Divider
+- Context
 - Input 
 - Header
 
