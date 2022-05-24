@@ -1,5 +1,6 @@
 const rootPrefix = '../..',
   SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
+  slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
   CommonValidators = require(rootPrefix + '/lib/validator/Common');
 
 /**
@@ -53,6 +54,12 @@ class ValidateSlackApiAppId extends SlackAuthenticationBase {
     const oThis = this;
 
     if (CommonValidators.isVarNullOrUndefined(oThis.apiAppId)) {
+      throw new Error(`Invalid  apiAppId :: ${oThis.apiAppId}`);
+    }
+
+    const appConfig = slackAppConstants.getAppConfigById(oThis.apiAppId);
+
+    if (!CommonValidators.validateNonEmptyObject(appConfig)) {
       throw new Error(`Invalid  apiAppId :: ${oThis.apiAppId}`);
     }
 
