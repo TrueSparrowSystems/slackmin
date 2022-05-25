@@ -86,7 +86,7 @@ For more detailed info on exposed functionalities check [here](https://github.co
 
 For detailed guide of [middlewares](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/middlewares/middlewares.md)
 
-```
+```javascript
 const {
   formatPayload,
   sanitizeBodyAndQuery,
@@ -107,7 +107,7 @@ const {
 ```
 
 ### Common Middlewares
-```
+```javascript
 // common middlewares
 router.use(
   formatPayload,
@@ -126,7 +126,7 @@ router.use(
 ```
 
 ### Interactive Middlewares
-```
+```javascript
 //  interactive-endpoint middlewares
 router.post(
   '/interactive-endpoint',
@@ -153,7 +153,7 @@ router.post(
 ```
 
 ### Slash Command Middlewares
-```
+```javascript
 // '/' command middlewares
 router.use(
   validateSlackChannel,
@@ -171,7 +171,7 @@ router.use(
 ## Components
 
 ### Message Preview
-```
+```javascript
 const message = new slackAdmin.interactiveElements.Message();
 ```
 - Section
@@ -181,7 +181,7 @@ const message = new slackAdmin.interactiveElements.Message();
 - Input 
 - Header
 ### Modal Preview
-```
+```javascript
 const modal = new slackAdmin.interactiveElements.Modal(appId, text);
 ```
 - Section
