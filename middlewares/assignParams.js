@@ -1,3 +1,7 @@
+/**
+ * Class for assigning params to req
+ * @class AssignParams
+ */
 class AssignParams {
   constructor() {}
 

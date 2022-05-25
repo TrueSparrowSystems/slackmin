@@ -1,3 +1,8 @@
+/**
+ * Class for extracting and preprocessing text from slash command
+ *
+ * @class ExtractText
+ */
 class ExtractText {
   constructor() {}
 

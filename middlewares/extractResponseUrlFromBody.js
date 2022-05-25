@@ -1,3 +1,8 @@
+/**
+ * Class for extracting response_url from slash commands.
+ *
+ * @class ExtractResponseUrlFromBody
+ */
 class ExtractResponseUrlFromBody {
   constructor() {}
 

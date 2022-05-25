@@ -1,3 +1,8 @@
+/**
+ * Class for extract slack params
+ *
+ * @class ExtractSlackParams
+ */
 class ExtractSlackParams {
   constructor() {}
 

@@ -1,3 +1,8 @@
+/**
+ * Class for extract response_url from slack payload
+ *
+ * @class ExtractResponseUrlFromPayload
+ */
 class ExtractResponseUrlFromPayload {
   constructor() {}
   /**
