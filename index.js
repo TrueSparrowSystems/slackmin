@@ -45,14 +45,19 @@ class SlackAdmin {
     };
   }
 
-  get interactiveEndpointMiddlewares() {
+  get commonMiddlewares() {
     return [
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
       assignParams,
       extractSlackParams,
       authenticator.validateSlackSignature,
-      authenticator.validateSlackUser,
+      authenticator.validateSlackUser
+    ];
+  }
+
+  get interactiveEndpointMiddlewares() {
+    return [
       sanitizer.sanitizeDynamicUrlParams,
       sanitizer.sanitizeHeaderParams,
       authenticator.validateSlackApiAppId,
@@ -64,12 +69,6 @@ class SlackAdmin {
 
   get slashCommandMiddlewares() {
     return [
-      formatPayload,
-      sanitizer.sanitizeBodyAndQuery,
-      assignParams,
-      extractSlackParams,
-      authenticator.validateSlackSignature,
-      authenticator.validateSlackUser,
       authenticator.validateSlackChannel,
       extractText,
       extractResponseUrlFromBody
