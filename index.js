@@ -66,6 +66,7 @@ class SlackAdmin {
     return [
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
+      assignParams,
       extractSlackParams,
       authenticator.validateSlackSignature,
       authenticator.validateSlackUser,
