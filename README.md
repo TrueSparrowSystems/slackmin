@@ -34,6 +34,8 @@ const slackAdmin = new Slackmin(
 module.exports = slackAdmin;
 ```
 
+For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/INDEX.md)
+
 ## slackmin middleware usage
 
 For detailed guide of [middlewares](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/middlewares/middlewares.md)
