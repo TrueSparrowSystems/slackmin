@@ -23,7 +23,7 @@ const slackAdmin = new Slackmin(
     {
       id: '<slack_app_id>',
       secret: '<slack_signing_secret>',
-      bot_token: '<slack_bot_user_oauth_token>'
+      slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
     }
   ],
   { '<channel_id>': '1' }, // whitelisted channels
