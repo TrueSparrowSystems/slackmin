@@ -1,24 +1,31 @@
 {
   "name": "slackmin",
-  "version": "1.0.0",
-  "description": "npm package for easily providing admin abilities to slack",
+  "version": "1.0.0-beta.1",
+  "description": "Easy integration to slack for sending messages, opening modals, interactive endpoints and much more.",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --write './**/*.js' --config .prettierrc.json",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pre-commit": "lint-staged"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PLG-Works/slack-admin.git"
+    "url": "git+https://github.com/PLG-Works/slackmin.git"
   },
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "slackmin",
+    "slash commands",
+    "interactive endpoints",
+    "slack block UI",
+    "slack modal",
+    "slack message"
+  ],
+  "author": "PLG Works",
+  "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/PLG-Works/slack-admin/issues"
+    "url": "https://github.com/PLG-Works/slackmin/issues"
   },
-  "homepage": "https://github.com/PLG-Works/slack-admin#readme",
+  "homepage": "https://github.com/PLG-Works/slackmin#readme",
   "dependencies": {
-    "@moxiedotxyz/base": "1.0.0",
+    "@plgworks/base": "^1.0.0",
     "sanitize-html": "2.7.0",
     "slack": "11.0.2",
     "uuid": "8.3.2",
@@ -26,6 +33,18 @@
     "@slack/bolt": "3.2.0"
   },
   "devDependencies": {
+    "eslint": "7.20.0",
+    "lint-staged": "10.5.4",
+    "pre-commit": "1.2.2",
     "prettier": "1.13.7"
+  },
+  "pre-commit": [
+    "pre-commit"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "prettier --write --config .prettierrc.json",
+      "git add"
+    ]
   }
 }
