@@ -168,28 +168,80 @@ router.use(
 )
 ```
 
-## Components
+## Interactive Components
 
-### Message Preview
+Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to lay out complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in each message, and 100 blocks in modals.
+You can find Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks)
+
+### Message Wrapper
+
+slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various blocks.
+
 ```javascript
 const message = new slackAdmin.interactiveElements.Message();
 ```
-- Section
-- Actions
-- Divider
-- Context
-- Input 
-- Header
-### Modal Preview
+
+For example,
+<br>
+adding a section block
+
 ```javascript
+message.addSection("I want to add some text here. And it should be *markdown*");
+```
+[Preview for message.addSection](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22I%20want%20to%20add%20some%20text%20here.%20And%20it%20should%20be%20*markdown*%22%7D%7D%5D%7D)
+
+
+adding divider section
+```javascript
+message.addDivider()
+```
+[Preview for message.addDivider](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D%5D%7D)
+
+adding button elements
+```javascript
+message.addButtonElements(
+  [
+    {
+      buttonText: 'Click me 1',
+      confirmText: 'You clicked the correct button 1',
+      value: '{"action":"actionId-0"}'
+    },
+    {
+      buttonText: 'Click me 2',
+      confirmText: 'You clicked the correct button 2',
+      value: '{"action":"actionId-1"}'
+    }
+  ]
+)
+```
+[Preview for message.addButtonElements](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22actions%22,%22elements%22:%5B%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%201%22%7D,%22value%22:%22click_me_123%22,%22action_id%22:%22actionId-0%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%201%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D,%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%202%22%7D,%22value%22:%22click_me_1234%22,%22action_id%22:%22actionId-1%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%202%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D%5D%7D%5D%7D)
+
+### Modal Wrapper
+slackmin Modal wrapper allows us to add various blocks in a popup.
+```javascript
+// appId is required to validate signature
+// text here is modal's title text
+const text = "Input Email"
 const modal = new slackAdmin.interactiveElements.Modal(appId, text);
 ```
-- Section
-- Actions
-- Divider
-- Context
-- Input 
-- Header
+For example,
+<br>
 
-## Notes
-To overcome the limitation of single slack app providing only 25 '/' commands, we can provide multiple slack apps in the config.
+buttons on modal. we can change the text of the confirm button and cancel button.
+
+```javascript
+modal.addSubmitAndCancel("Confirm", "Close");
+```
+
+add input text box
+
+```javascript
+// takes params labelText(string), multiline(boolean), isOptional(boolean)
+modal.addTextbox(
+  "Your Email",
+  false,
+  false
+)
+```
+[Preview for modal](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22type%22:%22modal%22,%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Input%20Email%22,%22emoji%22:true%7D,%22submit%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22,%22emoji%22:true%7D,%22close%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Close%22,%22emoji%22:true%7D,%22blocks%22:%5B%7B%22type%22:%22input%22,%22element%22:%7B%22type%22:%22plain_text_input%22,%22multiline%22:false%7D,%22label%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Your%20Email%22%7D,%22optional%22:false%7D%5D%7D)
+
