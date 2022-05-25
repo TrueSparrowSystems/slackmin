@@ -54,9 +54,9 @@ module.exports = slackAdmin;
 
 `appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config in an object consisting of id, secret and token.
 
-- id: You need to provide your slack app id here. To create a slack app visit https://api.slack.com/apps.
-- secret: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature.
-- slack_bot_user_oauth_token: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack. In slackmin slack bot sends the message on the slack channel.
+- **id**: You need to provide your slack app id here. To create a slack app visit https://api.slack.com/apps.
+- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature.
+- **slack_bot_user_oauth_token**: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack. In slackmin slack bot sends the message on the slack channel.
 
 <br>
 
