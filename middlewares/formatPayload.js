@@ -12,7 +12,6 @@ class PayloadFormatter {
    *
    * @returns {string|boolean|number|Array}
    */
-
   _preprocessSlackPayload(params) {
     const oThis = this;
 

@@ -22,7 +22,6 @@ class ParseApiParams {
 
     let apiParamsResponse;
 
-    // TODO
     if (payload.type === slackConstants.viewSubmissionPayloadType) {
       apiParamsResponse = await new ParseViewSubmissionApiParams({
         payload: req.body.payload
@@ -32,7 +31,6 @@ class ParseApiParams {
         payload: req.body.payload
       }).perform();
     } else {
-      // TODO
       const errorObj = responseHelper.error({
         internal_error_identifier: 'r_a_s_i_gap_1',
         api_error_identifier: 'invalid_params',
