@@ -80,11 +80,11 @@ module.exports = slackAdmin;
 
 <br>
 
-For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/INDEX.md)
+For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slackmin/blob/master/INDEX.md)
 
 ## slackmin middleware usage
 
-For detailed guide of [middlewares](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/middlewares/middlewares.md)
+For detailed guide of [middlewares](https://github.com/PLG-Works/slackmin/blob/master/middlewares/middlewares.md)
 
 ```javascript
 const {
