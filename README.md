@@ -24,21 +24,61 @@ While using the package, create an object of Slackmin at one place (in a provide
 // slack admin provider's config
 const Slackmin = require('slackmin');
 
+const appConfigs = [
+  {
+    id: '<slack_app_id>',
+    secret: '<slack_signing_secret>',
+    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
+  }
+]
+
+const whiteListedChannels = { '<slack_channel_id>': '1' }
+
+const slackDomain = '<your_slack_domain>'
+
+const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>']
+
 const slackAdmin = new Slackmin(
-  [
-    {
-      id: '<slack_app_id>',
-      secret: '<slack_signing_secret>',
-      slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
-    }
-  ],
-  { '<channel_id>': '1' }, // whitelisted channels
-  '<your_slack_domain>',
-  ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>'] // whitelisted admin users
+  appConfigs,
+  whiteListedChannels,
+  slackDomain,
+  whitelistedUsers
 );
 
 module.exports = slackAdmin;
 ```
+
+### Slackmin Params
+**1. appConfigs**
+
+
+`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config in an object consisting of id, secret and token.
+
+- id: You need to provide your slack app id here. To create a slack app visit https://api.slack.com/apps.
+- secret: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature.
+- slack_bot_user_oauth_token: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack. In slackmin slack bot sends the message on the slack channel.
+
+<br>
+
+**2. whiteListedChannels**
+
+
+`whiteListedChannels` is a channel id map consisting of whitelisted channels to execute the slash commands in. Slash commands will execute only in the whitelisted channels.
+
+<br>
+
+**3. slackDomain**
+
+
+`slackDomain` is your slack app's workspace domain. It could be a team workspace or individual workspace. 
+
+<br>
+
+**4. whitelistedUsers**
+
+`whitelistedUsers` is an array consisting of whitelisted user ids. User id is your member id on slack. Whitelisted users are channel admins that can execute commands in whitelisted channels.
+
+<br>
 
 For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/INDEX.md)
 
@@ -64,7 +104,10 @@ const {
   parseApiParameters,
   extractTriggerId
 } = slackAdmin.middlewares;
+```
 
+### Common Middlewares
+```
 // common middlewares
 router.use(
   formatPayload,
@@ -75,6 +118,15 @@ router.use(
   validateSlackUser
 )
 
+// OR 
+
+router.use(
+  slackmin.commonMiddlewares
+);
+```
+
+### Interactive Middlewares
+```
 //  interactive-endpoint middlewares
 router.post(
   '/interactive-endpoint',
@@ -89,12 +141,31 @@ router.post(
   }
 );
 
+//OR
+
+router.post(
+  '/interactive-endpoint',
+  slackAdmin.interactiveEndpointMiddlewares,
+  async function(req, res, next) {
+    // your business logic
+  }
+)
+```
+
+### Slash Command Middlewares
+```
 // '/' command middlewares
 router.use(
   validateSlackChannel,
   extractText,
   extractResponseUrlFromBody
 );
+
+//OR
+
+router.use(
+  slackAdmin.slashCommandMiddlewares
+)
 ```
 
 ## Components
