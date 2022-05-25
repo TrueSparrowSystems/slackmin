@@ -1,19 +1,23 @@
-# slackmin
+# Slackmin
+![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-## What is slackmin?
-An npm package that is used to integrate with your slack app that does the work of admin. You can perform CRUD operations within slack channel itself without the need for any web interface for admin dashboard.
+Slackmin helps you in easy integration with slack to use slash commands, interactive endpoints, send alert messages, open modals. One use case is to develop admin functionality over slack.
 
-## Why slackmin?
-An easy way to integrate admin operations in your slack app which reduces dev effort of building admin dashboards.
+## Why Slackmin?
+- Security features involving signature verification, channel authentication, user authentication, team validation, domain validation 
+    are taken care of by the exposed middlewares.
+- The view submission parameters are extracted into key value pairs for ease of use.
+- Message and Modal wrappers help in easy writing of messages and opening of modals.
+- Support of interacting with multiple slack apps comes built-in with this package.
 
-## slackmin installation
+## Installation
 
-```
+```sh
 npm install slackmin
 ```
 
-## slackmin usage
-
+## Initialize
+While using the package, create an object of Slackmin at one place (in a provider) and then use it accross the application.
 ```
 // slack admin provider's config
 const Slackmin = require('slackmin');
