@@ -1,7 +1,8 @@
 # Slackmin
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps you in easy integration with slack to use slash commands, interactive endpoints, send alert messages, open modals. One use case is to develop admin functionality over slack.
+Slackmin helps you in easy integration with slack to use slash commands, interactive endpoints, send alert messages, open modals. 
+One use case is to develop admin functionality over slack.
 
 ## Why Slackmin?
 - Security features involving signature verification, channel authentication, user authentication, team validation, domain validation 
@@ -9,6 +10,7 @@ Slackmin helps you in easy integration with slack to use slash commands, interac
 - The view submission parameters are extracted into key value pairs for ease of use.
 - Message and Modal wrappers help in easy writing of messages and opening of modals.
 - Support of interacting with multiple slack apps comes built-in with this package.
+  This overcomes the limitation of maximum number of 25 slash commands supported by a slack app.
 
 ## Installation
 
@@ -18,7 +20,7 @@ npm install slackmin
 
 ## Initialize
 While using the package, create an object of Slackmin at one place (in a provider) and then use it accross the application.
-```
+```node.js
 // slack admin provider's config
 const Slackmin = require('slackmin');
 
@@ -120,7 +122,3 @@ const modal = new slackAdmin.interactiveElements.Modal(appId, text);
 
 ## Notes
 To overcome the limitation of single slack app providing only 25 '/' commands, we can provide multiple slack apps in the config.
-
-## Limitations
-- No component for datatable in Slack
-- Currently has only Message and Modal preview
