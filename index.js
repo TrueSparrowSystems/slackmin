@@ -15,6 +15,17 @@ const rootPrefix = '.',
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
 
+/**
+ * Class for Slack Admin.
+ *
+ * @class SlackAdmin
+ *
+ * @param {array} appConfigs
+ * @param {object} whitelistedChannelIds
+ * @param {string} domain
+ * @param {array} whitelistedUsers
+ *
+ */
 class SlackAdmin {
   constructor(appConfigs, whitelistedChannelIds, domain, whitelistedUsers) {
     configProvider.set('app_config', appConfigs);
@@ -25,6 +36,11 @@ class SlackAdmin {
     slackWrapper.init();
   }
 
+  /**
+   * Slack admin middlewares
+   *
+   * @returns {{validateSignature: Authenticator.validateSlackSignature, assignParams, extractResponseUrlFromPayload, extractResponseUrlFromBody, validateSlackChannel: Authenticator.validateSlackChannel, extractText, extractSlackParams, validateSlackApiAppId: Authenticator.validateSlackApiAppId, formatPayload, sanitizeHeaderParams: Sanitizer.sanitizeHeaderParams, parseApiParameters, sanitizeBodyAndQuery: Sanitizer.sanitizeBodyAndQuery, sanitizeDynamicUrlParams: Sanitizer.sanitizeDynamicUrlParams, validateSlackUser: Authenticator.validateSlackUser, extractTriggerId}}
+   */
   get middlewares() {
     return {
       formatPayload: formatPayload,
@@ -45,6 +61,11 @@ class SlackAdmin {
     };
   }
 
+  /**
+   * Slack admin common middlewares
+   *
+   * @returns {(*|Sanitizer.sanitizeBodyAndQuery|Authenticator.validateSlackSignature)[]}
+   */
   get commonMiddlewares() {
     return [
       formatPayload,
@@ -56,6 +77,11 @@ class SlackAdmin {
     ];
   }
 
+  /**
+   * Slack admin interactive endpoints middlewares
+   *
+   * @returns {(Sanitizer.sanitizeDynamicUrlParams|Sanitizer.sanitizeHeaderParams|Authenticator.validateSlackApiAppId|*)[]}
+   */
   get interactiveEndpointMiddlewares() {
     return [
       sanitizer.sanitizeDynamicUrlParams,
@@ -67,6 +93,11 @@ class SlackAdmin {
     ];
   }
 
+  /**
+   * Slack command middlewares
+   *
+   * @returns {(Authenticator.validateSlackChannel|*)[]}
+   */
   get slashCommandMiddlewares() {
     return [
       authenticator.validateSlackChannel,
@@ -75,6 +106,11 @@ class SlackAdmin {
     ];
   }
 
+  /**
+   * Slack interactive element middlewares
+   *
+   * @returns {{Message, Modal}}
+   */
   get interactiveElements() {
     return {
       Message: Message,
