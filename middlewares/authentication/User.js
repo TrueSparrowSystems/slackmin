@@ -7,18 +7,18 @@ const rootPrefix = '../..',
  * Class to validate slack user.
  *
  * @class ValidateSlackUser
+ *
+ * @param {object} params
+ * @param {string} params.rawBody
+ * @param {object} params.requestHeaders
+ * @param {object} params.slackRequestParams
+ * @param {string} params.slackRequestParams.slack_id
+ *
+ * @augments SlackAuthenticationBase
  */
 class ValidateSlackUser extends SlackAuthenticationBase {
   /**
    * Constructor to validate slack user.
-   *
-   * @param {object} params
-   * @param {string} params.rawBody
-   * @param {object} params.requestHeaders
-   * @param {object} params.slackRequestParams
-   * @param {string} params.slackRequestParams.slack_id
-   *
-   * @augments SlackAuthenticationBase
    *
    * @constructor
    */

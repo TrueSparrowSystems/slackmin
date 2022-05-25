@@ -99,11 +99,7 @@ class SlackAdmin {
    * @returns {(Authenticator.validateSlackChannel|*)[]}
    */
   get slashCommandMiddlewares() {
-    return [
-      authenticator.validateSlackChannel,
-      extractText,
-      extractResponseUrlFromBody
-    ];
+    return [authenticator.validateSlackChannel, extractText, extractResponseUrlFromBody];
   }
 
   /**

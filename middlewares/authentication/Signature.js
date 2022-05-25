@@ -9,6 +9,8 @@ const rootPrefix = '../..',
  * Class to validate signature request from slack.
  *
  * @class ValidateSlackSignature
+ *
+ * @augments SlackAuthenticationBase
  */
 class ValidateSlackSignature extends SlackAuthenticationBase {
   /**

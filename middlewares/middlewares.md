@@ -8,138 +8,161 @@
 *   [assignParams][1]
     *   [Parameters][2]
 *   [ValidateSlackApiAppId][3]
-*   [Authenticator][4]
-    *   [validateSlackApiAppId][5]
-        *   [Parameters][6]
-    *   [validateSlackChannel][7]
-        *   [Parameters][8]
-    *   [validateSlackSignature][9]
-        *   [Parameters][10]
-    *   [validateSlackUser][11]
-        *   [Parameters][12]
-*   [SlackAuthenticationBase][13]
-    *   [perform][14]
-*   [ValidateSlackChannel][15]
-    *   [Parameters][16]
-*   [ValidateSlackSignature][17]
-*   [ValidateSlackUser][18]
-*   [extractResponseUrlFromBody][19]
-    *   [Parameters][20]
-*   [extractResponseUrlFromPayload][21]
-    *   [Parameters][22]
-*   [extractSlackParams][23]
-    *   [Parameters][24]
-*   [extractText][25]
-    *   [Parameters][26]
-*   [extractTriggerId][27]
-    *   [Parameters][28]
-*   [PayloadFormatter][29]
-    *   [\_preprocessSlackPayload][30]
-        *   [Parameters][31]
-    *   [formatPayload][32]
-        *   [Parameters][33]
-*   [parse][34]
-    *   [Parameters][35]
+    *   [Parameters][4]
+*   [Authenticator][5]
+    *   [validateSlackApiAppId][6]
+        *   [Parameters][7]
+    *   [validateSlackChannel][8]
+        *   [Parameters][9]
+    *   [validateSlackSignature][10]
+        *   [Parameters][11]
+    *   [validateSlackUser][12]
+        *   [Parameters][13]
+*   [SlackAuthenticationBase][14]
+    *   [Parameters][15]
+    *   [perform][16]
+*   [ValidateSlackChannel][17]
+    *   [Parameters][18]
+*   [ValidateSlackSignature][19]
+*   [ValidateSlackUser][20]
+    *   [Parameters][21]
+*   [extractResponseUrlFromBody][22]
+    *   [Parameters][23]
+*   [extractResponseUrlFromPayload][24]
+    *   [Parameters][25]
+*   [extractSlackParams][26]
+    *   [Parameters][27]
+*   [extractText][28]
+    *   [Parameters][29]
+*   [extractTriggerId][30]
+    *   [Parameters][31]
+*   [PayloadFormatter][32]
+    *   [\_preprocessSlackPayload][33]
+        *   [Parameters][34]
+    *   [formatPayload][35]
+        *   [Parameters][36]
+*   [parse][37]
+    *   [Parameters][38]
 
 ## assignParams
 
-[middlewares/assignParams.js:11-17][36]
+[middlewares/assignParams.js:11-17][39]
 
 Assign params.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## ValidateSlackApiAppId
 
-[middlewares/authentication/ApiAppId.js:10-61][39]
+[middlewares/authentication/ApiAppId.js:19-68][42]
+
+**Extends SlackAuthenticationBase**
 
 Class to validate slack API app ID.
 
+### Parameters
+
+*   `params` **[object][40]** 
+
+    *   `params.rawBody` **[string][43]** 
+    *   `params.requestHeaders` **[object][40]** 
+    *   `params.slackRequestParams` **[object][40]** 
+
+        *   `params.slackRequestParams.api_app_id` **[string][43]** 
+
 ## Authenticator
 
-[middlewares/authentication/Authenticator.js:12-108][40]
+[middlewares/authentication/Authenticator.js:12-106][44]
 
 Class for Authenticator.
 
 ### validateSlackApiAppId
 
-[middlewares/authentication/Authenticator.js:24-36][41]
+[middlewares/authentication/Authenticator.js:23-35][45]
 
 Function to validate slack Api app ID.
 This method won't be called in case of slash command routes routes. This will be called only for interactive routes.
 
 #### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
-Returns **[Promise][42]\<void>** 
+Returns **[Promise][46]\<void>** 
 
 ### validateSlackChannel
 
-[middlewares/authentication/Authenticator.js:48-60][43]
+[middlewares/authentication/Authenticator.js:47-59][47]
 
 Function to validate slack channel.
 This method won't be called in case of interactive routes. This will be called only for slash commands routes.
 
 #### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
-Returns **[Promise][42]\<void>** 
+Returns **[Promise][46]\<void>** 
 
 ### validateSlackSignature
 
-[middlewares/authentication/Authenticator.js:71-84][44]
+[middlewares/authentication/Authenticator.js:70-83][48]
 
 Function to validate slack signature.
 
 #### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
-Returns **[Promise][42]\<void>** 
+Returns **[Promise][46]\<void>** 
 
 ### validateSlackUser
 
-[middlewares/authentication/Authenticator.js:95-106][45]
+[middlewares/authentication/Authenticator.js:94-105][49]
 
 Function to validate slack user.
 
 #### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
-Returns **[Promise][42]\<void>** 
+Returns **[Promise][46]\<void>** 
 
 ## SlackAuthenticationBase
 
-[middlewares/authentication/Base.js:11-161][46]
+[middlewares/authentication/Base.js:17-162][50]
 
 Base class to validate requests from slack.
 
+### Parameters
+
+*   `params` **[object][40]** 
+
+    *   `params.rawBody` **[string][43]** 
+    *   `params.requestHeaders` **[object][40]** 
+    *   `params.slackRequestParams` **[object][40]** 
+
 ### perform
 
-[middlewares/authentication/Base.js:37-60][47]
+[middlewares/authentication/Base.js:38-61][51]
 
 Main performer for class.
 
-Returns **[Promise][42]<(any | result)>** 
+Returns **[Promise][46]<(any | result)>** 
 
 ## ValidateSlackChannel
 
-[middlewares/authentication/Channel.js:19-63][48]
+[middlewares/authentication/Channel.js:19-59][52]
 
 **Extends SlackAuthenticationBase**
 
@@ -147,96 +170,110 @@ Class to validate slack channel.
 
 ### Parameters
 
-*   `params` **[object][37]** 
+*   `params` **[object][40]** 
 
-    *   `params.rawBody` **[string][49]** 
-    *   `params.requestHeaders` **[object][37]** 
-    *   `params.slackRequestParams` **[object][37]** 
+    *   `params.rawBody` **[string][43]** 
+    *   `params.requestHeaders` **[object][40]** 
+    *   `params.slackRequestParams` **[object][40]** 
 
-        *   `params.slackRequestParams.channel_id` **[string][49]** 
+        *   `params.slackRequestParams.channel_id` **[string][43]** 
 
 ## ValidateSlackSignature
 
-[middlewares/authentication/Signature.js:13-72][50]
+[middlewares/authentication/Signature.js:15-73][53]
+
+**Extends SlackAuthenticationBase**
 
 Class to validate signature request from slack.
 
 ## ValidateSlackUser
 
-[middlewares/authentication/User.js:11-81][51]
+[middlewares/authentication/User.js:19-78][54]
+
+**Extends SlackAuthenticationBase**
 
 Class to validate slack user.
 
+### Parameters
+
+*   `params` **[object][40]** 
+
+    *   `params.rawBody` **[string][43]** 
+    *   `params.requestHeaders` **[object][40]** 
+    *   `params.slackRequestParams` **[object][40]** 
+
+        *   `params.slackRequestParams.slack_id` **[string][43]** 
+
 ## extractResponseUrlFromBody
 
-[middlewares/extractResponseUrlFromBody.js:11-16][52]
+[middlewares/extractResponseUrlFromBody.js:11-16][55]
 
 Extract response_url from slash commands. This middleware should only be used with slash commands.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## extractResponseUrlFromPayload
 
-[middlewares/extractResponseUrlFromPayload.js:10-15][53]
+[middlewares/extractResponseUrlFromPayload.js:10-15][56]
 
 Extract response_url from interactive routes. This middleware should only be used with interactive routes.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## extractSlackParams
 
-[middlewares/extractSlackParams.js:11-30][54]
+[middlewares/extractSlackParams.js:11-30][57]
 
 Extract slack id and slack token.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## extractText
 
-[middlewares/extractText.js:11-16][55]
+[middlewares/extractText.js:11-16][58]
 
 Extract text from slash commands. This middleware should only be used with slash commands.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## extractTriggerId
 
-[middlewares/extractTriggerId.js:12-18][56]
+[middlewares/extractTriggerId.js:12-18][59]
 
 Extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
 This middleware will not fetch triggerId for view_submission type interactions.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## PayloadFormatter
 
-[middlewares/formatPayload.js:5-62][57]
+[middlewares/formatPayload.js:5-61][60]
 
 Class for formatting and preprocessing payload
 
 ### \_preprocessSlackPayload
 
-[middlewares/formatPayload.js:16-41][58]
+[middlewares/formatPayload.js:16-41][61]
 
 Parse and regex replace processed links and user mention in slack payload.
 
@@ -244,34 +281,34 @@ Parse and regex replace processed links and user mention in slack payload.
 
 *   `params` **any** 
 
-Returns **([string][49] | [boolean][59] | [number][60] | [Array][61])** 
+Returns **([string][43] | [boolean][62] | [number][63] | [Array][64])** 
 
 ### formatPayload
 
-[middlewares/formatPayload.js:50-60][62]
+[middlewares/formatPayload.js:50-60][65]
 
 Convert string to JSON.
 
 #### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
 ## parse
 
-[middlewares/parseApiParams.js:21-68][63]
+[middlewares/parseApiParams.js:20-67][66]
 
 Function to get view submission parameters.
 This method won't be called in case of slash command routes routes. This will be called only for interactive routes.
 
 ### Parameters
 
-*   `req` **[object][37]** 
-*   `res` **[object][37]** 
-*   `next` **[function][38]** 
+*   `req` **[object][40]** 
+*   `res` **[object][40]** 
+*   `next` **[function][41]** 
 
-Returns **[Promise][42]\<void>** 
+Returns **[Promise][46]\<void>** 
 
 [1]: #assignparams
 
@@ -279,122 +316,128 @@ Returns **[Promise][42]\<void>**
 
 [3]: #validateslackapiappid
 
-[4]: #authenticator
+[4]: #parameters-1
 
-[5]: #validateslackapiappid-1
+[5]: #authenticator
 
-[6]: #parameters-1
+[6]: #validateslackapiappid-1
 
-[7]: #validateslackchannel
+[7]: #parameters-2
 
-[8]: #parameters-2
+[8]: #validateslackchannel
 
-[9]: #validateslacksignature
+[9]: #parameters-3
 
-[10]: #parameters-3
+[10]: #validateslacksignature
 
-[11]: #validateslackuser
+[11]: #parameters-4
 
-[12]: #parameters-4
+[12]: #validateslackuser
 
-[13]: #slackauthenticationbase
+[13]: #parameters-5
 
-[14]: #perform
+[14]: #slackauthenticationbase
 
-[15]: #validateslackchannel-1
+[15]: #parameters-6
 
-[16]: #parameters-5
+[16]: #perform
 
-[17]: #validateslacksignature-1
+[17]: #validateslackchannel-1
 
-[18]: #validateslackuser-1
+[18]: #parameters-7
 
-[19]: #extractresponseurlfrombody
+[19]: #validateslacksignature-1
 
-[20]: #parameters-6
+[20]: #validateslackuser-1
 
-[21]: #extractresponseurlfrompayload
+[21]: #parameters-8
 
-[22]: #parameters-7
+[22]: #extractresponseurlfrombody
 
-[23]: #extractslackparams
+[23]: #parameters-9
 
-[24]: #parameters-8
+[24]: #extractresponseurlfrompayload
 
-[25]: #extracttext
+[25]: #parameters-10
 
-[26]: #parameters-9
+[26]: #extractslackparams
 
-[27]: #extracttriggerid
+[27]: #parameters-11
 
-[28]: #parameters-10
+[28]: #extracttext
 
-[29]: #payloadformatter
+[29]: #parameters-12
 
-[30]: #_preprocessslackpayload
+[30]: #extracttriggerid
 
-[31]: #parameters-11
+[31]: #parameters-13
 
-[32]: #formatpayload
+[32]: #payloadformatter
 
-[33]: #parameters-12
+[33]: #_preprocessslackpayload
 
-[34]: #parse
+[34]: #parameters-14
 
-[35]: #parameters-13
+[35]: #formatpayload
 
-[36]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/assignParams.js#L11-L17 "Source code on GitHub"
+[36]: #parameters-15
 
-[37]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[37]: #parse
 
-[38]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+[38]: #parameters-16
 
-[39]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/ApiAppId.js#L10-L61 "Source code on GitHub"
+[39]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/assignParams.js#L11-L17 "Source code on GitHub"
 
-[40]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Authenticator.js#L12-L108 "Source code on GitHub"
+[40]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[41]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Authenticator.js#L24-L36 "Source code on GitHub"
+[41]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[42]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
+[42]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/ApiAppId.js#L19-L68 "Source code on GitHub"
 
-[43]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Authenticator.js#L48-L60 "Source code on GitHub"
+[43]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[44]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Authenticator.js#L71-L84 "Source code on GitHub"
+[44]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Authenticator.js#L12-L106 "Source code on GitHub"
 
-[45]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Authenticator.js#L95-L106 "Source code on GitHub"
+[45]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Authenticator.js#L23-L35 "Source code on GitHub"
 
-[46]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Base.js#L11-L161 "Source code on GitHub"
+[46]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-[47]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Base.js#L37-L60 "Source code on GitHub"
+[47]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Authenticator.js#L47-L59 "Source code on GitHub"
 
-[48]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Channel.js#L19-L63 "Source code on GitHub"
+[48]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Authenticator.js#L70-L83 "Source code on GitHub"
 
-[49]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[49]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Authenticator.js#L94-L105 "Source code on GitHub"
 
-[50]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/Signature.js#L13-L72 "Source code on GitHub"
+[50]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Base.js#L17-L162 "Source code on GitHub"
 
-[51]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/authentication/User.js#L11-L81 "Source code on GitHub"
+[51]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Base.js#L38-L61 "Source code on GitHub"
 
-[52]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/extractResponseUrlFromBody.js#L11-L16 "Source code on GitHub"
+[52]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Channel.js#L19-L59 "Source code on GitHub"
 
-[53]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/extractResponseUrlFromPayload.js#L10-L15 "Source code on GitHub"
+[53]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/Signature.js#L15-L73 "Source code on GitHub"
 
-[54]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/extractSlackParams.js#L11-L30 "Source code on GitHub"
+[54]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/authentication/User.js#L19-L78 "Source code on GitHub"
 
-[55]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/extractText.js#L11-L16 "Source code on GitHub"
+[55]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/extractResponseUrlFromBody.js#L11-L16 "Source code on GitHub"
 
-[56]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/extractTriggerId.js#L12-L18 "Source code on GitHub"
+[56]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/extractResponseUrlFromPayload.js#L10-L15 "Source code on GitHub"
 
-[57]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/formatPayload.js#L5-L62 "Source code on GitHub"
+[57]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/extractSlackParams.js#L11-L30 "Source code on GitHub"
 
-[58]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/formatPayload.js#L16-L41 "Source code on GitHub"
+[58]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/extractText.js#L11-L16 "Source code on GitHub"
 
-[59]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[59]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/extractTriggerId.js#L12-L18 "Source code on GitHub"
 
-[60]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[60]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/formatPayload.js#L5-L61 "Source code on GitHub"
 
-[61]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+[61]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/formatPayload.js#L16-L41 "Source code on GitHub"
 
-[62]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/formatPayload.js#L50-L60 "Source code on GitHub"
+[62]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[63]: https://github.com/PLG-Works/slack-admin/blob/591e8e25dfa3e51e897a60254f9a9e1d083ed223/middlewares/parseApiParams.js#L21-L68 "Source code on GitHub"
+[63]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[64]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[65]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/formatPayload.js#L50-L60 "Source code on GitHub"
+
+[66]: https://github.com/PLG-Works/slack-admin/blob/afaf52f8c90054530f39fd64d559b5fa55bef943/middlewares/parseApiParams.js#L20-L67 "Source code on GitHub"
