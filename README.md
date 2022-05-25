@@ -59,15 +59,19 @@ const {
   extractTriggerId
 } = slackAdmin.middlewares;
 
-//  interactive-endpoint middlewares
-router.post(
-  '/interactive-endpoint',
+// common middlewares
+router.use(
   formatPayload,
   sanitizeBodyAndQuery,
   assignParams,
   extractSlackParams,
   validateSignature,
-  validateSlackUser,
+  validateSlackUser
+)
+
+//  interactive-endpoint middlewares
+router.post(
+  '/interactive-endpoint',
   sanitizeDynamicUrlParams,
   sanitizeHeaderParams,
   validateSlackApiAppId,
@@ -81,12 +85,6 @@ router.post(
 
 // '/' command middlewares
 router.use(
-  formatPayload,
-  sanitizeBodyAndQuery,
-  assignParams,
-  extractSlackParams,
-  validateSignature,
-  validateSlackUser,
   validateSlackChannel,
   extractText,
   extractResponseUrlFromBody
