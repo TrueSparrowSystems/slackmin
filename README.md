@@ -19,7 +19,7 @@ npm install slackmin
 ```
 
 ## Initialize
-While using the package, create an object of Slackmin at one place (in a provider) and then use it accross the application.
+While using the package, create an object of Slackmin at one place (in a provider) and then use it across the application.
 ```node.js
 // slack admin provider's config
 const Slackmin = require('slackmin');
@@ -80,11 +80,9 @@ module.exports = slackAdmin;
 
 <br>
 
-For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/INDEX.md)
+For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slackmin/blob/master/INDEX.md)
 
 ## slackmin middleware usage
-
-For detailed guide of [middlewares](https://github.com/PLG-Works/slack-admin/blob/slack-admin-development/middlewares/middlewares.md)
 
 ```javascript
 const {
@@ -105,10 +103,107 @@ const {
   extractTriggerId
 } = slackAdmin.middlewares;
 ```
+### Slackmin Middlewares
+**1. formatPayload**
+
+`formatPayload` formats and preprocess the slack payload. Parse and regex replace processed links and user mention in slack payload. A slack payload is a JSON object that is used to define metadata about the message, such as where it should be published etc.
+<br>
+
+**2. sanitizeBodyAndQuery**
+
+`sanitizeBodyAndQuery` recursively sanitize request body and request query params.
+
+<br>
+
+**3. assignParams**
+
+`assignParams` assign params to request object, so it can be used in subsequent middlewares.
+
+<br>
+
+**4. sanitizeDynamicUrlParams**
+
+`sanitizeDynamicUrlParams` recursively sanitize dynamic params in URL.
+
+<br>
+
+**5. sanitizeHeaderParams**
+
+`sanitizeHeaderParams` recursively sanitize request headers.
+
+<br>
+
+
+**6. extractSlackParams**
+
+`extractSlackParams` extract slack_id, team_domain and api_app_id from slack request payload in case of interactive endpoints.
+It extract slack_id, team_domain, channel_id and response_url from request body in case of slash commands. 
+
+<br>
+
+**7. validateSignature**
+
+`validateSignature` verify requests from slack by verifying signatures using signing secret.
+The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
+                    
+<br>
+
+**8. validateSlackUser**
+
+`validateSlackUser`perform slack user authentication. It verify if user is present in `whitelistedUsers`. 
+
+<br>
+
+**9. validateSlackChannel**
+
+`validateSlackChannel`perform slack channel authentication. It validates if channel is listed in  `whiteListedChannels`. 
+ 
+<br>
+
+**10. validateSlackApiAppId**
+
+`validateSlackApiAppId` validate slack app Id. It only allows request from provided apps in `appConfigs`.
+
+<br>
+
+**11. extractResponseUrlFromPayload**
+
+`extractResponseUrlFromPayload` extract response_url from interactive routes. This middleware should only be used with interactive endpoints.
+
+<br>
+
+**12. extractText**
+
+`extractText` extract text from slash command's request body. This middleware should only be used with slash commands.
+
+<br>
+
+**13. extractResponseUrlFromBody**
+
+`extractResponseUrlFromBody` extract response_url from slash command's request body. This middleware should only be used with slash commands
+
+<br>
+
+**14. parseApiParameters**
+
+`parseApiParameters` parse and get block_actions payload when a user interacts with block component.
+Parse and get view_submission payload when users interact with modal views. This middleware should only be used with interactive endpoints. 
+
+<br>
+
+**15. extractTriggerId**
+
+`extractTriggerId` extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
+ This middleware will not fetch triggerId for view_submission type interactions.
+ 
+<br>
+
+For detailed guide of [middlewares](https://github.com/PLG-Works/slackmin/blob/master/middlewares/middlewares.md)
 
 ### Common Middlewares
 ```javascript
 // common middlewares
+// This set of middlewares can be used with slash commands as well as with interactive routes.
 router.use(
   formatPayload,
   sanitizeBodyAndQuery,
@@ -128,6 +223,8 @@ router.use(
 ### Interactive Middlewares
 ```javascript
 //  interactive-endpoint middlewares
+// This set of middlewares can be used with interactive routes.
+
 router.post(
   '/interactive-endpoint',
   sanitizeDynamicUrlParams,
@@ -155,6 +252,8 @@ router.post(
 ### Slash Command Middlewares
 ```javascript
 // '/' command middlewares
+// This set of middlewares can be used with Slash commands.
+
 router.use(
   validateSlackChannel,
   extractText,
@@ -246,4 +345,4 @@ modal.addTextbox(
 [Preview for modal](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22type%22:%22modal%22,%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Input%20Email%22,%22emoji%22:true%7D,%22submit%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22,%22emoji%22:true%7D,%22close%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Close%22,%22emoji%22:true%7D,%22blocks%22:%5B%7B%22type%22:%22input%22,%22element%22:%7B%22type%22:%22plain_text_input%22,%22multiline%22:false%7D,%22label%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Your%20Email%22%7D,%22optional%22:false%7D%5D%7D)
 
 
-You can check out Interactive Components in detail [here](https://github.com/PLG-Works/slackmin/blob/slack-admin-development/lib/slack/InteractiveComponents.md)
+You can check out Interactive Components in detail [here](https://github.com/PLG-Works/slackmin/blob/master/lib/slack/InteractiveComponents.md)
