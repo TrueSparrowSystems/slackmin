@@ -78,10 +78,6 @@ module.exports = slackAdmin;
 
 `whitelistedUsers` is an array consisting of whitelisted user ids. User id is your member id on slack. Whitelisted users are channel admins that can execute commands in whitelisted channels.
 
-<br>
-
-For more detailed info on exposed functionalities check [here](https://github.com/PLG-Works/slackmin/blob/master/INDEX.md)
-
 ## slackmin middleware usage
 
 ```javascript
@@ -195,10 +191,6 @@ Parse and get view_submission payload when users interact with modal views. This
 
 `extractTriggerId` extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
  This middleware will not fetch triggerId for view_submission type interactions.
- 
-<br>
-
-For detailed guide of [middlewares](https://github.com/PLG-Works/slackmin/blob/master/middlewares/middlewares.md)
 
 ### Common Middlewares
 ```javascript
@@ -343,6 +335,3 @@ modal.addTextbox(
 )
 ```
 [Preview for modal](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22type%22:%22modal%22,%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Input%20Email%22,%22emoji%22:true%7D,%22submit%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22,%22emoji%22:true%7D,%22close%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Close%22,%22emoji%22:true%7D,%22blocks%22:%5B%7B%22type%22:%22input%22,%22element%22:%7B%22type%22:%22plain_text_input%22,%22multiline%22:false%7D,%22label%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Your%20Email%22%7D,%22optional%22:false%7D%5D%7D)
-
-
-You can check out Interactive Components in detail [here](https://github.com/PLG-Works/slackmin/blob/master/lib/slack/InteractiveComponents.md)
