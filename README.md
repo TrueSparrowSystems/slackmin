@@ -15,14 +15,17 @@ One use case is to develop admin functionality over slack.
 ## Installation
 
 ```sh
-npm install slackmin
+npm install @plgworks/slackmin
 ```
 
 ## Initialize
-While using the package, create an object of Slackmin at one place (in a provider) and then use it across the application.
+While using the package, create an object of Slackmin at one place (in a provider file) and then use it across the application.
+Example snippet for the provider file is given below.
+
 ```node.js
-// slack admin provider's config
-const Slackmin = require('slackmin');
+// slack admin provider file
+
+const Slackmin = require('@plgworks/slackmin');
 
 const appConfigs = [
   {
@@ -48,7 +51,7 @@ const slackAdmin = new Slackmin(
 module.exports = slackAdmin;
 ```
 
-### Slackmin Params
+### Slackmin Initialization Params
 **1. appConfigs**
 
 
