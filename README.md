@@ -1,16 +1,18 @@
 # Slackmin
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps you in easy integration with slack to use slash commands, interactive endpoints, send alert messages, open modals. 
+Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/slash-commands), send messages, use modals.
 One use case is to develop admin functionality over slack.
 
 ## Why Slackmin?
-- Security features involving signature verification, channel authentication, user authentication, team validation, domain validation 
-    are taken care of by the exposed middlewares.
-- The view submission parameters are extracted into key value pairs for ease of use.
-- Message and Modal wrappers help in easy writing of messages and opening of modals.
-- Support of interacting with multiple slack apps comes built-in with this package.
-  This overcomes the limitation of maximum number of 25 slash commands supported by a slack app.
+- Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, domain validation are taken care of by the exposed middlewares.
+- The [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) is extracted into key value pairs for ease of use.
+- Message wrapper helps in easy formatting of messages.
+- Modal wrapper utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals)
+- Support of interacting with multiple slack apps comes built-in with this package. This allows you to overcome the limitation of maximum number of 25 slash commands supported by a slack app.
+
+## Prerequisites
+Express.js routing knowledge is required.
 
 ## Installation
 
@@ -19,11 +21,10 @@ npm install @plgworks/slackmin
 ```
 
 ## Initialize
-While using the package, create an object of Slackmin at one place (in a provider file) and then use it across the application.
+While using the package, create a singleton object of Slackmin and then use it across the application.
 Example snippet for the provider file is given below.
 
 ```node.js
-// slack admin provider file
 
 const Slackmin = require('@plgworks/slackmin');
 
