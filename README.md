@@ -342,7 +342,7 @@ slackmin Message wrapper allows us to create and format the message alert interf
   - Description: Adds type `"section"` block with array of fields type `"mrkdwn"`
 - `addButton`
   - Parameters: labelText (string), buttonText (string), value (string)
-  - Description: Adds type `"section"` block with type `"button"`. Comes with a `labelText`. `value` is a string that specifies the click handler.
+  - Description: Adds type `"section"` block with type `"button"`. Comes with an option to add `label`. `value` is a string that specifies the click handler.
 - `addButtonElements`
   - Parameters: buttonDetails (array of objects with keys - buttonText, value)
   - Description: Adds type `"action"` block with array of button elements. Each button element comes with a confirmation popup.
@@ -454,6 +454,44 @@ const message = new slackmin.interactiveElements.Message();
 
 ### Modal Wrapper
 slackmin Modal wrapper allows us to add various blocks in a popup.
+
+**Methods**
+
+- `addSubmitAndCancel`
+  - Parameters: submitText (string), cancelText (string)
+  - Description: Allows to change text for the submit and close button in the modal
+- `addPlainTextSection`
+  - Parameters: text (string)
+  - Description: Adds type `"section"` block with text type `"plain_text"`
+- `addMarkdownTextContext`
+  - Parameters: text (string)
+  - Description: Adds type `"context"` block with text type `"mrkdwn"`
+- `addDivider`
+  - Parameters: nil
+  - Description: Adds type `"divider"` block.
+- `addTextbox`
+  - Parameters: labelText (string), multiline (boolean), isOptional (boolean)
+  - Description: Adds type `"input"` block having multiline and required option
+- `addCheckBoxes`
+  - Parameters: labelText (string), optionsArray (object with keys text, value)
+  - Description: Adds type `"input"` block with element type `"checkboxes"`. Comes with an option to add `label`. `text` is the checkbox label text. `value` is a string that specifies the value of the option.
+- `addRadioButtons`
+  - Parameters: labelText (string), optionsArray (object with keys text, value), initialOption (object)
+  - Description: Adds type `"input"` block with element type `"radio_buttons"`. Comes with an option to add `label`. `text` is the radio button label text. `value` is a string that specifies the value of the option. You can set `initial_option` in the element for selecting radio option by default.
+- `addParamsMeta`
+  - Parameters: paramsMeta (array of string)
+  - Description: To specify parameter names for the subsequent textboxes.
+- `addHiddenParamsMeta`
+  - Parameters: hiddenParamsMeta (object)
+  - Description: To pass on internal parameters
+- `addAction`
+  - Parameters: actionName (string)
+  - Description: You can provide the api route to be executed here.
+- `open` 
+  - Parameters: triggerId (string)
+  - Description: utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts#creating-modals) to open modal view. It requires trigger_id obtained from interaction payload. Refer [here](https://api.slack.com/surfaces/modals/using) for more on modals.
+
+
 ```javascript
 // appId is required to validate signature
 // text here is modal's title text
