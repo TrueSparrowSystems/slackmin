@@ -371,6 +371,61 @@ message.addButtonElements(
 ```
 [Preview for message.addButtonElements](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22actions%22,%22elements%22:%5B%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%201%22%7D,%22value%22:%22click_me_123%22,%22action_id%22:%22actionId-0%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%201%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D,%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%202%22%7D,%22value%22:%22click_me_1234%22,%22action_id%22:%22actionId-1%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%202%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D%5D%7D%5D%7D)
 
+
+#### Message Wrapper Example 
+
+```javascript
+const message = new slackmin.interactiveElements.Message();
+const userId = 100000;
+const userInfo = {
+      id: userId,
+      name: 'Shraddha',
+      username: 'Shraddha',
+      email: 's@gmail.com',
+      phoneNumber: '9067675645'
+    };
+
+const  currentAdmin = {
+      id: 1,
+      name: 'Dj'
+    };
+
+   const actionText = 'Get *user info* for user ' + userId;
+       message.addCustomHeader(`*ADMIN:* ${currentAdmin.name} - *ACTION:* ${actionText}`);
+   
+       const texts = [
+         '*User Id*:\n' + userInfo.id,
+         '*Name*:\n' + userInfo.name,
+         '*Username*:\n' + userInfo.username,
+         '*Email*:\n' + userInfo.email,
+         '*Phone Number* \n' + userInfo.phoneNumber
+       ];
+   
+       message.addSectionWithTextFields(texts);
+
+
+    const actionButtons = [];
+
+    const updatePhoneNumber = {
+      buttonText: 'Update Phone',
+      confirmText: 'Do you want to update phone number of user: *' + userInfo.name + '*?',
+      value:
+        '{"action":"phoneNumberUpdateModal","hiddenParams":{"text":"' +
+        userInfo.id +
+        '", "original_response_url":"' +
+        responseUrl +
+        '"}}'
+    };
+
+    actionButtons.push(updatePhoneNumber);
+
+    message.addButtonElements(actionButtons);
+
+    message.sendUsingResponseUrl(responseUrl);
+``` 
+#### Demo
+
+
 ### Modal Wrapper
 slackmin Modal wrapper allows us to add various blocks in a popup.
 ```javascript
