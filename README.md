@@ -448,8 +448,7 @@ actionButtons.push(updatePhoneNumber);
 message.addButtonElements(actionButtons);
 message.sendUsingResponseUrl(responseUrl);
 ``` 
-
-![Message wrapper usage Demo](https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png)
+<img height="250" alt="Message wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png" />
 
 ### Modal Wrapper
 slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup.
@@ -554,8 +553,7 @@ modal.addSubmitAndCancel();
 
 return modal.open(triggerId);
 ```
-
-![Modal wrapper usage Demo](https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png)
+<img height="500" alt="Modal wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png" />
 
 # Contributors
 [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/), [Shraddha Falane](https://plgworks.com/blog/author/shraddha/), [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/), [Parv Saxena](https://plgworks.com/blog/author/parv/)
