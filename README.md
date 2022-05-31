@@ -423,7 +423,9 @@ const  currentAdmin = {
 
     message.sendUsingResponseUrl(responseUrl);
 ``` 
-#### Demo
+<br>
+
+![Message wrapper usage Demo](https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png)
 
 
 ### Modal Wrapper
