@@ -428,10 +428,10 @@ const texts = [
   '*Phone Number* \n' + userInfo.phoneNumber
  ];
 
- message.addSectionWithTextFields(texts);
+message.addSectionWithTextFields(texts);
 const actionButtons = [];
 
-// action in value specifies the next method call to be performed for interactive endpoint i.e call to phoneNumberUpdateModal
+// action in value specifies the next method call to be performed for interactive endpoint i.e call to phoneNumberUpdateModal opens the modal
 // hiddenParams are internal params that need to be forwarded
 const updatePhoneNumber = {
       buttonText: 'Update Phone',
@@ -485,7 +485,7 @@ slackmin Modal wrapper allows us to add various [block elements](https://api.sla
   - Description: To pass on internal parameters
 - `addAction`
   - Parameters: actionName (string)
-  - Description: You can provide the api route to be executed here.
+  - Description: You can provide the next action method/route to be executed on modal submit.
 - `open` 
   - Parameters: triggerId (string)
   - Description: utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts#creating-modals) to open modal view. It requires trigger_id obtained from interaction payload. Refer [here](https://api.slack.com/surfaces/modals/using) for more on modals.
