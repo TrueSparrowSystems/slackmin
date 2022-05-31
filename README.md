@@ -4,8 +4,15 @@
 Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/slash-commands), format and send messages, and design and use modals.
 One use case is to develop admin functionality over slack.
 
-# Demo
-![ezgif-3-695499e23a](https://user-images.githubusercontent.com/30872426/171111658-986a456d-19e1-4cd2-b234-4a9b40710e10.gif)
+## Demo
+
+#### **Slash Command**
+
+![Slash Command Demo](https://user-images.githubusercontent.com/30872426/171111658-986a456d-19e1-4cd2-b234-4a9b40710e10.gif)
+
+#### **Interactive Component**
+
+![Interactive Component Demo](https://user-images.githubusercontent.com/30872426/171114279-5d0f90bd-09b0-48cd-b7e1-f385dc4c0bfb.gif)
 
 ## Why Slackmin?
 - Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, domain validation are taken care of by the exposed middlewares.
