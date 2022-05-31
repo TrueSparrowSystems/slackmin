@@ -4,6 +4,9 @@
 Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/slash-commands), format and send messages, and design and use modals.
 One use case is to develop admin functionality over slack.
 
+# Demo
+![ezgif-3-695499e23a](https://user-images.githubusercontent.com/30872426/171111658-986a456d-19e1-4cd2-b234-4a9b40710e10.gif)
+
 ## Why Slackmin?
 - Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, domain validation are taken care of by the exposed middlewares.
 - The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are extracted into key value pairs for ease of use.
@@ -90,119 +93,7 @@ module.exports = slackmin;
 
 `whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels.
 
-## slackmin middleware usage
-
-```javascript
-const {
-  formatPayload,
-  sanitizeBodyAndQuery,
-  assignParams,
-  sanitizeDynamicUrlParams,
-  sanitizeHeaderParams,
-  extractSlackParams,
-  validateSignature,
-  validateSlackUser,
-  validateSlackChannel,
-  validateSlackApiAppId,
-  extractResponseUrlFromPayload,
-  extractText,
-  extractResponseUrlFromBody,
-  parseApiParameters,
-  extractTriggerId
-} = slackmin.middlewares;
-```
-### Slackmin Middlewares
-**1. formatPayload**
-
-`formatPayload` formats and preprocess the slack payload. Parse and regex replace processed links and user mention in slack payload. A slack payload is a JSON object that is used to define metadata about the message, such as where it should be published etc.
-<br>
-
-**2. sanitizeBodyAndQuery**
-
-`sanitizeBodyAndQuery` recursively sanitize request body and request query params.
-
-<br>
-
-**3. assignParams**
-
-`assignParams` assign params to request object, so it can be used in subsequent middlewares.
-
-<br>
-
-**4. sanitizeDynamicUrlParams**
-
-`sanitizeDynamicUrlParams` recursively sanitize dynamic params in URL.
-
-<br>
-
-**5. sanitizeHeaderParams**
-
-`sanitizeHeaderParams` recursively sanitize request headers.
-
-<br>
-
-
-**6. extractSlackParams**
-
-`extractSlackParams` extract slack_id, team_domain and api_app_id from slack request payload in case of interactive endpoints.
-It extract slack_id, team_domain, channel_id and response_url from request body in case of slash commands. 
-
-<br>
-
-**7. validateSignature**
-
-`validateSignature` verify requests from slack by verifying signatures using signing secret.
-The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
-                    
-<br>
-
-**8. validateSlackUser**
-
-`validateSlackUser`perform slack user authentication. It verify if user is present in `whitelistedUsers`. 
-
-<br>
-
-**9. validateSlackChannel**
-
-`validateSlackChannel`perform slack channel authentication. It validates if channel is listed in  `whiteListedChannels`. 
- 
-<br>
-
-**10. validateSlackApiAppId**
-
-`validateSlackApiAppId` validate slack app Id. It only allows request from provided apps in `appConfigs`.
-
-<br>
-
-**11. extractResponseUrlFromPayload**
-
-`extractResponseUrlFromPayload` extract response_url from interactive routes. This middleware should only be used with interactive endpoints.
-
-<br>
-
-**12. extractText**
-
-`extractText` extract text from slash command's request body. This middleware should only be used with slash commands.
-
-<br>
-
-**13. extractResponseUrlFromBody**
-
-`extractResponseUrlFromBody` extract response_url from slash command's request body. This middleware should only be used with slash commands
-
-<br>
-
-**14. parseApiParameters**
-
-`parseApiParameters` parse and get block_actions payload when a user interacts with block component.
-Parse and get view_submission payload when users interact with modal views. This middleware should only be used with interactive endpoints. 
-
-<br>
-
-**15. extractTriggerId**
-
-`extractTriggerId` extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
- This middleware will not fetch triggerId for view_submission type interactions.
+## Slackmin Middleware usage
 
 ### Common Middlewares
 ```javascript
@@ -305,6 +196,123 @@ router.use(
   slackmin.slashCommandMiddlewares
 )
 ```
+
+### Slackmin Middlewares
+
+Following are the middlewares that are exposed individually from slackmin.
+
+```javascript
+const {
+  formatPayload,
+  sanitizeBodyAndQuery,
+  assignParams,
+  sanitizeDynamicUrlParams,
+  sanitizeHeaderParams,
+  extractSlackParams,
+  validateSignature,
+  validateSlackUser,
+  validateSlackChannel,
+  validateSlackApiAppId,
+  extractResponseUrlFromPayload,
+  extractText,
+  extractResponseUrlFromBody,
+  parseApiParameters,
+  extractTriggerId
+} = slackmin.middlewares;
+```
+
+**1. formatPayload**
+
+`formatPayload` formats and preprocess the slack payload. Parse and regex replace processed links and user mention in slack payload. A slack payload is a JSON object that is used to define metadata about the message, such as where it should be published etc.
+<br>
+
+**2. sanitizeBodyAndQuery**
+
+`sanitizeBodyAndQuery` recursively sanitize request body and request query params.
+
+<br>
+
+**3. assignParams**
+
+`assignParams` assign params to request object, so it can be used in subsequent middlewares.
+
+<br>
+
+**4. sanitizeDynamicUrlParams**
+
+`sanitizeDynamicUrlParams` recursively sanitize dynamic params in URL.
+
+<br>
+
+**5. sanitizeHeaderParams**
+
+`sanitizeHeaderParams` recursively sanitize request headers.
+
+<br>
+
+
+**6. extractSlackParams**
+
+`extractSlackParams` extract slack_id, team_domain and api_app_id from slack request payload in case of interactive endpoints.
+It extract slack_id, team_domain, channel_id and response_url from request body in case of slash commands. 
+
+<br>
+
+**7. validateSignature**
+
+`validateSignature` verify requests from slack by verifying signatures using signing secret.
+The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
+                    
+<br>
+
+**8. validateSlackUser**
+
+`validateSlackUser`perform slack user authentication. It verify if user is present in `whitelistedUsers`. 
+
+<br>
+
+**9. validateSlackChannel**
+
+`validateSlackChannel`perform slack channel authentication. It validates if channel is listed in  `whiteListedChannels`. 
+ 
+<br>
+
+**10. validateSlackApiAppId**
+
+`validateSlackApiAppId` validate slack app Id. It only allows request from provided apps in `appConfigs`.
+
+<br>
+
+**11. extractResponseUrlFromPayload**
+
+`extractResponseUrlFromPayload` extract response_url from interactive routes. This middleware should only be used with interactive endpoints.
+
+<br>
+
+**12. extractText**
+
+`extractText` extract text from slash command's request body. This middleware should only be used with slash commands.
+
+<br>
+
+**13. extractResponseUrlFromBody**
+
+`extractResponseUrlFromBody` extract response_url from slash command's request body. This middleware should only be used with slash commands
+
+<br>
+
+**14. parseApiParameters**
+
+`parseApiParameters` parse and get block_actions payload when a user interacts with block component.
+Parse and get view_submission payload when users interact with modal views. This middleware should only be used with interactive endpoints. 
+
+<br>
+
+**15. extractTriggerId**
+
+`extractTriggerId` extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
+ This middleware will not fetch triggerId for view_submission type interactions.
+
 
 ## Interactive Components
 
