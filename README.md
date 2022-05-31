@@ -109,6 +109,12 @@ const router = express.Router();
 
 // common middlewares
 // This set of middlewares can be used with slash commands as well as with interactive routes.
+router.use(
+  slackmin.commonMiddlewares
+);
+
+// OR
+
 const {
   formatPayload,
   sanitizeBodyAndQuery,
@@ -129,19 +135,24 @@ router.use(
   validateSlackUser
 );
 
-// OR 
-
-router.use(
-  slackmin.commonMiddlewares
-);
 ```
 
-### Interactive Middlewares
+### Interactive Component Middlewares
 ```javascript
 const express = require('express');
 const router = express.Router();
+
 //  interactive-endpoint middlewares
 // This set of middlewares can be used with interactive routes.
+router.post(
+  '/interactive-endpoint',
+  slackmin.interactiveEndpointMiddlewares,
+  async function(req, res, next) {
+    // your business logic
+  }
+)
+
+// OR
 
 const {
   sanitizeDynamicUrlParams,
@@ -166,15 +177,6 @@ router.post(
   }
 );
 
-//OR
-
-router.post(
-  '/interactive-endpoint',
-  slackmin.interactiveEndpointMiddlewares,
-  async function(req, res, next) {
-    // your business logic
-  }
-)
 ```
 
 ### Slash Command Middlewares
@@ -184,6 +186,12 @@ const router = express.Router();
 
 // slash ('/') command middlewares
 // This set of middlewares can be used with Slash commands.
+router.use(
+  slackmin.slashCommandMiddlewares
+)
+
+//OR
+
 const {
   validateSlackChannel,
   extractText,
@@ -196,12 +204,6 @@ router.use(
   extractText,
   extractResponseUrlFromBody
 );
-
-//OR
-
-router.use(
-  slackmin.slashCommandMiddlewares
-)
 ```
 
 ### Slackmin Middlewares
