@@ -525,9 +525,9 @@ const apiAppId = 'A03GGU0AKKK'; // slack_app_id
 const modal = new SlackAdminProvider.interactiveElements.Modal(apiAppId, 'Give your vote');
 
 // Mandatory parameters when creating a new modal. Add your next action route here
-modal.addAction('');
+modal.addAction('submitForm');
 
-// These are the parameter names for the subsequent text-boxes.
+// These are the parameter names for the subsequent textboxes.
 const paramsMeta = ['name', 'member_id', 'designation', 'projects'];
 
 modal.addParamsMeta(paramsMeta);
