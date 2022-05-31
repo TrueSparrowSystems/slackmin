@@ -1,18 +1,26 @@
 # Slackmin
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/slash-commands), send messages, use modals.
+Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/slash-commands), format and send messages, and design and use modals.
 One use case is to develop admin functionality over slack.
 
 ## Why Slackmin?
 - Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, domain validation are taken care of by the exposed middlewares.
-- The [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) is extracted into key value pairs for ease of use.
+- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are extracted into key value pairs for ease of use.
 - Message wrapper helps in easy formatting of messages.
-- Modal wrapper utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals)
+- Modal wrapper utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
 - Support of interacting with multiple slack apps comes built-in with this package. This allows you to overcome the limitation of maximum number of 25 slash commands supported by a slack app.
 
 ## Prerequisites
 Express.js routing knowledge is required.
+
+## Slack app setup
+First, we need to setup slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
+
+- Create a slack app. Visit https://api.slack.com/apps.
+- Configure request URL for interactive components. Refer [here](https://api.slack.com/interactivity/handling).
+- Configure slash commands. Refer [here](https://api.slack.com/interactivity/slash-commands).
+- Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [here](https://api.slack.com/authentication/token-types).
 
 ## Installation
 
@@ -22,7 +30,7 @@ npm install @plgworks/slackmin
 
 ## Initialize
 While using the package, create a singleton object of Slackmin and then use it across the application.
-Example snippet for the provider file is given below.
+Example snippet for the Slackmin usage is given below.
 
 ```node.js
 
@@ -34,13 +42,13 @@ const appConfigs = [
     secret: '<slack_signing_secret>',
     slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
   }
-]
+];
 
-const whiteListedChannels = { '<slack_channel_id>': '1' }
+const whiteListedChannels = { '<slack_channel_id>': '1' };
 
-const slackDomain = '<your_slack_domain>'
+const slackDomain = '<your_slack_domain>';
 
-const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>']
+const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>'];
 
 const slackAdmin = new Slackmin(
   appConfigs,
@@ -56,18 +64,18 @@ module.exports = slackAdmin;
 **1. appConfigs**
 
 
-`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config in an object consisting of id, secret and token.
+`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config in an object consists of id, secret and token.
 
-- **id**: You need to provide your slack app id here. To create a slack app visit https://api.slack.com/apps.
-- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature.
-- **slack_bot_user_oauth_token**: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack. In slackmin slack bot sends the message on the slack channel.
+- **id**: You need to provide your slack app id here. Follow the slack app setup given above.
+- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack).
+- **slack_bot_user_oauth_token**: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack.
 
 <br>
 
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is a channel id map consisting of whitelisted channels to execute the slash commands in. Slash commands will execute only in the whitelisted channels.
+`whiteListedChannels` is a channel id map which allows whitelisted users to execute slack commands in the whitelisted channel.
 
 <br>
 
@@ -80,7 +88,7 @@ module.exports = slackAdmin;
 
 **4. whitelistedUsers**
 
-`whitelistedUsers` is an array consisting of whitelisted user ids. User id is your member id on slack. Whitelisted users are channel admins that can execute commands in whitelisted channels.
+`whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins that can execute commands in whitelisted channels.
 
 ## slackmin middleware usage
 
