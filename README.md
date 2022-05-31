@@ -332,6 +332,33 @@ You can find Block Kit reference [here](https://api.slack.com/reference/block-ki
 
 slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various blocks.
 
+**Methods**
+
+- `addSection`
+  - Parameters: text (string)
+  - Description: Adds type `"section"` block with text type `"mrkdwn"`
+- `addSectionWithTextFields`
+  - Parameters: texts (array of strings)
+  - Description: Adds type `"section"` block with array of fields type `"mrkdwn"`
+- `addButton`
+  - Parameters: labelText (string), buttonText (string), value (string)
+  - Description: Adds type `"section"` block with type `"button"`. Comes with a `labelText`. `value` is a string that specifies the click handler.
+- `addButtonElements`
+  - Parameters: buttonDetails (array of objects with keys - buttonText, value)
+  - Description: Adds type `"action"` block with array of button elements. Each button element comes with a confirmation popup.
+- `addDivider`
+  - Parameters: nil
+  - Description: Adds type `"divider"` block. 
+- `addCustomHeader`
+  - Parameters: nil
+  - Description: Adds a divider and a section block
+- `sendUsingResponseUrl`
+  - Parameters: responseUrl (string), isTemporary (boolean)
+  - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). response_type could be [in_channel or ephemeral](https://api.slack.com/interactivity/handling#publishing_ephemeral_response).
+- `sendMessageToChannel`
+  - Parameters: postMessageParams (object with keys - channel_id, text)
+  - Description: utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel for which the channel id is specified.
+
 ```javascript
 const message = new slackmin.interactiveElements.Message();
 ```
