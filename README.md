@@ -50,21 +50,21 @@ const slackDomain = '<your_slack_domain>';
 
 const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>'];
 
-const slackAdmin = new Slackmin(
+const slackmin = new Slackmin(
   appConfigs,
   whiteListedChannels,
   slackDomain,
   whitelistedUsers
 );
 
-module.exports = slackAdmin;
+module.exports = slackmin;
 ```
 
 ### Slackmin Initialization Params
 **1. appConfigs**
 
 
-`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config in an object consists of id, secret and token.
+`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config consists of id, secret and token.
 
 - **id**: You need to provide your slack app id here. Follow the slack app setup given above.
 - **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack).
@@ -88,7 +88,7 @@ module.exports = slackAdmin;
 
 **4. whitelistedUsers**
 
-`whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins that can execute commands in whitelisted channels.
+`whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels.
 
 ## slackmin middleware usage
 
@@ -109,7 +109,7 @@ const {
   extractResponseUrlFromBody,
   parseApiParameters,
   extractTriggerId
-} = slackAdmin.middlewares;
+} = slackmin.middlewares;
 ```
 ### Slackmin Middlewares
 **1. formatPayload**
@@ -206,8 +206,22 @@ Parse and get view_submission payload when users interact with modal views. This
 
 ### Common Middlewares
 ```javascript
+const express = require('express');
+const router = express.Router();
+
 // common middlewares
 // This set of middlewares can be used with slash commands as well as with interactive routes.
+const {
+  formatPayload,
+  sanitizeBodyAndQuery,
+  assignParams,
+  extractSlackParams,
+  validateSignature,
+  validateSlackUser
+} = slackmin.middlewares;
+
+// NOTE: should be used in the same sequence as given if trying to use individually.
+// Should be called before slash commands routes and interactive routes.
 router.use(
   formatPayload,
   sanitizeBodyAndQuery,
@@ -215,7 +229,7 @@ router.use(
   extractSlackParams,
   validateSignature,
   validateSlackUser
-)
+);
 
 // OR 
 
@@ -226,9 +240,21 @@ router.use(
 
 ### Interactive Middlewares
 ```javascript
+const express = require('express');
+const router = express.Router();
 //  interactive-endpoint middlewares
 // This set of middlewares can be used with interactive routes.
 
+const {
+  sanitizeDynamicUrlParams,
+  sanitizeHeaderParams,
+  validateSlackApiAppId,
+  extractTriggerId,
+  extractResponseUrlFromPayload,
+  parseApiParameters
+} = slackmin.middlewares;
+
+// NOTE: should be used in the same sequence as given if trying to use individually.
 router.post(
   '/interactive-endpoint',
   sanitizeDynamicUrlParams,
@@ -246,7 +272,7 @@ router.post(
 
 router.post(
   '/interactive-endpoint',
-  slackAdmin.interactiveEndpointMiddlewares,
+  slackmin.interactiveEndpointMiddlewares,
   async function(req, res, next) {
     // your business logic
   }
@@ -255,9 +281,18 @@ router.post(
 
 ### Slash Command Middlewares
 ```javascript
-// '/' command middlewares
-// This set of middlewares can be used with Slash commands.
+const express = require('express');
+const router = express.Router();
 
+// slash ('/') command middlewares
+// This set of middlewares can be used with Slash commands.
+const {
+  validateSlackChannel,
+  extractText,
+  extractResponseUrlFromBody
+} = slackmin.middlewares;
+
+// NOTE: should be used in the same sequence as given if trying to use individually.
 router.use(
   validateSlackChannel,
   extractText,
@@ -267,7 +302,7 @@ router.use(
 //OR
 
 router.use(
-  slackAdmin.slashCommandMiddlewares
+  slackmin.slashCommandMiddlewares
 )
 ```
 
@@ -281,7 +316,7 @@ You can find Block Kit reference [here](https://api.slack.com/reference/block-ki
 slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various blocks.
 
 ```javascript
-const message = new slackAdmin.interactiveElements.Message();
+const message = new slackmin.interactiveElements.Message();
 ```
 
 For example,
@@ -325,7 +360,7 @@ slackmin Modal wrapper allows us to add various blocks in a popup.
 // appId is required to validate signature
 // text here is modal's title text
 const text = "Input Email"
-const modal = new slackAdmin.interactiveElements.Modal(appId, text);
+const modal = new slackmin.interactiveElements.Modal(appId, text);
 ```
 For example,
 <br>
