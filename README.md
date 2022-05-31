@@ -449,10 +449,8 @@ const message = new slackmin.interactiveElements.Message();
 
     message.sendUsingResponseUrl(responseUrl);
 ``` 
-<br>
-#### Demo
+
 ![Message wrapper usage Demo](https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png)
-<br>
 
 ### Modal Wrapper
 slackmin Modal wrapper allows us to add various blocks in a popup.
@@ -522,10 +520,8 @@ modal.addTextbox(
 
     return modal.open(triggerId);
 ```
-<br>
-#### Demo
-<br>
 
+![Modal wrapper usage Demo](https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png)
 
 # Contributors
 [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/), [Shraddha Falane](https://plgworks.com/blog/author/shraddha/), [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/), [Parv Saxena](https://plgworks.com/blog/author/parv/)
