@@ -403,34 +403,33 @@ message.addButtonElements(
 
 ```javascript
 const message = new slackmin.interactiveElements.Message();
-const userId = 100000;
-const userInfo = {
+    const userId = 100000,
+     userInfo = {
       id: userId,
       name: 'Shraddha',
       username: 'Shraddha',
       email: 's@gmail.com',
       phoneNumber: '9067675645'
-    };
+    },
 
-const  currentAdmin = {
+    currentAdmin = {
       id: 1,
       name: 'Dj'
     };
 
-   const actionText = 'Get *user info* for user ' + userId;
-       message.addCustomHeader(`*ADMIN:* ${currentAdmin.name} - *ACTION:* ${actionText}`);
-   
-       const texts = [
-         '*User Id*:\n' + userInfo.id,
-         '*Name*:\n' + userInfo.name,
-         '*Username*:\n' + userInfo.username,
-         '*Email*:\n' + userInfo.email,
-         '*Phone Number* \n' + userInfo.phoneNumber
-       ];
-   
-       message.addSectionWithTextFields(texts);
+    const actionText = 'Get *user info* for user ' + userId;
+    message.addCustomHeader(`*ADMIN:* ${currentAdmin.name} - *ACTION:* ${actionText}`);
 
+    const texts = [
+      '*User Id*:\n' + userInfo.id,
+      '*Name*:\n' + userInfo.name,
+      '*Username*:\n' + userInfo.username,
+      '*Email*:\n' + userInfo.email,
+      '*Phone Number* \n' + userInfo.phoneNumber
+    ];
 
+    message.addSectionWithTextFields(texts);
+    
     const actionButtons = [];
 
     const updatePhoneNumber = {
@@ -451,9 +450,9 @@ const  currentAdmin = {
     message.sendUsingResponseUrl(responseUrl);
 ``` 
 <br>
-
+#### Demo
 ![Message wrapper usage Demo](https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png)
-
+<br>
 
 ### Modal Wrapper
 slackmin Modal wrapper allows us to add various blocks in a popup.
@@ -483,6 +482,49 @@ modal.addTextbox(
 )
 ```
 [Preview for modal](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22type%22:%22modal%22,%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Input%20Email%22,%22emoji%22:true%7D,%22submit%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22,%22emoji%22:true%7D,%22close%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Close%22,%22emoji%22:true%7D,%22blocks%22:%5B%7B%22type%22:%22input%22,%22element%22:%7B%22type%22:%22plain_text_input%22,%22multiline%22:false%7D,%22label%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Your%20Email%22%7D,%22optional%22:false%7D%5D%7D)
+<br>
+
+#### Modal Wrapper Example
+
+```javascript
+    const apiAppId = 'A03GGU0AKKK'; // slack_app_id
+    const modal = new SlackAdminProvider.interactiveElements.Modal(apiAppId, 'Give your vote');
+
+    // Mandatory parameters when creating a new modal. Add your next action route here
+    modal.addAction('');
+
+    // These are the parameter names for the subsequent text-boxes.
+    const paramsMeta = ['name', 'Member Id'];
+
+    modal.addParamsMeta(paramsMeta);
+
+    modal.addTextbox('Name', false);
+
+    modal.addTextbox('Member Id', false);
+
+    modal.addRadioButtons(
+      'Designation',
+      [
+        { text: 'Front End Developer', value: 'FE' },
+        { text: 'Back End Developer', value: 'BE' },
+        { text: 'Quality Assurance Engineer', value: 'QA' }
+      ],
+      { text: 'Front End Developer', value: 'FE' }
+    );
+
+    modal.addCheckBoxes('Projects', [
+      { text: 'Fab', value: '1' },
+      { text: 'Moxie', value: '2' },
+      { text: 'Hem', value: '3' }
+    ]);
+
+    modal.addSubmitAndCancel();
+
+    return modal.open(triggerId);
+```
+<br>
+#### Demo
+<br>
 
 
 # Contributors
