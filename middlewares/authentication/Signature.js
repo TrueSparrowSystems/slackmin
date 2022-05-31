@@ -45,6 +45,7 @@ class ValidateSlackSignature extends SlackAuthenticationBase {
    *
    * Verifying requests from Slack: https://api.slack.com/authentication/verifying-requests-from-slack
    * Crypto.timingSafeEqual: https://nodejs.org/docs/latest-v6.x/api/crypto.html#crypto_crypto_timingsafeequal_a_b
+   * The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
    *
    * @param {number} requestTimestamp
    * @param {string} version

@@ -59,7 +59,7 @@ class ValidateSlackUser extends SlackAuthenticationBase {
   }
 
   /**
-   * Validate slack user.
+   * Validates if slack member id is present in 'whitelistedUsers' list.
    *
    * @sets oThis.adminData
    *

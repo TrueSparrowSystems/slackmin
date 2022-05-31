@@ -40,7 +40,7 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
   }
 
   /**
-   * Validate slack channel.
+   * Validates if slack channel is present in whitelisted_channel_ids list.
    *
    * @returns {Promise<never|result>}
    * @private
