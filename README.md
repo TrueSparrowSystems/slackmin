@@ -22,7 +22,7 @@ One use case is to develop admin functionality over slack.
 - Support of interacting with multiple slack apps comes built-in with this package. This allows you to overcome the limitation of maximum number of 25 slash commands supported by a slack app.
 
 ## Prerequisites
-Express.js routing knowledge is required.
+[Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
 
 ## Slack app setup
 First, we need to setup slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
@@ -31,6 +31,7 @@ First, we need to setup slack app as mentioned in [this guide](https://api.slack
 - Configure request URL for interactive components. Refer [here](https://api.slack.com/interactivity/handling).
 - Configure slash commands. Refer [here](https://api.slack.com/interactivity/slash-commands).
 - Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [here](https://api.slack.com/authentication/token-types).
+- Keep a note of your slack_app_id, slack_signing_secret and slack_bot_user_oauth_token. It will be require in further steps.
 
 ## Installation
 
@@ -85,7 +86,7 @@ module.exports = slackmin;
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is an channel ids array which allows whitelisted users to execute slack commands in the whitelisted channel.
+`whiteListedChannels` is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel.
 
 <br>
 
@@ -101,6 +102,10 @@ module.exports = slackmin;
 `whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels.
 
 ## Slackmin Middleware usage
+
+slackmin package provides the set of middlewares that can be used with slack slash commands as well as with interactive routes. The middleware layer formats and preprocesses the slack payload. 
+Sanitize unwanted HTML tags from parameters obtained in request body, query, headers. slackmin has build-in security, slack request verification, slack app id  validation, slack channel id validation and user authentication
+are performed by middleware layer.
 
 ### Common Middlewares
 ```javascript
