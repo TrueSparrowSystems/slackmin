@@ -32,7 +32,7 @@ First, we need to setup slack app as mentioned in [this guide](https://api.slack
 - Configure slash commands. Refer [here](https://api.slack.com/interactivity/slash-commands) for details.
 - Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [here](https://api.slack.com/scopes) for details.
 
-Keep a note of your slack_app_id, slack_signing_secret and slack_bot_user_oauth_token. It will be require in further steps.
+Keep a note of your slack App ID, slack Signing Secret and slack_bot_user_oauth_token. It will be required in further steps.
 
 ## Install NPM
 
@@ -86,7 +86,7 @@ module.exports = slackmin;
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Refer [here](https://help.socialintents.com/article/148-how-to-find-your-slack-team-id-and-slack-channel-id) to get slack channel id.
+`whiteListedChannels` is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Refer [here](https://help.socialintents.com/article/148-how-to-find-your-slack-team-id-and-slack-channel-id) to get slack channel id.
 
 <br>
 
@@ -104,8 +104,7 @@ module.exports = slackmin;
 ## Slackmin Middleware Usage
 
 Slackmin package provides the set of middlewares that can be used with slack slash commands as well as with interactive routes. The middleware layer formats and preprocesses the slack payload,
-sanitizes unwanted HTML tags from parameters obtained in request body, query and headers. Slackmin has built-in security, request verification, app id validation, channel id validation and user authentication
-are performed by middleware layer.
+sanitizes unwanted HTML tags from parameters obtained in request body, query and headers. Slackmin has built-in security, request verification, app id validation, channel id validation and slack member id validation are performed by middleware layer.
 
 Following are different middleware examples:
 
