@@ -54,7 +54,7 @@ const appConfigs = [
   }
 ];
 
-const whiteListedChannels = { '<slack_channel_id>': '1' };
+const whiteListedChannels = ['<slack_channel_id>', '<slack_channel_id>', '<slack_channel_id>'];
 
 const slackDomain = '<your_slack_domain>';
 
@@ -85,7 +85,7 @@ module.exports = slackmin;
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is a channel id map which allows whitelisted users to execute slack commands in the whitelisted channel.
+`whiteListedChannels` is an channel ids array which allows whitelisted users to execute slack commands in the whitelisted channel.
 
 <br>
 
