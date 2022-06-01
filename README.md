@@ -86,7 +86,7 @@ module.exports = slackmin;
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Refer [here](https://help.socialintents.com/article/148-how-to-find-your-slack-team-id-and-slack-channel-id) to get slack channel id.
+`whiteListedChannels` is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Right click on the channel you created in your Slack workspace. From the options select `Open channel details`. You will find the Channel ID at the bottom of the channel details popup.
 
 <br>
 
