@@ -2,7 +2,7 @@
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
 Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/slash-commands), format and send messages, design and use modals.
-One use case of slackmin is to implement admin functionality over slack.
+One use case of Slackmin is to implement admin functionality over slack.
 
 ## Demo
 
@@ -30,7 +30,7 @@ First, we need to setup slack app as mentioned in [this guide](https://api.slack
 - Create a slack app. Visit https://api.slack.com/apps.
 - Configure request URL for interactive components. Refer [here](https://api.slack.com/interactivity/handling) for details.
 - Configure slash commands. Refer [here](https://api.slack.com/interactivity/slash-commands) for details.
-- Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [here](https://api.slack.com/authentication/token-types) for details.
+- Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [here](https://api.slack.com/scopes) for details.
 
 Keep a note of your slack_app_id, slack_signing_secret and slack_bot_user_oauth_token. It will be require in further steps.
 
@@ -75,11 +75,10 @@ module.exports = slackmin;
 ### Slackmin Initialization Params
 **1. appConfigs**
 
-
-`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config consists of id, secret and token.
+`appConfigs` is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
 - **id**: You need to provide your slack app id here. Follow the slack app setup given above.
-- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack).
+- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack) for more details.
 - **slack_bot_user_oauth_token**: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack.
 
 <br>
@@ -87,7 +86,7 @@ module.exports = slackmin;
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel.
+`whiteListedChannels` is array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Refer [here](https://help.socialintents.com/article/148-how-to-find-your-slack-team-id-and-slack-channel-id) to get slack channel id .
 
 <br>
 
@@ -100,13 +99,15 @@ module.exports = slackmin;
 
 **4. whitelistedUsers**
 
-`whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels.
+`whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels. Refer [here](https://www.workast.com/help/articles/61000165203/) to get slack member id.
 
 ## Slackmin Middleware Usage
 
-slackmin package provides the set of middlewares that can be used with slack slash commands as well as with interactive routes. The middleware layer formats and preprocesses the slack payload.
-Sanitize unwanted HTML tags from parameters obtained in request body, query, headers. slackmin has build-in security, slack request verification, slack app id  validation, slack channel id validation and user authentication
+Slackmin package provides the set of middlewares that can be used with slack slash commands as well as with interactive routes. The middleware layer formats and preprocesses the slack payload,
+sanitizes unwanted HTML tags from parameters obtained in request body, query and headers. Slackmin has built-in security, request verification, app id validation, channel id validation and user authentication
 are performed by middleware layer.
+
+Following are different middleware examples:
 
 ### Common Middlewares
 ```javascript
@@ -212,9 +213,9 @@ router.use(
 );
 ```
 
-### Slackmin Middlewares
+### Slackmin Middlewares Description
 
-Following are the middlewares that are exposed individually from slackmin. If you plan to use all middlewares, please follow the sequence mentioned above.
+Following are the middlewares that are exposed individually from Slackmin. If you plan to use all middlewares, please follow the sequence mentioned above.
 
 ```javascript
 const {
@@ -332,12 +333,12 @@ Parse and get view_submission payload when users interact with modal views. This
 
 ## Interactive Components
 
-Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to lay out complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in each message, and 100 blocks in modals.
-You can find Block Kit reference [here].(https://api.slack.com/reference/block-kit/blocks)
+Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to lay out complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in each message and 100 blocks in modals.
+You can find Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks) .
 
 ### Message Wrapper
 
-slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various [block elements](https://api.slack.com/reference/block-kit/block-elements).
+Slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various [block elements](https://api.slack.com/reference/block-kit/block-elements).
 
 **Methods**
 
@@ -370,9 +371,9 @@ slackmin Message wrapper allows us to create and format the message alert interf
 const message = new slackmin.interactiveElements.Message();
 ```
 
-For example,
+Following are Message wrapper method examples:
 <br>
-adding a section block
+Adding a Section Block
 
 ```javascript
 message.addSection("I want to add some text here. And it should be *markdown*");
@@ -380,13 +381,13 @@ message.addSection("I want to add some text here. And it should be *markdown*");
 [Preview for message.addSection](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22I%20want%20to%20add%20some%20text%20here.%20And%20it%20should%20be%20*markdown*%22%7D%7D%5D%7D)
 
 
-adding divider section
+Adding Divider Section
 ```javascript
 message.addDivider()
 ```
 [Preview for message.addDivider](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D%5D%7D)
 
-adding button elements
+Adding Button Elements
 ```javascript
 message.addButtonElements(
   [
@@ -455,10 +456,12 @@ actionButtons.push(updatePhoneNumber);
 message.addButtonElements(actionButtons);
 message.sendUsingResponseUrl(responseUrl);
 ```
+Output of above code will look like below:
 <img height="250" alt="Message wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png" />
 
 ### Modal Wrapper
-slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup.
+Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
+which can be used to construct Modal.
 
 **Methods**
 
@@ -502,16 +505,18 @@ slackmin Modal wrapper allows us to add various [block elements](https://api.sla
 const text = "Input Email"
 const modal = new slackmin.interactiveElements.Modal(appId, text);
 ```
-For example,
+Following are few modal method examples:
 <br>
 
-buttons on modal. we can change the text of the confirm button and cancel button.
+Buttons on Modal
+<br>
+Here we are changing the text of the confirm button and cancel button.
 
 ```javascript
 modal.addSubmitAndCancel("Confirm", "Close");
 ```
 
-add input text box
+Add Input Text Box
 
 ```javascript
 // takes params labelText(string), multiline(boolean), isOptional(boolean)
@@ -528,7 +533,7 @@ modal.addTextbox(
 
 ```javascript
 const apiAppId = 'A03GGU0AKKK'; // slack_app_id
-const modal = new SlackAdminProvider.interactiveElements.Modal(apiAppId, 'Give your vote');
+const modal = new slackmin.interactiveElements.Modal(apiAppId, 'Give your vote');
 
 // Mandatory parameters when creating a new modal. Add your next action route here
 modal.addAction('submitForm');
@@ -561,6 +566,11 @@ modal.addSubmitAndCancel();
 return modal.open(triggerId);
 ```
 <img height="500" alt="Modal wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png" />
+
+# Conclusion
+
+Slackmin package can be effectively used to build an admin functionality over slack with security features by using exposed middlewares. 
+Message wrapper and modal wrapper methods can be easily used to message formatting and modal creation. 
 
 # Contributors
 [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/), [Shraddha Falane](https://plgworks.com/blog/author/shraddha/), [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/), [Parv Saxena](https://plgworks.com/blog/author/parv/)
