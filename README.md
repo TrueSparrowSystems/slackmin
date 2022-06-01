@@ -34,7 +34,7 @@ First, we need to setup slack app as mentioned in [this guide](https://api.slack
 
 Keep a note of your slack_app_id, slack_signing_secret and slack_bot_user_oauth_token. It will be require in further steps.
 
-## Instal NPM
+## Install NPM
 
 ```sh
 npm install @plgworks/slackmin
@@ -86,7 +86,7 @@ module.exports = slackmin;
 **2. whiteListedChannels**
 
 
-`whiteListedChannels` is array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Refer [here](https://help.socialintents.com/article/148-how-to-find-your-slack-team-id-and-slack-channel-id) to get slack channel id .
+`whiteListedChannels` is array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Refer [here](https://help.socialintents.com/article/148-how-to-find-your-slack-team-id-and-slack-channel-id) to get slack channel id.
 
 <br>
 
@@ -457,11 +457,12 @@ message.addButtonElements(actionButtons);
 message.sendUsingResponseUrl(responseUrl);
 ```
 Output of above code will look like below:
+
 <img height="250" alt="Message wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png" />
 
 ### Modal Wrapper
 Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
-which can be used to construct Modal.
+which can be used to create modal.
 
 **Methods**
 
@@ -565,6 +566,8 @@ modal.addSubmitAndCancel();
 
 return modal.open(triggerId);
 ```
+Output of above code will look like below:
+
 <img height="500" alt="Modal wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png" />
 
 # Conclusion
