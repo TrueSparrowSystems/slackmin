@@ -103,8 +103,7 @@ module.exports = slackmin;
 
 ## Slackmin Middleware Usage
 
-Slackmin package provides the set of middlewares that can be used with slack slash commands as well as with interactive routes. The middleware layer formats and preprocesses the slack payload,
-sanitizes unwanted HTML tags from parameters obtained in request body, query and headers. Slackmin has built-in security, request verification, app id validation, channel id validation and slack member id validation are performed by middleware layer.
+Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload, and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation, and slack member id validation.
 
 Following are different middleware examples:
 
