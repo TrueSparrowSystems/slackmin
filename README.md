@@ -29,7 +29,8 @@ First, we need to setup a slack app as mentioned in [this guide](https://api.sla
 - Create a slack app. Visit https://api.slack.com/apps.
 - Configure request URL for interactive components. Click [here](https://api.slack.com/interactivity/handling) for details.
 - Configure slash commands. For more details [click here](https://api.slack.com/interactivity/slash-commands).
-- Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [Slack Scopes](https://api.slack.com/scopes) for details.
+- Add scopes chat:write and chat:write:public to the bot token scopes. Know more about [Slack Scopes](https://api.slack.com/scopes).
+- Then install the app.
 
 Keep a note of your slack App ID, slack Signing Secret and slack_bot_user_oauth_token. It will be required in further steps.
 
@@ -41,7 +42,7 @@ npm install @plgworks/slackmin
 
 ## Initialize
 While using the package, create a singleton object of Slackmin and then use it across the application.
-Example snippet for the Slackmin usage is given below.
+Example snippet for the Slackmin singleton object is given below.
 
 ```node.js
 
