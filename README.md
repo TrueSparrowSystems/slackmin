@@ -266,23 +266,24 @@ which can be used to create [modal](https://api.slack.com/surfaces/modals).
 - `addCheckBoxes`
   - Parameters: labelText (string), optionsArray (object with keys text, value)
   - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
-  Comes with an option to add `label`. `text` is the checkbox label text. `value` is a string that specifies the value of the option.
+    `labelText` is the input block label text. `text` is the checkbox label text. `value` is a unique string that specifies the value of the option.
 - `addRadioButtons`
   - Parameters: labelText (string), optionsArray (object with keys text, value), initialOption (object)
-  - Description: Adds type `"input"` block with element type `"radio_buttons"`. Comes with an option to add `label`. `text` is the radio button label text. `value` is a string that specifies the value of the option. You can set `initial_option` in the element for selecting radio option by default.
+  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio). 
+   `labelText` is the input block label text. `text` is the radio button label text. `value` is a unique string value that will be passed to your app when any option is chosen. You can set `initial_option` in the element for selecting radio button option by default.
 - `addParamsMeta`
   - Parameters: paramsMeta (array of string)
-  - Description: To specify parameter names for the subsequent textboxes.
+  - Description: To specify parameter names for the subsequent [input](https://api.slack.com/reference/block-kit/blocks#input) block elements such as [plain-text](https://api.slack.com/reference/block-kit/block-elements#input),
+    [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes) and [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio).
 - `addHiddenParamsMeta`
   - Parameters: hiddenParamsMeta (object)
-  - Description: To pass on internal parameters
+  - Description: To pass on internal parameters on modal submit. `hiddenParamsMeta` contains hidden parameters which has to pass for next modal action.
 - `addAction`
   - Parameters: actionName (string)
-  - Description: You can provide the next action method/route to be executed on modal submit.
+  - Description: You can provide the next action method/route to be executed on modal submit. 
 - `open`
   - Parameters: triggerId (string)
-  - Description: utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts#creating-modals) to open modal view. It requires trigger_id obtained from interaction payload. Refer [here](https://api.slack.com/surfaces/modals/using) for more  details on modals.
-
+  - Description: utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts#creating-modals) to open modal view. `triggerId` is obtained from [interaction payload](https://api.slack.com/interactivity/handling#payloads).
 #### Modal Wrapper Example
 
 ```javascript
