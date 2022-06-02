@@ -1,7 +1,7 @@
 # Slackmin
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals.
+Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, and design & use modals.
 One use case of Slackmin is to implement admin functionality over slack.
 
 ## Demo
@@ -15,11 +15,11 @@ One use case of Slackmin is to implement admin functionality over slack.
 ![Interactive Component Demo](https://user-images.githubusercontent.com/30872426/171114279-5d0f90bd-09b0-48cd-b7e1-f385dc4c0bfb.gif)
 
 ## Why Slackmin?
-- Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, domain validation are taken care by the exposed middlewares.
+- Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, admin domain validation are taken care of by the exposed middlewares.
 - The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
 - Message wrapper helps in easy formatting of messages.
 - Modal wrapper utilizes [Bolt](https://slack.dev/bolt-js/tutorial/getting-started) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Support of interacting with multiple slack apps comes built-in with this package. This allows you to overcome the limitation of maximum number of 25 slash commands supported by a slack app.
+- Support of interacting with multiple slack apps comes built-in with this package. It allows you to overcome a maximum of 25 slash commands support in a single slack app and also control over grouping functionalities.
 
 ## Prerequisites
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
