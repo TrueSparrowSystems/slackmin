@@ -106,6 +106,7 @@ Slackmin middlewares are used with slash commands as well as with interactive ro
 ### Interactive Component Middlewares
 ```javascript
 const express = require('express');
+const slackmin = require('path-to-your-slackmin-singletone-provider');
 const router = express.Router();
 
 // common middlewares
@@ -125,7 +126,7 @@ router.post(
   '/interactive-endpoint',
   async function(req, res, next) {
      // your business logic
-    // Pre-processed  and completely sanitized  parameters are assigned in req.decodedparams. It must be used to read data.
+    // req.decodedParams contains sanitized parameters and must be used to read data for further business logic.
    console.log(req.decodedParams);  }
 );
 ```
@@ -133,6 +134,7 @@ router.post(
 ### Slash Command Middlewares
 ```javascript
 const express = require('express');
+const slackmin = require('path-to-your-slackmin-singletone-provider');
 const router = express.Router();
 
 // common middlewares
@@ -153,43 +155,46 @@ router.post(
   '/slash-command',
   async function(req, res, next) {
      // your business logic
-    // Pre-processed  and completely sanitized  parameters are assigned in req.decodedparams. It must be used to read data.
+    // req.decodedParams contains sanitized parameters and must be used to read data for further business logic.
    console.log(req.decodedParams);
   }
 );
 ```
-Note: `req.decodedparams` contains pre-processed and completely sanitized parameters. `req.decodedparams` must be used to read data for further business logic development.
+**Important Note**: `req.decodedParams` contains sanitized parameters and must be used to read data for further business logic.
 
 
 ## Interactive Components
 
 Slack provides a range of visual components, called Block Kit, used to layout complex information. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in a message and 100 blocks in modals.
-You can find the Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks) .
+You can find the Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks).
 
 ### Message Wrapper
 
-Slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various [block elements](https://api.slack.com/reference/block-kit/block-elements).
+Slackmin Message wrapper provides simple methods to create and format complex message layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
 
 **Methods**
 
 - `addSection`
   - Parameters: text (string)
-  - Description: Adds type `"section"` block with text type `"mrkdwn"`
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
 - `addSectionWithTextFields`
   - Parameters: texts (array of strings)
-  - Description: Adds type `"section"` block with array of fields type `"mrkdwn"`
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with two columns layout to display provided texts. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
 - `addButton`
   - Parameters: labelText (string), buttonText (string), value (string)
-  - Description: Adds type `"section"` block with type `"button"`. Comes with an option to add `label`. `value` is a string that is sent along with the [interaction payload](https://api.slack.com/interactivity/handling#payloads).
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block to render a [button](https://api.slack.com/reference/block-kit/block-elements#button). 
+  `labelText` is the section text, `buttonText` is the button label text and `value` is the button value. 
 - `addButtonElements`
-  - Parameters: buttonDetails (array of objects with keys - buttonText, value)
-  - Description: Adds type `"action"` block with array of button elements. Each button element comes with a confirmation popup.
+  - Parameters: buttonDetails (array of objects with keys - buttonText, value, confirmText)
+  - Description: Adds an [action](https://api.slack.com/reference/block-kit/blocks#actions) block with multiple [button](https://api.slack.com/reference/block-kit/block-elements#button) elements.
+   Each button element comes with a confirmation popup. `buttonText` is the button label text, `value` is the button value and `confirmText` is the confirmation pop up message. If you don't want to have
+   a confirmation pop up, don't pass `confirmText`.
 - `addDivider`
-  - Parameters: nil
-  - Description: Adds type `"divider"` block.
+  - Parameters: null
+  - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
 - `addCustomHeader`
-  - Parameters: nil
-  - Description: Adds a divider and a section block
+  - Parameters: text (string)
+  - Description: Adds a [divider](https://api.slack.com/reference/block-kit/blocks#divider) and a [section](https://api.slack.com/reference/block-kit/blocks#section) block.
 - `sendUsingResponseUrl`
   - Parameters: responseUrl (string), isTemporary (boolean)
   - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). response_type could be [in_channel or ephemeral](https://api.slack.com/interactivity/handling#publishing_ephemeral_response).
