@@ -194,111 +194,27 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
 - `addCustomHeader`
   - Parameters: text (string)
-  - Description: Adds a [divider](https://api.slack.com/reference/block-kit/blocks#divider) and a [section](https://api.slack.com/reference/block-kit/blocks#section) block.
+  - Description: Adds a [divider](https://api.slack.com/reference/block-kit/blocks#divider) and a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
 - `sendUsingResponseUrl`
   - Parameters: responseUrl (string), isTemporary (boolean)
-  - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). response_type could be [in_channel or ephemeral](https://api.slack.com/interactivity/handling#publishing_ephemeral_response).
+  - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). `responseUrl` is the response URL. `isTemporary` is true for [ephemeral message] (https://api.slack.com/messaging/managing#ephemeral), otherwise false.
 - `sendMessageToChannel`
-  - Parameters: postMessageParams (object with keys - channel_id, text)
-  - Description: utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel for which the channel id is specified.
+  - Parameters: postMessageParams (object with keys - channel, text)
+  - Description: utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
+
+#### Example
 
 ```javascript
 const message = new slackmin.interactiveElements.Message();
-```
 
-Following are Message wrapper method examples:
-<br>
-Adding a Section Block
-
-```javascript
-message.addSection("I want to add some text here. And it should be *markdown*");
-```
-[Preview for message.addSection](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22I%20want%20to%20add%20some%20text%20here.%20And%20it%20should%20be%20*markdown*%22%7D%7D%5D%7D)
-
-
-Adding Divider Section
-```javascript
-message.addDivider()
-```
-[Preview for message.addDivider](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D%5D%7D)
-
-Adding Button Elements
-```javascript
-message.addButtonElements(
-  [
-    {
-      buttonText: 'Click me 1',
-      confirmText: 'You clicked the correct button 1',
-      value: '{"action":"actionId-0"}'
-    },
-    {
-      buttonText: 'Click me 2',
-      confirmText: 'You clicked the correct button 2',
-      value: '{"action":"actionId-1"}'
-    }
-  ]
-)
-```
-[Preview for message.addButtonElements](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22actions%22,%22elements%22:%5B%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%201%22%7D,%22value%22:%22click_me_123%22,%22action_id%22:%22actionId-0%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%201%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D,%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%202%22%7D,%22value%22:%22click_me_1234%22,%22action_id%22:%22actionId-1%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%202%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D%5D%7D%5D%7D)
-
-#### Hidden Parameters in Modals
-
- When we are interacting with different entities in slack through the modal box, parameters like entity, user_id on which we are performing CURD operations need to pass in modal.
- Thus, we are passing parameters as hidden parameters on button action in below example:
-
-```javascript
-const name = 'abc'; // mention user name
-let userId, responseUrl;  // add your user id and responseUrl
-
-// action in value specifies the next method call to be performed for interactive endpoint i.e call to updateEmailModal opens the modal
-// hiddenParams are internal params that need to be forwarded on button action to perform necessary CURD operations on entity
-const button = {
-  buttonText: 'Upate User Email',
-  confirmText: 'Do you want to update email of user name: ' + name + '?',
-  value: '{"action":"updateEmailModal","hiddenParams":{"user_id":"' +
-            userId +
-            '", "original_response_url":"' +
-            responseUrl +
-            '"}}'
-  };
-
-```
-
- Further, our Interctive Component Middleware layer extracts hidden parameters from block_actions payload's view object and similarly from view_submission payload's view object. 
- Extracted hidden parameters are assigned in `req.decodedParams`.
-
-
-
-
-
-
-#### Message Wrapper Example
-
-```javascript
-const message = new slackmin.interactiveElements.Message();
-const userId = 100000,
- userInfo = {
-  id: userId,
-   name: 'Shraddha',
-   username: 'Shraddha',
-   email: 's@gmail.com',
-   phoneNumber: '9067675645'
- },
-
- currentAdmin = {
-   id: 1,
-   name: 'Dj'
- };
-
-const actionText = 'Get *user info* for user ' + userId;
-message.addCustomHeader(`*ADMIN:* ${currentAdmin.name} - *ACTION:* ${actionText}`);
+message.addCustomHeader(`*ADMIN:* John - *ACTION:* Fetched user with id: 123`);
 
 const texts = [
-  '*User Id*:\n' + userInfo.id,
-  '*Name*:\n' + userInfo.name,
-  '*Username*:\n' + userInfo.username,
-  '*Email*:\n' + userInfo.email,
-  '*Phone Number* \n' + userInfo.phoneNumber
+  '*User Id*:\n' + '123',
+  '*Name*:\n' + 'David',
+  '*Username*:\n' + 'david_qwerty',
+  '*Email*:\n' + 'david@example.com',
+  '*Phone Number* \n' + '(555) 555-1234'
  ];
 
 message.addSectionWithTextFields(texts);
@@ -306,18 +222,16 @@ const actionButtons = [];
 
 // action in value specifies the next method call to be performed for interactive endpoint i.e call to phoneNumberUpdateModal opens the modal
 // hiddenParams are internal params that need to be forwarded
-const updatePhoneNumber = {
+const updatePhoneNumberButton = {
       buttonText: 'Update Phone',
-      confirmText: 'Do you want to update phone number of user: *' + userInfo.name + '*?',
+      confirmText: 'Do you want to update phone number for the user?',
       value:
-        '{"action":"phoneNumberUpdateModal","hiddenParams":{"text":"' +
-        userInfo.id +
-        '", "original_response_url":"' +
+        '{"action":"phoneNumberUpdateModal","hiddenParams":{"user_id":"123", "original_response_url":"' +
         responseUrl +
         '"}}'
     };
 
-actionButtons.push(updatePhoneNumber);
+actionButtons.push(updatePhoneNumberButton);
 message.addButtonElements(actionButtons);
 message.sendUsingResponseUrl(responseUrl);
 ```
@@ -365,36 +279,6 @@ which can be used to create modal.
   - Parameters: triggerId (string)
   - Description: utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts#creating-modals) to open modal view. It requires trigger_id obtained from interaction payload. Refer [here](https://api.slack.com/surfaces/modals/using) for more  details on modals.
 
-```javascript
-// appId is required to validate signature
-// text here is modal's title text
-const text = "Input Email"
-const modal = new slackmin.interactiveElements.Modal(appId, text);
-```
-Following are few modal method examples:
-<br>
-
-Buttons on Modal
-<br>
-Here we are changing the text of the confirm button and cancel button.
-
-```javascript
-modal.addSubmitAndCancel("Confirm", "Close");
-```
-
-Add Input Text Box
-
-```javascript
-// takes params labelText(string), multiline(boolean), isOptional(boolean)
-modal.addTextbox(
-  "Your Email",
-  false,
-  false
-)
-```
-[Preview for modal](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22type%22:%22modal%22,%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Input%20Email%22,%22emoji%22:true%7D,%22submit%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22,%22emoji%22:true%7D,%22close%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Close%22,%22emoji%22:true%7D,%22blocks%22:%5B%7B%22type%22:%22input%22,%22element%22:%7B%22type%22:%22plain_text_input%22,%22multiline%22:false%7D,%22label%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Your%20Email%22%7D,%22optional%22:false%7D%5D%7D)
-<br>
-
 #### Modal Wrapper Example
 
 ```javascript
@@ -435,6 +319,32 @@ Output of above code will look like below:
 
 <img height="500" alt="Modal wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png" />
 
+#### Hidden Parameters in Modals
+
+ When we are interacting with different entities in slack through the modal box, parameters like entity, user_id on which we are performing CURD operations need to pass in modal.
+ Thus, we are passing parameters as hidden parameters on button action in below example:
+
+```javascript
+const name = 'abc'; // mention user name
+let userId, responseUrl;  // add your user id and responseUrl
+
+// action in value specifies the next method call to be performed for interactive endpoint i.e call to updateEmailModal opens the modal
+// hiddenParams are internal params that need to be forwarded on button action to perform necessary CURD operations on entity
+const button = {
+  buttonText: 'Upate User Email',
+  confirmText: 'Do you want to update email of user name: ' + name + '?',
+  value: '{"action":"updateEmailModal","hiddenParams":{"user_id":"' +
+            userId +
+            '", "original_response_url":"' +
+            responseUrl +
+            '"}}'
+  };
+
+```
+
+ Further, our Interctive Component Middleware layer extracts hidden parameters from block_actions payload's view object and similarly from view_submission payload's view object. 
+ Extracted hidden parameters are assigned in `req.decodedParams`.
+ 
 # Conclusion
 
 Slackmin package can be effectively used to build an admin functionality over slack with security features by using exposed middlewares. 
