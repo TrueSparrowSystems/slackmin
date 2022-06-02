@@ -19,8 +19,7 @@ One use case of Slackmin is to implement admin functionality over slack.
 - The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
 - Message wrapper helps in easy formatting of messages.
 - Modal wrapper utilizes [Bolt](https://slack.dev/bolt-js/tutorial/getting-started) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Multiple slack apps support help in following: 
-1. 
+- Multiple slack apps support helps in; Overcoming 25 slash commands limitation in slack apps. Also you can organise your commands better in multiple applications.
 
 ## Prerequisites
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
