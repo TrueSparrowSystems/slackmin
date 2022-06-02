@@ -73,7 +73,7 @@ module.exports = slackmin;
 ```
 
 ### Slackmin Initialization Params
-**1. appConfigs**
+**1. `appConfigs`**
 
 `appConfigs**` is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
