@@ -241,28 +241,32 @@ Output of above code will look like below:
 
 ### Modal Wrapper
 Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
-which can be used to create modal.
+which can be used to create [modal](https://api.slack.com/surfaces/modals).
 
 **Methods**
 
 - `addSubmitAndCancel`
   - Parameters: submitText (string), cancelText (string)
-  - Description: Allows to change text for the submit and close button in the modal
+  - Description: Add submit and cancel [button]((https://api.slack.com/reference/block-kit/block-elements#button)) elements in [modal](https://api.slack.com/surfaces/modals).
+  `submitText` is the submit button label text. `cancelText` is the cancel button label text.
 - `addPlainTextSection`
   - Parameters: text (string)
-  - Description: Adds type `"section"` block with text type `"plain_text"`
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text.
 - `addMarkdownTextContext`
   - Parameters: text (string)
-  - Description: Adds type `"context"` block with text type `"mrkdwn"`
+  - Description: Adds a [context](https://api.slack.com/reference/block-kit/blocks#context) block with the provided text. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
 - `addDivider`
-  - Parameters: nil
-  - Description: Adds type `"divider"` block.
+  - Parameters: null
+  - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
 - `addTextbox`
   - Parameters: labelText (string), multiline (boolean), isOptional (boolean)
-  - Description: Adds type `"input"` block having multiline and required option
+  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [plain-text](https://api.slack.com/reference/block-kit/block-elements#input).
+  `labelText` is the input block label text. `multiline` indicates whether the input will be a single line (false) or a larger textarea (true), defaults set to true.
+  `isOptional` is a boolean that indicates whether the input element may be empty when a user submits the modal, defaults set to false.
 - `addCheckBoxes`
   - Parameters: labelText (string), optionsArray (object with keys text, value)
-  - Description: Adds type `"input"` block with element type `"checkboxes"`. Comes with an option to add `label`. `text` is the checkbox label text. `value` is a string that specifies the value of the option.
+  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
+  Comes with an option to add `label`. `text` is the checkbox label text. `value` is a string that specifies the value of the option.
 - `addRadioButtons`
   - Parameters: labelText (string), optionsArray (object with keys text, value), initialOption (object)
   - Description: Adds type `"input"` block with element type `"radio_buttons"`. Comes with an option to add `label`. `text` is the radio button label text. `value` is a string that specifies the value of the option. You can set `initial_option` in the element for selecting radio option by default.
