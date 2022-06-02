@@ -24,12 +24,12 @@ Slackmin helps you in easy integration with slack to use [slash commands](https:
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
 
 ## Slack app setup
-First, we need to setup slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
+First, we need to setup a slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
 
 - Create a slack app. Visit https://api.slack.com/apps.
-- Configure request URL for interactive components. Refer [here](https://api.slack.com/interactivity/handling) for details.
-- Configure slash commands. Refer [here](https://api.slack.com/interactivity/slash-commands) for details.
-- Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [here](https://api.slack.com/scopes) for details.
+- Configure request URL for interactive components. Click [here](https://api.slack.com/interactivity/handling) for details.
+- Configure slash commands. For more details [click here](https://api.slack.com/interactivity/slash-commands).
+- Add scopes chat:write and chat:write:public to the bot token scopes. Then install the app. Refer [Slack Scopes](https://api.slack.com/scopes) for details.
 
 Keep a note of your slack App ID, slack Signing Secret and slack_bot_user_oauth_token. It will be required in further steps.
 
