@@ -75,7 +75,7 @@ module.exports = slackmin;
 ### Slackmin Initialization Params
 **1. appConfigs**
 
-`appConfigs` is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
+`appConfigs**` is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
 - **id**: You need to provide your slack app id here. Follow the slack app setup given above.
 - **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack) for more details.
