@@ -124,8 +124,9 @@ router.use(
 router.post(
   '/interactive-endpoint',
   async function(req, res, next) {
-    // your business logic
-  }
+     // your business logic
+    // Pre-processed  and completely sanitized  parameters are assigned in req.decodedparams. It must be used to read data.
+   console.log(req.decodedParams);  }
 );
 ```
 
@@ -151,10 +152,14 @@ router.use(
 router.post(
   '/slash-command',
   async function(req, res, next) {
-    // your business logic
+     // your business logic
+    // Pre-processed  and completely sanitized  parameters are assigned in req.decodedparams. It must be used to read data.
+   console.log(req.decodedParams);
   }
 );
 ```
+Note: `req.decodedparams` contains pre-processed and completely sanitized parameters. `req.decodedparams` must be used to read data for further business logic development.
+
 
 ## Interactive Components
 
@@ -230,6 +235,36 @@ message.addButtonElements(
 )
 ```
 [Preview for message.addButtonElements](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22actions%22,%22elements%22:%5B%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%201%22%7D,%22value%22:%22click_me_123%22,%22action_id%22:%22actionId-0%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%201%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D,%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%202%22%7D,%22value%22:%22click_me_1234%22,%22action_id%22:%22actionId-1%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%202%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D%5D%7D%5D%7D)
+
+#### Hidden Parameters in Modals
+
+ When we are interacting with different entities in slack through the modal box, parameters like entity, user_id on which we are performing CURD operations need to pass in modal.
+ Thus, we are passing parameters as hidden parameters on button action in below example:
+
+```javascript
+const name = 'abc'; // mention user name
+let userId, responseUrl;  // add your user id and responseUrl
+
+// action in value specifies the next method call to be performed for interactive endpoint i.e call to updateEmailModal opens the modal
+// hiddenParams are internal params that need to be forwarded on button action to perform necessary CURD operations on entity
+const button = {
+  buttonText: 'Upate User Email',
+  confirmText: 'Do you want to update email of user name: ' + name + '?',
+  value: '{"action":"updateEmailModal","hiddenParams":{"user_id":"' +
+            userId +
+            '", "original_response_url":"' +
+            responseUrl +
+            '"}}'
+  };
+
+```
+
+ Further, our Interctive Component Middleware layer extracts hidden parameters from block_actions payload's view object and similarly from view_submission payload's view object. 
+ Extracted hidden parameters are assigned in `req.decodedParams`.
+
+
+
+
 
 
 #### Message Wrapper Example
