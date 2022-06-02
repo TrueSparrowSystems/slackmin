@@ -225,104 +225,71 @@ const {
 } = slackmin.middlewares;
 ```
 
-**1. formatPayload**
-
-`formatPayload` formats and preprocesses the slack [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission).
+**1. `formatPayload`** formats and preprocesses the slack [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission).
 
 <br>
 
-**2. sanitizeBodyAndQuery**
-
-`sanitizeBodyAndQuery` recursively sanitizes request body and request query params.
+**2. `sanitizeBodyAndQuery`** recursively sanitize request body and request query params.
 
 <br>
 
-**3. assignParams**
-
-`assignParams` sets `decodedParams` empty which is required in subsequent middlewares.
+**3. `assignParams`** sets `decodedParams` empty which is required in subsequent middlewares.
 
 <br>
 
-**4. sanitizeDynamicUrlParams**
-
-`sanitizeDynamicUrlParams` recursively sanitizes dynamic params in URL.
+**4. `sanitizeDynamicUrlParams`** recursively sanitize dynamic params in URL.
 
 <br>
 
-**5. sanitizeHeaderParams**
-
-`sanitizeHeaderParams` recursively sanitizes request headers.
+**5. `sanitizeHeaderParams`** recursively sanitize request headers.
 
 <br>
 
 
-**6. extractSlackParams**
-
-`extractSlackParams` extract [slack params](https://api.slack.com/reference/interaction-payloads/block-actions#examples) from slack request payload in case of interactive endpoints.
-It extracts [slack params](https://api.slack.com/interactivity/slash-commands#app_command_handling) from request body in case of slash commands.
+**6. `extractSlackParams`** extract [slack params](https://api.slack.com/reference/interaction-payloads/block-actions#examples) from slack request payload in case of interactive endpoints. Or extract [slack params](https://api.slack.com/interactivity/slash-commands#app_command_handling) from request body in case of slash commands.
 
 <br>
 
-**7. validateSignature**
-
-`validateSignature` verify requests from slack by verifying signatures using signing secret.
-The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
+**7. `validateSignature`** verify requests from slack by verifying signatures using the signing secret. The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
 
 <br>
 
-**8. validateSlackUser**
-
-`validateSlackUser` performs slack user authentication. It verifies if user is present in `whitelistedUsers`.
+**8. `validateSlackUser`** performs slack user authentication. It verifies if user is present in `whitelistedUsers`.
 
 <br>
 
-**9. validateSlackChannel**
-
-`validateSlackChannel` performs slack channel authentication. It validates if channel is listed in `whiteListedChannels`.
+**9. `validateSlackChannel`** performs slack channel authentication. It validates if the channel id is listed in `whiteListedChannels`.
 
 <br>
 
-**10. validateSlackApiAppId**
-
-`validateSlackApiAppId` validates slack app id. It only allows request from apps provided in `appConfigs`.
+**10. `validateSlackApiAppId`** validates slack app id. It only allow requests from apps provided in `appConfigs`.
 
 <br>
 
-**11. extractResponseUrlFromPayload**
-
-`extractResponseUrlFromPayload` extracts response_url from interactive routes. This middleware should only be used with interactive endpoints.
+**11. `extractResponseUrlFromPayload`** extracts response_url from interactive routes. This middleware should only be used with interactive endpoints.
 
 <br>
 
-**12. extractText**
-
-`extractText` extract text from slash command's request body. This middleware should only be used with slash commands.
+**12. `extractText`** extract text from the slash command's request body. This middleware should only be used with slash commands.
 
 <br>
 
-**13. extractResponseUrlFromBody**
-
-`extractResponseUrlFromBody` extract response_url from slash command's request body. This middleware should only be used with slash commands
+**13. `extractResponseUrlFromBody`** extract response_url from slash command's request body. This middleware should only be used with slash commands
 
 <br>
 
-**14. parseApiParameters**
-
-`parseApiParameters` parse and get block_actions payload when a user interacts with block component.
-Parse and get view_submission payload when users interact with modal views. This middleware should only be used with interactive components.
+**14. `parseApiParameters`** parse and get block_actions payload when a user interacts with a block component. Parse and get view_submission payload when users interact with modal views. This middleware should only be used with interactive components.
 
 <br>
 
-**15. extractTriggerId**
-
-`extractTriggerId` extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
+**15. `extractTriggerId`** extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
  This middleware will not fetch trigger_id for view_submission type interactions.
 
 
 ## Interactive Components
 
-Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to lay out complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in each message and 100 blocks in modals.
-You can find Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks) .
+Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to layout complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in a message and 100 blocks in modals.
+You can find the Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks) .
 
 ### Message Wrapper
 
