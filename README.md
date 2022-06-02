@@ -73,9 +73,7 @@ module.exports = slackmin;
 ```
 
 ### Slackmin Initialization Params
-**1. `appConfigs`**
-
-`appConfigs**` is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
+**1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
 - **id**: You need to provide your slack app id here. Follow the slack app setup given above.
 - **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack) for more details.
@@ -83,23 +81,15 @@ module.exports = slackmin;
 
 <br>
 
-**2. whiteListedChannels**
-
-
-`whiteListedChannels` is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Right click on the channel you created in your Slack workspace. From the options select `Open channel details`. You will find the Channel ID at the bottom of the channel details popup.
+**2. `whiteListedChannels`** is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Right click on the channel you created in your Slack workspace. From the options select `Open channel details`. You will find the Channel ID at the bottom of the channel details popup.
 
 <br>
 
-**3. slackDomain**
-
-
-`slackDomain` is your slack app's workspace domain. It could be a team workspace or individual workspace.
+**3. `slackDomain`** is your slack app's workspace domain. It could be a team workspace or individual workspace.
 
 <br>
 
-**4. whitelistedUsers**
-
-`whitelistedUsers` is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels. Refer [here](https://www.workast.com/help/articles/61000165203/) to get slack member id.
+**4. `whitelistedUsers`** is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels. Refer [here](https://www.workast.com/help/articles/61000165203/) to get slack member id.
 
 ## Slackmin Middleware Usage
 
