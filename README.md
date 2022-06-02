@@ -14,11 +14,11 @@ Slackmin helps you in easy integration with slack to use [slash commands](https:
 ![Interactive Component Demo](https://user-images.githubusercontent.com/30872426/171114279-5d0f90bd-09b0-48cd-b7e1-f385dc4c0bfb.gif)
 
 ## Why Slackmin?
-- Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, admin domain validation are taken care of by the exposed middlewares.
+- Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, and admin domain validation are taken care of by the exposed middlewares.
 - The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
 - Message wrapper helps in easy formatting of messages.
 - Modal wrapper utilizes [Bolt](https://slack.dev/bolt-js/tutorial/getting-started) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Multiple slack apps support helps in; Overcoming 25 slash commands limitation in slack apps. Also you can organise your commands better in multiple applications.
+- Slackmin's multiple slack app support helps in: Overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and more.
 
 ## Prerequisites
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
