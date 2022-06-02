@@ -18,7 +18,7 @@ One use case of Slackmin is to implement admin functionality over slack.
 - Security features involving [signature verification](https://api.slack.com/authentication/verifying-requests-from-slack), channel id validation, slack member id validation, domain validation are taken care by the exposed middlewares.
 - The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
 - Message wrapper helps in easy formatting of messages.
-- Modal wrapper utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
+- Modal wrapper utilizes [Bolt]([https://slack.dev/bolt-js/concepts](https://slack.dev/bolt-js/tutorial/getting-started)) for [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
 - Support of interacting with multiple slack apps comes built-in with this package. This allows you to overcome the limitation of maximum number of 25 slash commands supported by a slack app.
 
 ## Prerequisites
