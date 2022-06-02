@@ -14,21 +14,19 @@ Slackmin helps you in easy integration with slack to use [slash commands](https:
 ![Interactive Component Demo](https://user-images.githubusercontent.com/30872426/171114279-5d0f90bd-09b0-48cd-b7e1-f385dc4c0bfb.gif)
 
 ## Why Slackmin?
-Slackmin provides following built-in security features:
+- Slackmin provides Message and Modal wrappers that help in easy writing of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
+- Slackmin's multiple slack app support helps in Overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
+- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
+
+Additionally, Slackmin provides following built-in security features:
 - **Sanitize unwanted HTML tags** from parameters obtained in request body, query, headers. [HTML sanitization](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization) is recommended by Open Web Application Security Project (OWASP)
 - **Signature / signed secret verification** is provided as a middleware ready to be plugged in and used for all the requests coming from slack. This [guide](https://api.slack.com/authentication/verifying-requests-from-slack) gives a detailed description of signature verification.
 - **Slack app id** is validated against whitelisted app ids. This validation is also provided via middleware.
 - **Slack channel** validation is done to only allow requests from whitelisted slack channels. For example, there can be one admin channel, in which we add all the admins and they can execute slash commands from there. Requests coming from other channels will be outright rejected. This validation is also provided via middleware.
-- **User authentication* helps in validating whether the user has admin rights or not. We validate the slack id of the user against whitelisted slack ids. This validation is also provided via middleware.
+- **User authentication** helps in validating whether the user has admin rights or not. We validate the slack id of the user against whitelisted slack ids. This validation is also provided via middleware.
 - Slack app’s **workspace domain** validation is also exposed as a middleware.
 
-Additionally, Slackmin provides following advantages:
-- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
-- Slackmin also provides Message and Modal wrappers that help in easy writing of messages and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Slackmin's multiple slack app support helps in: Overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and more.
-
 Thus Slackmin helps in integrating with slack involving minimum efforts (hence the name, Slackmin).
-
 
 ## Prerequisites
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
