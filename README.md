@@ -37,15 +37,15 @@ First, we need to setup a slack app as mentioned in [this guide](https://api.sla
 - Create a slack app. Visit https://api.slack.com/apps.
 - Configure request URL for interactive components. Click [here](https://api.slack.com/interactivity/handling) for details.
 - Configure slash commands. For more details [click here](https://api.slack.com/interactivity/slash-commands).
-- Add scopes chat:write and chat:write:public to the bot token scopes. Know more about [Slack Scopes](https://api.slack.com/scopes).
-- Then install the app.
+- Add scopes [chat:write](https://api.slack.com/scopes/chat:write) and [chat:write:public](https://api.slack.com/scopes/chat:write.public) to the bot token scopes. Know more about [Slack Scopes](https://api.slack.com/scopes).
+- Then [install](https://api.slack.com/authentication/basics#installing) the app to your workspace.
 
-Keep a note of your slack App ID, slack Signing Secret and slack_bot_user_oauth_token. It will be required in further steps.
+Keep a note of your App ID and Signing Secret from "Basic Information" section of your app. Also note the Bot User OAuth Token from "OAuth & Permissions" section of your app. These will be required in further steps.
 
 ## Install NPM
 
 ```sh
-npm install @plgworks/slackmin
+npm install @plgworks/slackmin --save
 ```
 
 ## Initialize
@@ -83,13 +83,13 @@ module.exports = slackmin;
 ### Slackmin Initialization Params
 **1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
-- **id**: You need to provide your slack app id here. Follow the slack app setup given above.
-- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature. Refer [here](https://api.slack.com/authentication/verifying-requests-from-slack) for more details.
-- **slack_bot_user_oauth_token**: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack.
+- **id**: This is your slack app id.
+- **secret**: Your app's signing secret. This is used to do request signature verification.
+- **slack_bot_user_oauth_token**: This is the Bot User OAuth Token.
 
 <br>
 
-**2. `whiteListedChannels`** is an array of channel ids which allows whitelisted users to execute slack commands in the whitelisted channel. Right click on the channel you created in your Slack workspace. From the options select `Open channel details`. You will find the Channel ID at the bottom of the channel details popup.
+**2. `whiteListedChannels`** is an array of channel ids which allows only whitelisted users to execute slash commands in the whitelisted channel. Right click on the channel you created in your Slack workspace. From the options select `Open channel details`. You will find the Channel ID at the bottom of the channel details popup.
 
 <br>
 
@@ -97,7 +97,7 @@ module.exports = slackmin;
 
 <br>
 
-**4. `whitelistedUsers`** is an array consisting of whitelisted slack member ids. Whitelisted users are channel admins who can execute commands in whitelisted channels. Refer [here](https://www.workast.com/help/articles/61000165203/) to get slack member id.
+**4. `whitelistedUsers`** is an array consisting of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
 
 ## Slackmin Middleware Usage
 
