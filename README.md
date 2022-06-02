@@ -89,7 +89,7 @@ module.exports = slackmin;
 
 <br>
 
-**2. `whiteListedChannels`** is an array of channel ids which allows only whitelisted users to execute slash commands in the whitelisted channel. Right click on the channel you created in your Slack workspace. From the options select `Open channel details`. You will find the Channel ID at the bottom of the channel details popup.
+**2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
 
 <br>
 
@@ -97,15 +97,13 @@ module.exports = slackmin;
 
 <br>
 
-**4. `whitelistedUsers`** is an array consisting of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
+**4. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
 
 ## Slackmin Middleware Usage
 
 Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload, and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation, and slack member id validation.
 
-Following are different middleware examples:
-
-### Common Middlewares
+### Interactive Component Middlewares
 ```javascript
 const express = require('express');
 const router = express.Router();
@@ -116,70 +114,19 @@ router.use(
   slackmin.commonMiddlewares
 );
 
-// OR
-
-const {
-  formatPayload,
-  sanitizeBodyAndQuery,
-  assignParams,
-  extractSlackParams,
-  validateSignature,
-  validateSlackUser
-} = slackmin.middlewares;
-
-// NOTE: should be used in the same sequence as given if trying to use individually.
-// Should be called before slash commands routes and interactive routes.
-router.use(
-  formatPayload,
-  sanitizeBodyAndQuery,
-  assignParams,
-  extractSlackParams,
-  validateSignature,
-  validateSlackUser
-);
-
-```
-
-### Interactive Component Middlewares
-```javascript
-const express = require('express');
-const router = express.Router();
-
 //  interactive-endpoint middlewares
 // This set of middlewares can be used with interactive routes.
+router.use(
+  slackmin.interactiveEndpointMiddlewares
+);
+
+// Example interactive endpoint
 router.post(
   '/interactive-endpoint',
-  slackmin.interactiveEndpointMiddlewares,
-  async function(req, res, next) {
-    // your business logic
-  }
-)
-
-// OR
-
-const {
-  sanitizeDynamicUrlParams,
-  sanitizeHeaderParams,
-  validateSlackApiAppId,
-  extractTriggerId,
-  extractResponseUrlFromPayload,
-  parseApiParameters
-} = slackmin.middlewares;
-
-// NOTE: should be used in the same sequence as given if trying to use individually.
-router.post(
-  '/interactive-endpoint',
-  sanitizeDynamicUrlParams,
-  sanitizeHeaderParams,
-  validateSlackApiAppId,
-  extractTriggerId,
-  extractResponseUrlFromPayload,
-  parseApiParameters,
   async function(req, res, next) {
     // your business logic
   }
 );
-
 ```
 
 ### Slash Command Middlewares
@@ -187,25 +134,25 @@ router.post(
 const express = require('express');
 const router = express.Router();
 
+// common middlewares
+// This set of middlewares can be used with slash commands as well as with interactive routes.
+router.use(
+  slackmin.commonMiddlewares
+);
+
 // slash ('/') command middlewares
 // This set of middlewares can be used with Slash commands.
 router.use(
   slackmin.slashCommandMiddlewares
-)
+);
 
-//OR
-
-const {
-  validateSlackChannel,
-  extractText,
-  extractResponseUrlFromBody
-} = slackmin.middlewares;
-
-// NOTE: should be used in the same sequence as given if trying to use individually.
-router.use(
-  validateSlackChannel,
-  extractText,
-  extractResponseUrlFromBody
+// Write all routes specific to slash commands below.
+// Example slash command endpoint
+router.post(
+  '/slash-command',
+  async function(req, res, next) {
+    // your business logic
+  }
 );
 ```
 
