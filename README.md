@@ -158,7 +158,7 @@ router.post(
 
 ## Interactive Components
 
-Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to layout complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in a message and 100 blocks in modals.
+Slack provides a range of visual components, called Block Kit, used to layout complex information. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in a message and 100 blocks in modals.
 You can find the Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks) .
 
 ### Message Wrapper
