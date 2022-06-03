@@ -248,7 +248,7 @@ message.sendUsingResponseUrl(responseUrl);
 ```
 Output of above code will look like below:
 
-<img height="250" alt="Message wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171155785-b0cd3aa1-8f7d-480d-bbab-cac527a5d1d0.png" />
+<img width="636" alt="Message wrapper example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
 
 ### Modal Wrapper
 Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
