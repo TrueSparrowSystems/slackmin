@@ -7,11 +7,11 @@ Slackmin helps you in easy integration with slack to use [slash commands](https:
 
 #### **Slash Command**
 
-![Slash Command Demo](https://user-images.githubusercontent.com/30872426/171111658-986a456d-19e1-4cd2-b234-4a9b40710e10.gif)
+![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171801109-34575a14-2d28-4f4a-96a9-a7ab7832c336.gif)
 
 #### **Interactive Component**
 
-![Interactive Component Demo](https://user-images.githubusercontent.com/30872426/171114279-5d0f90bd-09b0-48cd-b7e1-f385dc4c0bfb.gif)
+![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171801054-dc40583b-e81b-4751-adaf-a0a29ef682a7.gif)
 
 ## Why Slackmin?
 - Slackmin provides Message and Modal wrappers that help in easy writing of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
