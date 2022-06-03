@@ -7,7 +7,7 @@ Slackmin helps you in easy integration with slack to use [slash commands](https:
 
 #### **Slash Command**
 
-![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171805786-26777812-2100-4d3d-8205-cdba3e423a20.gif)
+![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171811955-ede7ebb0-05ae-4180-b2b1-bea224f3eaca.gif)
 
 #### **Interactive Component**
 
