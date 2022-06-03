@@ -366,10 +366,16 @@ Output of above code will look like below:
 
 <img width="575" alt="Modal wrapper example" src="https://user-images.githubusercontent.com/7627517/171832112-a87d979d-378a-44ea-b191-14c2306eb2db.png">
 
-#### Hidden Parameters in Modals
+### Hidden Parameters
+For interacting with different entities through slack, parameters like entity id, etc on which we are performing CRUD operations OR which define the context of the operations,
+ need to be passed in every API call to the BE server. These parameters need to be forwarded in button actions and in modal submissions.
+ 
+#### Button Values
+As a convention, we put a JSON string in value of button. It has 2 keys - `action` and `hiddenParams`.
+Interctive Component Middleware layer extracts hidden parameters from block_actions payload's view object and makes them available in `req.decodedParams`.
 
- When we are interacting with different entities in slack through the modal box, parameters like entity, user_id on which we are performing CURD operations need to pass in modal.
- Thus, we are passing parameters as hidden parameters on button action in below example:
+
+
 
 ```javascript
 const name = 'abc'; // mention user name
@@ -378,19 +384,14 @@ let userId, responseUrl;  // add your user id and responseUrl
 // action in value specifies the next method call to be performed for interactive endpoint i.e call to updateEmailModal opens the modal
 // hiddenParams are internal params that need to be forwarded on button action to perform necessary CURD operations on entity
 const button = {
-  buttonText: 'Upate User Email',
-  confirmText: 'Do you want to update email of user name: ' + name + '?',
-  value: '{"action":"updateEmailModal","hiddenParams":{"user_id":"' +
-            userId +
-            '", "original_response_url":"' +
-            responseUrl +
-            '"}}'
+    buttonText: 'Upate User Email',
+    confirmText: 'Do you want to update email of user name: ' + name + '?',
+    value: `{"action":"updateEmailModal", "hiddenParams":{"user_id":"`
   };
 
 ```
 
- Further, our Interctive Component Middleware layer extracts hidden parameters from block_actions payload's view object and similarly from view_submission payload's view object. 
- Extracted hidden parameters are assigned in `req.decodedParams`.
+These parameters are passed as hidden parameters, which are internally sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
  
 # Conclusion
 
