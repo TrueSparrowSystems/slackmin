@@ -84,7 +84,7 @@ const slackmin = new Slackmin(
 module.exports = slackmin;
 ```
 
-### Slackmin Initialization Params
+### Initialization Params
 **1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
 - **id**: This is your slack app id.
@@ -103,7 +103,7 @@ module.exports = slackmin;
 
 **4. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
 
-## Slackmin Middleware Usage
+## Middlewares
 
 Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload, and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation, and slack member id validation.
 
