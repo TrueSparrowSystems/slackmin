@@ -202,8 +202,8 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Parameters: postMessageParams (object with keys - channel, text)
   - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
 
-#### Example 1
-When responding to a slash commond or any other interaction, we have 2 choices - synchronous manner and asynchronous manner. In the following example, we are responding in asynchronous manner.
+#### Example 1 - Async Message
+When responding to a slash command or any other interaction, we have 2 choices - synchronous manner and asynchronous manner. In the following example, we are responding in asynchronous manner.
 In asynchronous manner, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of interaction.
 
 ```javascript
@@ -248,7 +248,27 @@ message.sendUsingResponseUrl(responseUrl);
 ```
 Output of above code will look like below:
 
-<img width="636" alt="Message wrapper example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
+<img width="636" alt="Message wrapper async example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
+
+#### Example 2 - Sync Message / System Alert
+If the generation of the message body is simple, then it can be done in a synchronous manner. Following is an example of the same.
+
+```javascript
+const text = 'TITLE TEXT';
+
+const slackMessageParams = {};
+slackMessageParams.text = text;
+slackMessageParams.channel = 'CHANNEL ID HERE';
+
+const message = new slackmin.interactiveElements.Message();
+message.addDivider();
+message.addSection(`*${text}*`);
+message.addSection('Another section.');
+
+message.sendMessageToChannel(slackMessageParams);
+```
+Output of above code will look like below:
+
 
 ### Modal Wrapper
 Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
