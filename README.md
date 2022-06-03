@@ -200,38 +200,49 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). `responseUrl` is the response URL. `isTemporary` is true for [ephemeral message] (https://api.slack.com/messaging/managing#ephemeral), otherwise false.
 - `sendMessageToChannel`
   - Parameters: postMessageParams (object with keys - channel, text)
-  - Description: utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
+  - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
 
-#### Example
+#### Example 1
+When responding to a slash commond or any other interaction, we have 2 choices - synchronous manner and asynchronous manner. In the following example, we are responding in asynchronous manner.
+In asynchronous manner, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of interaction.
 
 ```javascript
+const responseUrl = 'Response URL HERE';
 const message = new slackmin.interactiveElements.Message();
 
-message.addCustomHeader(`*ADMIN:* John - *ACTION:* Fetched user with id: 123`);
+message.addCustomHeader('Message *title* `text` here.');
 
 const texts = [
-  '*User Id*:\n' + '123',
-  '*Name*:\n' + 'David',
-  '*Username*:\n' + 'david_qwerty',
-  '*Email*:\n' + 'david@example.com',
-  '*Phone Number* \n' + '(555) 555-1234'
+  '2 Column Support.',
+  '`mrkdwn` is supported too.',
+  'Row 2, Column 1.',
+  'Row 2, Column 2.'
  ];
 
 message.addSectionWithTextFields(texts);
 const actionButtons = [];
 
-// action in value specifies the next method call to be performed for interactive endpoint i.e call to phoneNumberUpdateModal opens the modal
-// hiddenParams are internal params that need to be forwarded
-const updatePhoneNumberButton = {
-      buttonText: 'Update Phone',
-      confirmText: 'Do you want to update phone number for the user?',
+// as a convention, we have value as a JSON string with keys action and hiddenParams.
+// action specifies the next method call to be performed for interactive endpoint i.e call to testModal1Open opens the test modal 1
+// hiddenParams in value are internal params that need to be forwarded
+const testButton1 = {
+      buttonText: 'Test Button 1',
+      confirmText: 'Do you want to really click the test button 1?',
       value:
-        '{"action":"phoneNumberUpdateModal","hiddenParams":{"user_id":"123", "original_response_url":"' +
-        responseUrl +
-        '"}}'
+        "{\"action\":\"testModal1Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
     };
 
-actionButtons.push(updatePhoneNumberButton);
+actionButtons.push(testButton1);
+
+const testButton2 = {
+      buttonText: 'Test Button 2',
+      confirmText: 'Do you want to really click the test button 2?',
+      value:
+        "{\"action\":\"testModal2Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
+    };
+
+actionButtons.push(testButton2);
+
 message.addButtonElements(actionButtons);
 message.sendUsingResponseUrl(responseUrl);
 ```
