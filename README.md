@@ -53,7 +53,6 @@ While using the package, create a singleton object of Slackmin and then use it a
 Example snippet for the Slackmin singleton object is given below.
 
 ```node.js
-
 const Slackmin = require('@plgworks/slackmin');
 
 const appConfigs = [
@@ -246,7 +245,7 @@ actionButtons.push(testButton2);
 message.addButtonElements(actionButtons);
 message.sendUsingResponseUrl(responseUrl);
 ```
-Output of above code will look like below:
+Output of above code is shown in the screenshot below. On clicking of the buttons a confirmation popup comes, as configured.
 
 <img width="636" alt="Message wrapper async example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
 
@@ -267,20 +266,18 @@ message.addSection('Another section.');
 
 message.sendMessageToChannel(slackMessageParams);
 ```
-Output of above code will look like below:
+Output of above code is shown in the screenshot below.
 
 <img width="473" alt="Sync Message / System Alert" src="https://user-images.githubusercontent.com/7627517/171800304-5b3ddd5c-0deb-4a71-828d-a2259fe2e985.png">
 
 ### Modal Wrapper
-Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
-which can be used to create [modal](https://api.slack.com/surfaces/modals).
+Slackmin Modal wrapper provides simple methods to create and format complex [modal](https://api.slack.com/surfaces/modals) layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
 
 **Methods**
 
 - `addSubmitAndCancel`
   - Parameters: submitText (string), cancelText (string)
-  - Description: Add submit and cancel [button]((https://api.slack.com/reference/block-kit/block-elements#button)) elements in [modal](https://api.slack.com/surfaces/modals).
-  `submitText` is the submit button label text. `cancelText` is the cancel button label text.
+  - Description: Add submit and cancel button to the modal. `submitText` is the submit button label text. `cancelText` is the cancel button label text.
 - `addPlainTextSection`
   - Parameters: text (string)
   - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text.
@@ -296,39 +293,52 @@ which can be used to create [modal](https://api.slack.com/surfaces/modals).
   `labelText` is the input block label text. `multiline` indicates whether the input will be a single line (false) or a larger textarea (true), defaults set to true.
   `isOptional` is a boolean that indicates whether the input element may be empty when a user submits the modal, defaults set to false.
 - `addCheckBoxes`
-  - Parameters: labelText (string), optionsArray (object with keys text, value)
+  - Parameters: labelText (string), optionsArray (Array of objects, each object with keys text, value)
   - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
-    `labelText` is the input block label text. `text` is the checkbox label text. `value` is a unique string that specifies the value of the option.
+    `labelText` is the input block label text. `text` is the individual checkbox option label text. `value` is a unique string that specifies the value of the checkbox option.
 - `addRadioButtons`
-  - Parameters: labelText (string), optionsArray (object with keys text, value), initialOption (object)
+  - Parameters: labelText (string), optionsArray (Array of objects, each object with keys text, value), initialOption (object with keys text and value)
   - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio). 
    `labelText` is the input block label text. `text` is the radio button label text. `value` is a unique string value that will be passed to your app when any option is chosen. You can set `initial_option` in the element for selecting radio button option by default.
 - `addParamsMeta`
-  - Parameters: paramsMeta (array of string)
+  - Parameters: paramsMeta (array of strings)
   - Description: To specify parameter names for the subsequent [input](https://api.slack.com/reference/block-kit/blocks#input) block elements such as [plain-text](https://api.slack.com/reference/block-kit/block-elements#input),
     [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes) and [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio).
+    `paramsMeta` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
 - `addHiddenParamsMeta`
   - Parameters: hiddenParamsMeta (object)
   - Description: To pass on internal parameters on modal submit. `hiddenParamsMeta` contains hidden parameters which has to pass for next modal action.
+      `hiddenParamsMeta` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
 - `addAction`
   - Parameters: actionName (string)
-  - Description: You can provide the next action method/route to be executed on modal submit. 
+  - Description: You can provide the next action method/route to be executed on modal submit. As all the interactive component interactions are sent to a single request URL, this `actionName` helps in deciding what needs to be done.
+  `actionName` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
 - `open`
   - Parameters: triggerId (string)
-  - Description: utilizes [Bolt for Javascript](https://slack.dev/bolt-js/concepts#creating-modals) to open modal view. `triggerId` is obtained from [interaction payload](https://api.slack.com/interactivity/handling#payloads).
-#### Modal Wrapper Example
+  - Description: Opens modal using the trigger id, which expires in 3 seconds. `triggerId` is obtained from [interaction payload](https://api.slack.com/interactivity/handling#payloads).
+
+#### Example
 
 ```javascript
-const apiAppId = 'A03GGU0AKKK'; // slack_app_id
+const triggerId = 'Trigger ID obtained in payload';
+const apiAppId = 'A03GGU0AKKK'; // slack app id
 const modal = new slackmin.interactiveElements.Modal(apiAppId, 'Give your vote');
-
-// Mandatory parameters when creating a new modal. Add your next action route here
-modal.addAction('submitForm');
 
 // These are the parameter names for the subsequent textboxes.
 const paramsMeta = ['name', 'member_id', 'designation', 'projects'];
-
 modal.addParamsMeta(paramsMeta);
+
+const hiddenParamsMeta = {param1: "value1"};
+modal.addHiddenParamsMeta(hiddenParamsMeta);
+
+modal.addAction('submitForm');
+
+modal.addMarkdownTextContext('`Hello` *World!*');
+
+modal.addPlainTextSection('Hello World!');
+
+modal.addDivider();
+
 modal.addTextbox('Name', false);
 modal.addTextbox('Member Id', false);
 
@@ -350,11 +360,11 @@ modal.addCheckBoxes('Projects', [
 
 modal.addSubmitAndCancel();
 
-return modal.open(triggerId);
+modal.open(triggerId);
 ```
 Output of above code will look like below:
 
-<img height="500" alt="Modal wrapper usage image" src="https://user-images.githubusercontent.com/72125392/171181904-2175a0a7-bb2d-4155-92ef-b8c3960a3e2f.png" />
+
 
 #### Hidden Parameters in Modals
 
