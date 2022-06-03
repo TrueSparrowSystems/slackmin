@@ -24,14 +24,14 @@ Let's first see a quick demo of the functionality which can be easily implemente
 ### Slash Command
 In the following, you can see a working slash command which is used to fetch user info from the server.
 
-![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171839968-648fea39-eb6e-43f6-a384-da79b518754d.gif)
+![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171859730-6bdbeb0b-7e1b-4723-826c-b22660952f37.gif)
 
 ### Open Modal
 Along with the user information which is fetch by the above slash command, the message also has a button for "Update Phone".
 In the following demo, we can see that a confirmation popup comes on pressing the button. When we confirm, a modal with input for the new phone number opens.
 User enters the new phone numner and submits the modal. After the updation, a success message is sent.
 
-![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171840413-ed5fef75-5ae3-4df6-9345-d79e9a7beec3.gif)
+![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171860401-b64a2dae-03a3-4c89-9807-04fba756e5f7.gif)
 
 ## Prerequisites
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
