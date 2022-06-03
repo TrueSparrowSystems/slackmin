@@ -364,7 +364,7 @@ modal.open(triggerId);
 ```
 Output of above code will look like below:
 
-
+<img width="575" alt="Modal wrapper example" src="https://user-images.githubusercontent.com/7627517/171832112-a87d979d-378a-44ea-b191-14c2306eb2db.png">
 
 #### Hidden Parameters in Modals
 
