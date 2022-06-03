@@ -269,6 +269,7 @@ message.sendMessageToChannel(slackMessageParams);
 ```
 Output of above code will look like below:
 
+<img width="473" alt="Sync Message / System Alert" src="https://user-images.githubusercontent.com/7627517/171800304-5b3ddd5c-0deb-4a71-828d-a2259fe2e985.png">
 
 ### Modal Wrapper
 Slackmin Modal wrapper allows us to add various [block elements](https://api.slack.com/reference/block-kit/block-elements) in a popup. Following are different methods available in wrapper
