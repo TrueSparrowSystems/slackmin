@@ -3,16 +3,6 @@
 
 Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals. One use case of Slackmin is to implement admin functionality over slack.
 
-## Demo
-
-#### **Slash Command**
-
-![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171839968-648fea39-eb6e-43f6-a384-da79b518754d.gif)
-
-#### **Interactive Component**
-
-![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171840413-ed5fef75-5ae3-4df6-9345-d79e9a7beec3.gif)
-
 ## Why Slackmin?
 - Slackmin provides Message and Modal wrappers that help in easy writing of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
 - Slackmin's multiple slack app support helps in Overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
@@ -27,6 +17,19 @@ Additionally, Slackmin provides following built-in security features:
 - Slack app’s **workspace domain** validation is also exposed as a middleware.
 
 Thus Slackmin helps in integrating with slack involving minimum efforts (hence the name, Slackmin).
+
+## Demo
+Let's first see a quick demo of the functionality which can be easily implemented using Slackmin.
+
+### Slash Command
+In the following, you can see a slash command which is used to fetch user info from the server.
+![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171839968-648fea39-eb6e-43f6-a384-da79b518754d.gif)
+
+#### **Interactive Component**
+Along with the user information which is fetch by the above slash command, the message also has a button for "Update Phone".
+In the following demo, we can see that a confirmation popup comes on pressing the button. When we confirm, a modal with input for the new phone number opens.
+User enters the new phone numner and submits the modal.
+![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171840413-ed5fef75-5ae3-4df6-9345-d79e9a7beec3.gif)
 
 ## Prerequisites
 [Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
