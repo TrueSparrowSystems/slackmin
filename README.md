@@ -362,41 +362,40 @@ modal.addSubmitAndCancel();
 
 modal.open(triggerId);
 ```
-Output of above code will look like below:
+Output of above code is shown in the screenshot below.
 
 <img width="575" alt="Modal wrapper example" src="https://user-images.githubusercontent.com/7627517/171832112-a87d979d-378a-44ea-b191-14c2306eb2db.png">
 
-### Hidden Parameters
-For interacting with different entities through slack, parameters like entity id, etc on which we are performing CRUD operations OR which define the context of the operations,
- need to be passed in every API call to the BE server. These parameters need to be forwarded in button actions and in modal submissions.
- 
-#### Button Values
-As a convention, we put a JSON string in value of button. It has 2 keys - `action` and `hiddenParams`.
-Interctive Component Middleware layer extracts hidden parameters from block_actions payload's view object and makes them available in `req.decodedParams`.
+### Journey of Hidden Parameters
+In this section, we will go through an example of our convention if handling hidden parameters. Hidden parameters have the contextual information needed for the CRUD operations like entity id, etc.
 
-
-
+Following are the different parts of our example:
+#### Part 1
+A slash command which sends a message with interactive buttons in it (refer Message Wrapper documentation for creating of message UI).
+The hidden parameters (user_id in our example) must be present in the value of the button element as shown in the following snippet.
 
 ```javascript
-const name = 'abc'; // mention user name
-let userId, responseUrl;  // add your user id and responseUrl
+// hiddenParams in value are internal params that need to be forwarded
+const testButton1 = {
+      buttonText: 'Test Button 1',
+      confirmText: 'Do you want to really click the test button 1?',
+      value:
+        "{\"action\":\"testModal1Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
+    };
 
-// action in value specifies the next method call to be performed for interactive endpoint i.e call to updateEmailModal opens the modal
-// hiddenParams are internal params that need to be forwarded on button action to perform necessary CURD operations on entity
-const button = {
-    buttonText: 'Upate User Email',
-    confirmText: 'Do you want to update email of user name: ' + name + '?',
-    value: `{"action":"updateEmailModal", "hiddenParams":{"user_id":"`
-  };
-
+// Refer the snippet given in section "Example 1 - Async Message" for the complete idea.
+actionButtons.push(testButton1);
 ```
 
-These parameters are passed as hidden parameters, which are internally sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
- 
-# Conclusion
+#### Part 2
+When the button in the message is clicked, a confirmation popup is shown. On confirmation, a POST API call comes from slack to the interactive request URL (which was set in "Slack app setup" section above).
+The block submission payload which comes from slack is converted to api parameters and assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
-Slackmin package can be effectively used to build an admin functionality over slack with security features by using exposed middlewares. 
-Message wrapper and modal wrapper methods can be easily used to message formatting and modal creation. 
+#### Part 3
+A modal UI is created and opened using our Modal wrapper. Hidden parameters are forwarded to the modal view using `addHiddenParamsMeta` method of the Modal wrapper (refer documentation above).
+
+#### Part 4
+On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
 # Contributors
 [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/), [Shraddha Falane](https://plgworks.com/blog/author/shraddha/), [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/), [Parv Saxena](https://plgworks.com/blog/author/parv/)
