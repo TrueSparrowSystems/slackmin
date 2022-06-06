@@ -1,11 +1,11 @@
 # Slackmin
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps you in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals. One use case of Slackmin is to implement admin functionality over slack.
+Slackmin helps in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals. One use case of Slackmin is to implement admin functionality over slack.
 
 ## Why Slackmin?
-- Slackmin provides Message and Modal wrappers that help in easy writing of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Slackmin's multiple slack app support helps in Overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
+- Slackmin provides Message and Modal wrappers that help in easy formatting & sending of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
+- Slackmin's multiple slack app support helps in overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
 - The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
 
 Additionally, Slackmin provides following built-in security features:
@@ -19,7 +19,7 @@ Additionally, Slackmin provides following built-in security features:
 Thus Slackmin helps in integrating with slack involving minimum efforts (hence the name, Slackmin).
 
 ## Demo
-Let's first see a quick demo of the functionality which can be easily implemented using Slackmin.
+Let's first see some quick demos of the functionality which can be easily implemented using Slackmin.
 
 ### Slash Command
 In the following, you can see a working slash command which is used to fetch user info from the server.
@@ -49,7 +49,7 @@ Keep a note of your App ID and Signing Secret from "Basic Information" section o
 
 ## Install NPM
 
-```sh
+```shell script
 npm install @plgworks/slackmin --save
 ```
 
@@ -57,7 +57,7 @@ npm install @plgworks/slackmin --save
 While using the package, create a singleton object of Slackmin and then use it across the application.
 Example snippet for the Slackmin singleton object is given below.
 
-```node.js
+```js
 const Slackmin = require('@plgworks/slackmin');
 
 const appConfigs = [
@@ -108,7 +108,7 @@ module.exports = slackmin;
 Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload, and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation, and slack member id validation.
 
 ### Interactive Component Middlewares
-```javascript
+```js
 const express = require('express');
 const slackmin = require('path-to-your-slackmin-singletone-provider');
 const router = express.Router();
@@ -136,7 +136,7 @@ router.post(
 ```
 
 ### Slash Command Middlewares
-```javascript
+```js
 const express = require('express');
 const slackmin = require('path-to-your-slackmin-singletone-provider');
 const router = express.Router();
@@ -210,7 +210,7 @@ Slackmin Message wrapper provides simple methods to create and format complex me
 When responding to a slash command or any other interaction, we have 2 choices - synchronous manner and asynchronous manner. In the following example, we are responding in asynchronous manner.
 In asynchronous manner, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of interaction.
 
-```javascript
+```js
 const responseUrl = 'Response URL HERE';
 const message = new slackmin.interactiveElements.Message();
 
@@ -257,7 +257,7 @@ Output of above code is shown in the screenshot below. On clicking of the button
 #### Example 2 - Sync Message / System Alert
 If the generation of the message body is simple, then it can be done in a synchronous manner. Following is an example of the same.
 
-```javascript
+```js
 const text = 'TITLE TEXT';
 
 const slackMessageParams = {};
@@ -324,7 +324,7 @@ Slackmin Modal wrapper provides simple methods to create and format complex [mod
 
 #### Example
 
-```javascript
+```js
 const triggerId = 'Trigger ID obtained in payload';
 const apiAppId = 'A03GGU0AKKK'; // slack app id
 const modal = new slackmin.interactiveElements.Modal(apiAppId, 'Give your vote');
@@ -379,7 +379,7 @@ Following are the different parts of our example:
 A slash command which sends a message with interactive buttons in it (refer Message Wrapper documentation for creating of message UI).
 The hidden parameters (user_id in our example) must be present in the value of the button element as shown in the following snippet.
 
-```javascript
+```js
 // hiddenParams in value are internal params that need to be forwarded
 const testButton1 = {
       buttonText: 'Test Button 1',
