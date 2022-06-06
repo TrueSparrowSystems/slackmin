@@ -8,8 +8,9 @@ class ParseApiParams {
   constructor() {}
 
   /**
-   * Function to get view submission parameters.
-   * This method won't be called in case of slash command routes routes. This will be called only for interactive routes.
+   * Parse and get block_actions payload when a user interacts with block component.
+   * Parse and get view_submission payload when users interact with modal views.
+   * This method won't be called in case of slash command routes. This will be called only for interactive routes.
    *
    * @param {object} req
    * @param {object} res

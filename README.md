@@ -1,30 +1,63 @@
 # Slackmin
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps you in easy integration with slack to use slash commands, interactive endpoints, send alert messages, open modals. 
-One use case is to develop admin functionality over slack.
+Slackmin helps in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals. One use case of Slackmin is to implement admin functionality over slack.
 
 ## Why Slackmin?
-- Security features involving signature verification, channel authentication, user authentication, team validation, domain validation 
-    are taken care of by the exposed middlewares.
-- The view submission parameters are extracted into key value pairs for ease of use.
-- Message and Modal wrappers help in easy writing of messages and opening of modals.
-- Support of interacting with multiple slack apps comes built-in with this package.
-  This overcomes the limitation of maximum number of 25 slash commands supported by a slack app.
+- Slackmin provides Message and Modal wrappers that help in easy formatting & sending of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
+- Slackmin's multiple slack app support helps in overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
+- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
 
-## Installation
+Additionally, Slackmin provides following built-in security features:
+- **Sanitize unwanted HTML tags** from parameters obtained in request body, query, headers. [HTML sanitization](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization) is recommended by Open Web Application Security Project (OWASP)
+- **Signature / signed secret verification** is provided as a middleware ready to be plugged in and used for all the requests coming from slack. This [guide](https://api.slack.com/authentication/verifying-requests-from-slack) gives a detailed description of signature verification.
+- **Slack app id** is validated against whitelisted app ids. This validation is also provided via middleware.
+- **Slack channel** validation is done to only allow requests from whitelisted slack channels. For example, there can be one admin channel, in which we add all the admins and they can execute slash commands from there. Requests coming from other channels will be outright rejected. This validation is also provided via middleware.
+- **User authentication** helps in validating whether the user has admin rights or not. We validate the slack id of the user against whitelisted slack ids. This validation is also provided via middleware.
+- Slack app’s **workspace domain** validation is also exposed as a middleware.
 
-```sh
-npm install @plgworks/slackmin
+Thus Slackmin helps in integrating with slack involving minimum efforts (hence the name, Slackmin).
+
+## Demo
+Let's first see some quick demos of the functionality which can be easily implemented using Slackmin.
+
+### Slash Command
+In the following, you can see a working slash command which is used to fetch user info from the server.
+
+![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171859730-6bdbeb0b-7e1b-4723-826c-b22660952f37.gif)
+
+### Open Modal
+Along with the user information which is fetch by the above slash command, the message also has a button for "Update Phone".
+In the following demo, we can see that a confirmation popup comes on pressing the button. When we confirm, a modal with input for the new phone number opens.
+User enters the new phone numner and submits the modal. After the updation, a success message is sent.
+
+![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171860401-b64a2dae-03a3-4c89-9807-04fba756e5f7.gif)
+
+## Prerequisites
+[Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
+
+## Slack app setup
+First, we need to setup a slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
+
+- Create a slack app. Visit https://api.slack.com/apps.
+- Configure request URL for interactive components. Click [here](https://api.slack.com/interactivity/handling) for details.
+- Configure slash commands. For more details [click here](https://api.slack.com/interactivity/slash-commands).
+- Add scopes [chat:write](https://api.slack.com/scopes/chat:write) and [chat:write:public](https://api.slack.com/scopes/chat:write.public) to the bot token scopes. Know more about [Slack Scopes](https://api.slack.com/scopes).
+- Then [install](https://api.slack.com/authentication/basics#installing) the app to your workspace.
+
+Keep a note of your App ID and Signing Secret from "Basic Information" section of your app. Also note the Bot User OAuth Token from "OAuth & Permissions" section of your app. These will be required in further steps.
+
+## Install NPM
+
+```shell script
+npm install @plgworks/slackmin --save
 ```
 
 ## Initialize
-While using the package, create an object of Slackmin at one place (in a provider file) and then use it across the application.
-Example snippet for the provider file is given below.
+While using the package, create a singleton object of Slackmin and then use it across the application.
+Example snippet for the Slackmin singleton object is given below.
 
-```node.js
-// slack admin provider file
-
+```js
 const Slackmin = require('@plgworks/slackmin');
 
 const appConfigs = [
@@ -33,312 +66,344 @@ const appConfigs = [
     secret: '<slack_signing_secret>',
     slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
   }
-]
+];
 
-const whiteListedChannels = { '<slack_channel_id>': '1' }
+const whiteListedChannels = ['<slack_channel_id>', '<slack_channel_id>', '<slack_channel_id>'];
 
-const slackDomain = '<your_slack_domain>'
+const slackDomain = '<your_slack_domain>';
 
-const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>']
+const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>'];
 
-const slackAdmin = new Slackmin(
+const slackmin = new Slackmin(
   appConfigs,
   whiteListedChannels,
   slackDomain,
   whitelistedUsers
 );
 
-module.exports = slackAdmin;
+module.exports = slackmin;
 ```
 
-### Slackmin Initialization Params
-**1. appConfigs**
+### Initialization Params
+**1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
-
-`appConfigs` is an array of app config objects allowing slackmin to support multiple apps. Each app config in an object consisting of id, secret and token.
-
-- **id**: You need to provide your slack app id here. To create a slack app visit https://api.slack.com/apps.
-- **secret**: After you create your app, you can get signing secret from your app credentials. Slack signs the requests sent to you using this secret. We have provided a method that confirms each request coming from Slack by verifying its unique signature.
-- **slack_bot_user_oauth_token**: Your app's presence is determined by the slack bot. A bot token in your app lets users at-mention it, add it to channels and conversations, and allows you to turn on tabs in your app’s home. It makes it possible for users to interact with your app in Slack. In slackmin slack bot sends the message on the slack channel.
+- **id**: This is your slack app id.
+- **secret**: Your app's signing secret. This is used to do request signature verification.
+- **slack_bot_user_oauth_token**: This is the Bot User OAuth Token.
 
 <br>
 
-**2. whiteListedChannels**
-
-
-`whiteListedChannels` is a channel id map consisting of whitelisted channels to execute the slash commands in. Slash commands will execute only in the whitelisted channels.
+**2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
 
 <br>
 
-**3. slackDomain**
-
-
-`slackDomain` is your slack app's workspace domain. It could be a team workspace or individual workspace. 
+**3. `slackDomain`** is your slack app's workspace domain. It could be a team workspace or individual workspace.
 
 <br>
 
-**4. whitelistedUsers**
+**4. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
 
-`whitelistedUsers` is an array consisting of whitelisted user ids. User id is your member id on slack. Whitelisted users are channel admins that can execute commands in whitelisted channels.
+## Middlewares
 
-## slackmin middleware usage
+Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload, and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation, and slack member id validation.
 
-```javascript
-const {
-  formatPayload,
-  sanitizeBodyAndQuery,
-  assignParams,
-  sanitizeDynamicUrlParams,
-  sanitizeHeaderParams,
-  extractSlackParams,
-  validateSignature,
-  validateSlackUser,
-  validateSlackChannel,
-  validateSlackApiAppId,
-  extractResponseUrlFromPayload,
-  extractText,
-  extractResponseUrlFromBody,
-  parseApiParameters,
-  extractTriggerId
-} = slackAdmin.middlewares;
-```
-### Slackmin Middlewares
-**1. formatPayload**
+### Interactive Component Middlewares
+```js
+const express = require('express');
+const slackmin = require('path-to-your-slackmin-singletone-provider');
+const router = express.Router();
 
-`formatPayload` formats and preprocess the slack payload. Parse and regex replace processed links and user mention in slack payload. A slack payload is a JSON object that is used to define metadata about the message, such as where it should be published etc.
-<br>
-
-**2. sanitizeBodyAndQuery**
-
-`sanitizeBodyAndQuery` recursively sanitize request body and request query params.
-
-<br>
-
-**3. assignParams**
-
-`assignParams` assign params to request object, so it can be used in subsequent middlewares.
-
-<br>
-
-**4. sanitizeDynamicUrlParams**
-
-`sanitizeDynamicUrlParams` recursively sanitize dynamic params in URL.
-
-<br>
-
-**5. sanitizeHeaderParams**
-
-`sanitizeHeaderParams` recursively sanitize request headers.
-
-<br>
-
-
-**6. extractSlackParams**
-
-`extractSlackParams` extract slack_id, team_domain and api_app_id from slack request payload in case of interactive endpoints.
-It extract slack_id, team_domain, channel_id and response_url from request body in case of slash commands. 
-
-<br>
-
-**7. validateSignature**
-
-`validateSignature` verify requests from slack by verifying signatures using signing secret.
-The signature is created by combining the signing secret with the body of the request using a standard HMAC-SHA256 keyed hash.
-                    
-<br>
-
-**8. validateSlackUser**
-
-`validateSlackUser`perform slack user authentication. It verify if user is present in `whitelistedUsers`. 
-
-<br>
-
-**9. validateSlackChannel**
-
-`validateSlackChannel`perform slack channel authentication. It validates if channel is listed in  `whiteListedChannels`. 
- 
-<br>
-
-**10. validateSlackApiAppId**
-
-`validateSlackApiAppId` validate slack app Id. It only allows request from provided apps in `appConfigs`.
-
-<br>
-
-**11. extractResponseUrlFromPayload**
-
-`extractResponseUrlFromPayload` extract response_url from interactive routes. This middleware should only be used with interactive endpoints.
-
-<br>
-
-**12. extractText**
-
-`extractText` extract text from slash command's request body. This middleware should only be used with slash commands.
-
-<br>
-
-**13. extractResponseUrlFromBody**
-
-`extractResponseUrlFromBody` extract response_url from slash command's request body. This middleware should only be used with slash commands
-
-<br>
-
-**14. parseApiParameters**
-
-`parseApiParameters` parse and get block_actions payload when a user interacts with block component.
-Parse and get view_submission payload when users interact with modal views. This middleware should only be used with interactive endpoints. 
-
-<br>
-
-**15. extractTriggerId**
-
-`extractTriggerId` extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
- This middleware will not fetch triggerId for view_submission type interactions.
-
-### Common Middlewares
-```javascript
 // common middlewares
 // This set of middlewares can be used with slash commands as well as with interactive routes.
 router.use(
-  formatPayload,
-  sanitizeBodyAndQuery,
-  assignParams,
-  extractSlackParams,
-  validateSignature,
-  validateSlackUser
-)
-
-// OR 
-
-router.use(
   slackmin.commonMiddlewares
 );
-```
 
-### Interactive Middlewares
-```javascript
 //  interactive-endpoint middlewares
 // This set of middlewares can be used with interactive routes.
-
-router.post(
-  '/interactive-endpoint',
-  sanitizeDynamicUrlParams,
-  sanitizeHeaderParams,
-  validateSlackApiAppId,
-  extractTriggerId,
-  extractResponseUrlFromPayload,
-  parseApiParameters,
-  async function(req, res, next) {
-    // your business logic
-  }
+router.use(
+  slackmin.interactiveEndpointMiddlewares
 );
 
-//OR
-
+// Example interactive endpoint
 router.post(
   '/interactive-endpoint',
-  slackAdmin.interactiveEndpointMiddlewares,
   async function(req, res, next) {
-    // your business logic
-  }
-)
+     // your business logic
+    // req.decodedParams contains sanitized parameters and must be used to read data for further business logic.
+   console.log(req.decodedParams);  }
+);
 ```
 
 ### Slash Command Middlewares
-```javascript
-// '/' command middlewares
-// This set of middlewares can be used with Slash commands.
+```js
+const express = require('express');
+const slackmin = require('path-to-your-slackmin-singletone-provider');
+const router = express.Router();
 
+// common middlewares
+// This set of middlewares can be used with slash commands as well as with interactive routes.
 router.use(
-  validateSlackChannel,
-  extractText,
-  extractResponseUrlFromBody
+  slackmin.commonMiddlewares
 );
 
-//OR
-
+// slash ('/') command middlewares
+// This set of middlewares can be used with Slash commands.
 router.use(
-  slackAdmin.slashCommandMiddlewares
-)
+  slackmin.slashCommandMiddlewares
+);
+
+// Write all routes specific to slash commands below.
+// Example slash command endpoint
+router.post(
+  '/slash-command',
+  async function(req, res, next) {
+     // your business logic
+    // req.decodedParams contains sanitized parameters and must be used to read data for further business logic.
+   console.log(req.decodedParams);
+  }
+);
 ```
+**Important Note**: `req.decodedParams` contains sanitized parameters and must be used to read data for further business logic.
+
 
 ## Interactive Components
 
-Slack provides a range of visual components, called Block Kit, that can be used in messages. These blocks can be used to lay out complex information in a way that's easy to digest. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in each message, and 100 blocks in modals.
-You can find Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks)
+Slack provides a range of visual components, called Block Kit, used to layout complex information. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in a message and 100 blocks in modals.
+You can find the Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks).
 
 ### Message Wrapper
 
-slackmin Message wrapper allows us to create and format the message alert interface by enabling addition of various blocks.
+Slackmin Message wrapper provides simple methods to create and format complex message layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
 
-```javascript
-const message = new slackAdmin.interactiveElements.Message();
+**Methods**
+
+- `addSection`
+  - Parameters: text (string)
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
+- `addSectionWithTextFields`
+  - Parameters: texts (array of strings)
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with two columns layout to display provided texts. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
+- `addButton`
+  - Parameters: labelText (string), buttonText (string), value (string)
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block to render a [button](https://api.slack.com/reference/block-kit/block-elements#button). 
+  `labelText` is the section text, `buttonText` is the button label text and `value` is the button value. 
+- `addButtonElements`
+  - Parameters: buttonDetails (array of objects with keys - buttonText, value, confirmText)
+  - Description: Adds an [action](https://api.slack.com/reference/block-kit/blocks#actions) block with multiple [button](https://api.slack.com/reference/block-kit/block-elements#button) elements.
+   Each button element comes with a confirmation popup. `buttonText` is the button label text, `value` is the button value and `confirmText` is the confirmation pop up message. If you don't want to have
+   a confirmation pop up, don't pass `confirmText`.
+- `addDivider`
+  - Parameters: null
+  - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
+- `addCustomHeader`
+  - Parameters: text (string)
+  - Description: Adds a [divider](https://api.slack.com/reference/block-kit/blocks#divider) and a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
+- `sendUsingResponseUrl`
+  - Parameters: responseUrl (string), isTemporary (boolean)
+  - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). `responseUrl` is the response URL. `isTemporary` is true for [ephemeral message] (https://api.slack.com/messaging/managing#ephemeral), otherwise false.
+- `sendMessageToChannel`
+  - Parameters: postMessageParams (object with keys - channel, text)
+  - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
+
+#### Example 1 - Sync Message / System Alert
+When responding to a slash command or any other interaction, we have 2 choices - synchronous response and asynchronous response. If the generation of the message body is simple, then the response can be sent synchronously. Following is an example of the same.
+
+```js
+const text = 'TITLE TEXT';
+
+const slackMessageParams = {};
+slackMessageParams.text = text;
+slackMessageParams.channel = 'CHANNEL ID HERE';
+
+const message = new slackmin.interactiveElements.Message();
+message.addDivider();
+message.addSection(`*${text}*`);
+message.addSection('Another section.');
+
+message.sendMessageToChannel(slackMessageParams);
 ```
+Output of above code is shown in the screenshot below.
 
-For example,
-<br>
-adding a section block
+<img width="473" alt="Sync Message / System Alert" src="https://user-images.githubusercontent.com/7627517/171800304-5b3ddd5c-0deb-4a71-828d-a2259fe2e985.png">
 
-```javascript
-message.addSection("I want to add some text here. And it should be *markdown*");
+#### Example 2 - Async Message
+In the following example, we are sending asynchronous response.
+While sending asynchronous response, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of initial slack interaction.
+
+```js
+const responseUrl = 'Response URL HERE';
+const message = new slackmin.interactiveElements.Message();
+
+message.addCustomHeader('Message *title* `text` here.');
+
+const texts = [
+  '2 Column Support.',
+  '`mrkdwn` is supported too.',
+  'Row 2, Column 1.',
+  'Row 2, Column 2.'
+ ];
+
+message.addSectionWithTextFields(texts);
+const actionButtons = [];
+
+// as a convention, we have value as a JSON string with keys action and hiddenParams.
+// action specifies the next method call to be performed for interactive endpoint i.e call to testModal1Open opens the test modal 1
+// hiddenParams in value are internal params that need to be forwarded
+const testButton1 = {
+      buttonText: 'Test Button 1',
+      confirmText: 'Do you want to really click the test button 1?',
+      value:
+        "{\"action\":\"testModal1Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
+    };
+
+actionButtons.push(testButton1);
+
+const testButton2 = {
+      buttonText: 'Test Button 2',
+      confirmText: 'Do you want to really click the test button 2?',
+      value:
+        "{\"action\":\"testModal2Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
+    };
+
+actionButtons.push(testButton2);
+
+message.addButtonElements(actionButtons);
+message.sendUsingResponseUrl(responseUrl);
 ```
-[Preview for message.addSection](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22I%20want%20to%20add%20some%20text%20here.%20And%20it%20should%20be%20*markdown*%22%7D%7D%5D%7D)
+Output of above code is shown in the screenshot below. On clicking of the buttons a confirmation popup comes, as configured.
 
-
-adding divider section
-```javascript
-message.addDivider()
-```
-[Preview for message.addDivider](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D,%7B%22type%22:%22section%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22This%20is%20a%20plain%20text%20section%20block.%22,%22emoji%22:true%7D%7D,%7B%22type%22:%22divider%22%7D%5D%7D)
-
-adding button elements
-```javascript
-message.addButtonElements(
-  [
-    {
-      buttonText: 'Click me 1',
-      confirmText: 'You clicked the correct button 1',
-      value: '{"action":"actionId-0"}'
-    },
-    {
-      buttonText: 'Click me 2',
-      confirmText: 'You clicked the correct button 2',
-      value: '{"action":"actionId-1"}'
-    }
-  ]
-)
-```
-[Preview for message.addButtonElements](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22blocks%22:%5B%7B%22type%22:%22actions%22,%22elements%22:%5B%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%201%22%7D,%22value%22:%22click_me_123%22,%22action_id%22:%22actionId-0%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%201%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D,%7B%22type%22:%22button%22,%22text%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Click%20Me%202%22%7D,%22value%22:%22click_me_1234%22,%22action_id%22:%22actionId-1%22,%22confirm%22:%7B%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Are%20you%20sure?%22%7D,%22text%22:%7B%22type%22:%22mrkdwn%22,%22text%22:%22You%20clicked%20the%20correct%20button%202%22%7D,%22confirm%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22%7D,%22deny%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Cancel%22%7D%7D%7D%5D%7D%5D%7D)
+<img width="636" alt="Message wrapper async example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
 
 ### Modal Wrapper
-slackmin Modal wrapper allows us to add various blocks in a popup.
-```javascript
-// appId is required to validate signature
-// text here is modal's title text
-const text = "Input Email"
-const modal = new slackAdmin.interactiveElements.Modal(appId, text);
+Slackmin Modal wrapper provides simple methods to create and format complex [modal](https://api.slack.com/surfaces/modals) layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
+
+**Methods**
+
+- `addSubmitAndCancel`
+  - Parameters: submitText (string), cancelText (string)
+  - Description: Add submit and cancel button to the modal. `submitText` is the submit button label text. `cancelText` is the cancel button label text.
+- `addPlainTextSection`
+  - Parameters: text (string)
+  - Description: Adds a [section](https://api.slack.com/reference/block-kit/blocks#section) block with the provided text.
+- `addMarkdownTextContext`
+  - Parameters: text (string)
+  - Description: Adds a [context](https://api.slack.com/reference/block-kit/blocks#context) block with the provided text. Supports [mrkdwn](https://api.slack.com/reference/surfaces/formatting).
+- `addDivider`
+  - Parameters: null
+  - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
+- `addTextbox`
+  - Parameters: labelText (string), multiline (boolean), isOptional (boolean)
+  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [plain-text](https://api.slack.com/reference/block-kit/block-elements#input).
+  `labelText` is the input block label text. `multiline` indicates whether the input will be a single line (false) or a larger textarea (true), defaults set to true.
+  `isOptional` is a boolean that indicates whether the input element may be empty when a user submits the modal, defaults set to false.
+- `addCheckBoxes`
+  - Parameters: labelText (string), optionsArray (Array of objects, each object with keys text, value)
+  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
+    `labelText` is the input block label text. `text` is the individual checkbox option label text. `value` is a unique string that specifies the value of the checkbox option.
+- `addRadioButtons`
+  - Parameters: labelText (string), optionsArray (Array of objects, each object with keys text, value), initialOption (object with keys text and value)
+  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio). 
+   `labelText` is the input block label text. `text` is the radio button label text. `value` is a unique string value that will be passed to your app when any option is chosen. You can set `initial_option` in the element for selecting radio button option by default.
+- `addParamsMeta`
+  - Parameters: paramsMeta (array of strings)
+  - Description: To specify parameter names for the subsequent [input](https://api.slack.com/reference/block-kit/blocks#input) block elements such as [plain-text](https://api.slack.com/reference/block-kit/block-elements#input),
+    [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes) and [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio).
+    `paramsMeta` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
+- `addHiddenParamsMeta`
+  - Parameters: hiddenParamsMeta (object)
+  - Description: To pass on internal parameters on modal submit. `hiddenParamsMeta` contains hidden parameters which has to pass for next modal action.
+      `hiddenParamsMeta` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
+- `addAction`
+  - Parameters: actionName (string)
+  - Description: You can provide the next action method/route to be executed on modal submit. As all the interactive component interactions are sent to a single request URL, this `actionName` helps in deciding what needs to be done.
+  `actionName` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
+- `open`
+  - Parameters: triggerId (string)
+  - Description: Opens modal using the trigger id, which expires in 3 seconds. `triggerId` is obtained from [interaction payload](https://api.slack.com/interactivity/handling#payloads).
+
+#### Example
+
+```js
+const triggerId = req.decodedParams.trigger_id; // Our middleware layer sets the trigger_id in req.decodedParams
+const apiAppId = '<slack_app_id>'; // slack app id
+const modal = new slackmin.interactiveElements.Modal(apiAppId, 'Give your vote');
+
+// These are the parameter names for the subsequent textboxes.
+const paramsMeta = ['name', 'member_id', 'designation', 'projects'];
+modal.addParamsMeta(paramsMeta);
+
+const hiddenParamsMeta = {param1: "value1"};
+modal.addHiddenParamsMeta(hiddenParamsMeta);
+
+modal.addAction('submitForm');
+
+modal.addMarkdownTextContext('`Hello` *World!*');
+
+modal.addPlainTextSection('Hello World!');
+
+modal.addDivider();
+
+modal.addTextbox('Name', false);
+modal.addTextbox('Member Id', false);
+
+modal.addRadioButtons(
+ 'Designation',
+  [
+    { text: 'Front End Developer', value: 'FE' },
+    { text: 'Back End Developer', value: 'BE' },
+    { text: 'Quality Assurance Engineer', value: 'QA' }
+  ],
+  { text: 'Front End Developer', value: 'FE' }
+);
+
+modal.addCheckBoxes('Projects', [
+  { text: 'Fab', value: '1' },
+  { text: 'Moxie', value: '2'},
+  { text: 'Hem', value: '3' }
+]);
+
+modal.addSubmitAndCancel();
+
+modal.open(triggerId);
 ```
-For example,
-<br>
+Output of above code is shown in the screenshot below.
 
-buttons on modal. we can change the text of the confirm button and cancel button.
+<img width="575" alt="Modal wrapper example" src="https://user-images.githubusercontent.com/7627517/171832112-a87d979d-378a-44ea-b191-14c2306eb2db.png">
 
-```javascript
-modal.addSubmitAndCancel("Confirm", "Close");
+### Journey of Hidden Parameters
+In this section, we will go through an example of our convention if handling hidden parameters. Hidden parameters have the contextual information needed for the CRUD operations like entity id, etc.
+
+Following are the different parts of our example:
+#### Part 1
+A slash command which sends a message with interactive buttons in it (refer Message Wrapper documentation for creating of message UI).
+The hidden parameters (user_id in our example) must be present in the value of the button element as shown in the following snippet.
+
+```js
+// hiddenParams in value are internal params that need to be forwarded
+const testButton1 = {
+      buttonText: 'Test Button 1',
+      confirmText: 'Do you want to really click the test button 1?',
+      value:
+        "{\"action\":\"testModal1Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
+    };
+
+// Refer the snippet given in section "Example 1 - Async Message" for the complete idea.
+actionButtons.push(testButton1);
 ```
 
-add input text box
+#### Part 2
+When the button in the message is clicked, a confirmation popup is shown. On confirmation, a POST API call comes from slack to the interactive request URL (which was set in "Slack app setup" section above).
+The block submission payload which comes from slack is converted to api parameters and assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
-```javascript
-// takes params labelText(string), multiline(boolean), isOptional(boolean)
-modal.addTextbox(
-  "Your Email",
-  false,
-  false
-)
-```
-[Preview for modal](https://app.slack.com/block-kit-builder/T0394LH7H54#%7B%22type%22:%22modal%22,%22title%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Input%20Email%22,%22emoji%22:true%7D,%22submit%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Confirm%22,%22emoji%22:true%7D,%22close%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Close%22,%22emoji%22:true%7D,%22blocks%22:%5B%7B%22type%22:%22input%22,%22element%22:%7B%22type%22:%22plain_text_input%22,%22multiline%22:false%7D,%22label%22:%7B%22type%22:%22plain_text%22,%22text%22:%22Your%20Email%22%7D,%22optional%22:false%7D%5D%7D)
+#### Part 3
+A modal UI is created and opened using our Modal wrapper. Hidden parameters are forwarded to the modal view using `addHiddenParamsMeta` method of the Modal wrapper (refer documentation above).
 
+#### Part 4
+On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
-# Contributors
-[Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/), [Shraddha Falane](https://plgworks.com/blog/author/shraddha/), [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/), [Parv Saxena](https://plgworks.com/blog/author/parv/)
+## Contributors
+- [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/)
+- [Shraddha Falane](https://plgworks.com/blog/author/shraddha/)
+- [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/)
+- [Parv Saxena](https://plgworks.com/blog/author/parv/)

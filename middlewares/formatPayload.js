@@ -1,5 +1,5 @@
 /**
- * Class for formatting and preprocessing payload
+ * Class for formatting and preprocessing slack payload
  * @class PayloadFormatter
  */
 class PayloadFormatter {

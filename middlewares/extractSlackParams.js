@@ -1,6 +1,9 @@
 /**
  * Class for extract slack params
  *
+ * extract slack_id, team_domain and api_app_id from slack request payload in case of interactive endpoints.
+ * It extract slack_id, team_domain, channel_id and response_url from request body in case of slash commands.
+ *
  * @class ExtractSlackParams
  */
 class ExtractSlackParams {
