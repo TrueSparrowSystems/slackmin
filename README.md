@@ -206,9 +206,30 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Parameters: postMessageParams (object with keys - channel, text)
   - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
 
-#### Example 1 - Async Message
-When responding to a slash command or any other interaction, we have 2 choices - synchronous manner and asynchronous manner. In the following example, we are responding in asynchronous manner.
-In asynchronous manner, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of interaction.
+#### Example 1 - Sync Message / System Alert
+When responding to a slash command or any other interaction, we have 2 choices - synchronous response and asynchronous response. If the generation of the message body is simple, then the response can be sent synchronously. Following is an example of the same.
+
+```js
+const text = 'TITLE TEXT';
+
+const slackMessageParams = {};
+slackMessageParams.text = text;
+slackMessageParams.channel = 'CHANNEL ID HERE';
+
+const message = new slackmin.interactiveElements.Message();
+message.addDivider();
+message.addSection(`*${text}*`);
+message.addSection('Another section.');
+
+message.sendMessageToChannel(slackMessageParams);
+```
+Output of above code is shown in the screenshot below.
+
+<img width="473" alt="Sync Message / System Alert" src="https://user-images.githubusercontent.com/7627517/171800304-5b3ddd5c-0deb-4a71-828d-a2259fe2e985.png">
+
+#### Example 2 - Async Message
+In the following example, we are sending asynchronous response.
+While sending asynchronous response, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of initial slack interaction.
 
 ```js
 const responseUrl = 'Response URL HERE';
@@ -253,27 +274,6 @@ message.sendUsingResponseUrl(responseUrl);
 Output of above code is shown in the screenshot below. On clicking of the buttons a confirmation popup comes, as configured.
 
 <img width="636" alt="Message wrapper async example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
-
-#### Example 2 - Sync Message / System Alert
-If the generation of the message body is simple, then it can be done in a synchronous manner. Following is an example of the same.
-
-```js
-const text = 'TITLE TEXT';
-
-const slackMessageParams = {};
-slackMessageParams.text = text;
-slackMessageParams.channel = 'CHANNEL ID HERE';
-
-const message = new slackmin.interactiveElements.Message();
-message.addDivider();
-message.addSection(`*${text}*`);
-message.addSection('Another section.');
-
-message.sendMessageToChannel(slackMessageParams);
-```
-Output of above code is shown in the screenshot below.
-
-<img width="473" alt="Sync Message / System Alert" src="https://user-images.githubusercontent.com/7627517/171800304-5b3ddd5c-0deb-4a71-828d-a2259fe2e985.png">
 
 ### Modal Wrapper
 Slackmin Modal wrapper provides simple methods to create and format complex [modal](https://api.slack.com/surfaces/modals) layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
@@ -325,8 +325,8 @@ Slackmin Modal wrapper provides simple methods to create and format complex [mod
 #### Example
 
 ```js
-const triggerId = 'Trigger ID obtained in payload';
-const apiAppId = 'A03GGU0AKKK'; // slack app id
+const triggerId = req.decodedParams.trigger_id; // Our middleware layer sets the trigger_id in req.decodedParams
+const apiAppId = '<slack_app_id>'; // slack app id
 const modal = new slackmin.interactiveElements.Modal(apiAppId, 'Give your vote');
 
 // These are the parameter names for the subsequent textboxes.
