@@ -1,6 +1,6 @@
 {
   "name": "@plgworks/slackmin",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Easy integration to slack for sending messages, opening modals, interactive endpoints and much more.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "slack message"
   ],
   "author": "PLG Works",
-  "license": "LGPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/PLG-Works/slackmin/issues"
   },
