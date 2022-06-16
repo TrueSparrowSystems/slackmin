@@ -1,6 +1,6 @@
 {
   "name": "@plgworks/slackmin",
-  "version": "2.0.0",
+  "version": "2.0.1-beta.1",
   "description": "Easy integration to slack for sending messages, opening modals, interactive endpoints and much more.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "slack message"
   ],
   "author": "PLG Works",
-  "license": "LGPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/PLG-Works/slackmin/issues"
   },
@@ -29,8 +29,8 @@
     "sanitize-html": "2.7.0",
     "slack": "11.0.2",
     "uuid": "8.3.2",
-    "html-entities": "2.1.0",
-    "@slack/bolt": "3.2.0",
+    "html-entities": "2.3.3",
+    "@slack/bolt": "3.11.0",
     "bignumber.js": "9.0.0"
   },
   "devDependencies": {
