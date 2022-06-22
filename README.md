@@ -203,8 +203,8 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Parameters: responseUrl (string), isTemporary (boolean)
   - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). `responseUrl` is the response URL. `isTemporary` is true for [ephemeral message] (https://api.slack.com/messaging/managing#ephemeral), otherwise false.
 - `sendMessageToChannel`
-  - Parameters: postMessageParams (object with keys - channel, text)
-  - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id. `text` is the message title text.
+  - Parameters: postMessageParams (object with keys - channelId, text)
+  - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channelId` is the channel id. `text` is the message title text.
 
 #### Example 1 - Sync Message / System Alert
 When responding to a slash command or any other interaction, we have 2 choices - synchronous response and asynchronous response. If the generation of the message body is simple, then the response can be sent synchronously. Following is an example of the same.
@@ -214,7 +214,7 @@ const text = 'TITLE TEXT';
 
 const slackMessageParams = {};
 slackMessageParams.text = text;
-slackMessageParams.channel = 'CHANNEL ID HERE';
+slackMessageParams.channelId = 'CHANNEL ID HERE';
 
 const message = new slackmin.interactiveElements.Message();
 message.addDivider();
