@@ -1,3 +1,6 @@
+## Slackmin v2.0.2
+- Removed usage of deprecated `slack` npm package and replaced it with `@slack/bolt` npm package.
+
 ## Slackmin v2.0.1
 - LICENSE changes.
 
