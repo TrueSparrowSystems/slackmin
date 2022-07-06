@@ -293,11 +293,10 @@ Slackmin Modal wrapper provides simple methods to create and format complex [mod
   - Parameters: null
   - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
 - `addTextbox`
-  - Parameters: labelText (string), initialText (string), placeHolderText (string), multiline (boolean), isOptional (boolean)
+  - Parameters: labelText (string), multiline (boolean), isOptional (boolean), initialText (string), placeHolderText (string)
   - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [plain-text](https://api.slack.com/reference/block-kit/block-elements#input).
-  `labelText` is the input block label text. `initialText` is the initial value in the plain-text input field. `placeHolderText` is the placeholder text shown in the plain-text input.
-  `multiline` indicates whether the input will be a single line (false) or a larger textarea (true), defaults set to true.
-  `isOptional` is a boolean that indicates whether the input element may be empty when a user submits the modal, defaults set to false.
+  `labelText` is the input block label text.`multiline` indicates whether the input will be a single line (false) or a larger textarea (true), defaults set to true.
+  `isOptional` is a boolean that indicates whether the input element may be empty when a user submits the modal, defaults set to false. `initialText` is the initial value in the plain-text input field. `placeHolderText` is the placeholder text shown in the plain-text input.
 - `addCheckBoxes`
   - Parameters: labelText (string), optionsArray (Array of objects, each object with keys text, value), initialOptions (Array of objects, each object with keys text, value)
   - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
