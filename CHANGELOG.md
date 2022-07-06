@@ -1,6 +1,6 @@
 ## Slackmin v2.1.0
-- Modal text input field with placeholder text and initial value text. 
-- Modal checkboxes input field with initial values.
+- Added functionality of adding placeholder (helper) text and initial value in Modal text input field. 
+- Added functionality of checkboxes to be checked on initial Modal page load.
 
 ## Slackmin v2.0.2
 - Removed usage of deprecated `slack` npm package and replaced it with `@slack/bolt` npm package.
