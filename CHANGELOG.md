@@ -1,3 +1,6 @@
+## Slackmin v2.0.3
+- Modal text input field with placeholder text and initial value text. Similarly, checkboxes input field with initial values.
+
 ## Slackmin v2.0.2
 - Removed usage of deprecated `slack` npm package and replaced it with `@slack/bolt` npm package.
 

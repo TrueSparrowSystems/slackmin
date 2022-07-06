@@ -1,6 +1,6 @@
 {
   "name": "@plgworks/slackmin",
-  "version": "2.0.2-beta.1",
+  "version": "2.0.3",
   "description": "Easy integration to slack for sending messages, opening modals, interactive endpoints and much more.",
   "main": "index.js",
   "scripts": {
