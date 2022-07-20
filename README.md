@@ -1,22 +1,32 @@
-# Slackmin
+![Group 11088](https://user-images.githubusercontent.com/7627517/179924973-20755a21-db85-428c-9f25-a0b693d0ab87.png)
+
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals. One use case of Slackmin is to implement admin functionality over slack.
+Slackmin allows you to easily integrate slack [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), message formatting, custom modals in your Node.js application. You can build and setup custom tailored tools for your daily ops like different analytics reports, content management interfaces, customer support modules and much more. Also send alerts and notifications over Slack for your team to take actions on critical events in your application.
 
-## Why Slackmin?
-- Slackmin provides Message and Modal wrappers that help in easy formatting & sending of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Slackmin's multiple slack app support helps in overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
-- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
+## Business Benefits
+- Use **Slack’s Web, Desktop and Mobile apps** to manage your Content, Orders, Reports, Customers and much more.
+- **Focus** on your Product instead of building custom solutions for your admin needs. Use Slack to manage everything, save days of valuable time.
+- **Spend Less $** on Admin Tools. Use the tool you already have, use Slack!
+- Use public and private channels in Slack to **manage access** to certain types of data and features. Additionally, you can whitelist slack users for specific functionalities.
+- Leverage the robust **Search** features in Slack so your team has easy access to historical data.
+- Users can setup their own push **notifications** in Slack to get alerted about the data they need most.
+- **Logs for actions** taken by your admins like updated product details, Customer queries, Payment notifications and much more are easily searchable and accessible.
 
-Additionally, Slackmin provides following built-in security features:
+## Developer Benefits
+- Slackmin is **open source**. Developers can use (as it is) or modify Slackmin for their custom needs, for free!
+- Slack has built a **secure platform**. Slackmin uses this secure infrastructure instead of you building your own security layers.
+- Slackmin provides **Message and Modal wrappers** that help in easy formatting & sending messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals). No need to create complex data structures for message and modal layouting.
+- Slackmin's multiple slack app support helps in overcoming the 25 slash commands limitation per slack app. You can also create multiple applications for better access control.
+- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed into key-value pair of parameters.
+
+Additionally, Slackmin provides following **built-in security** features as middlewares:
 - **Sanitize unwanted HTML tags** from parameters obtained in request body, query, headers. [HTML sanitization](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization) is recommended by Open Web Application Security Project (OWASP)
 - **Signature / signed secret verification** is provided as a middleware ready to be plugged in and used for all the requests coming from slack. This [guide](https://api.slack.com/authentication/verifying-requests-from-slack) gives a detailed description of signature verification.
-- **Slack app id** is validated against whitelisted app ids. This validation is also provided via middleware.
-- **Slack channel** validation is done to only allow requests from whitelisted slack channels. For example, there can be one admin channel, in which we add all the admins and they can execute slash commands from there. Requests coming from other channels will be outright rejected. This validation is also provided via middleware.
-- **User authentication** helps in validating whether the user has admin rights or not. We validate the slack id of the user against whitelisted slack ids. This validation is also provided via middleware.
+- **Slack app id** is validated against whitelisted app ids.
+- **Slack channel** validation is done to only allow requests from whitelisted slack channels.
+- **User authentication** helps in validating whether the slack user has correct privileges or not.
 - Slack app’s **workspace domain** validation is also exposed as a middleware.
-
-Thus Slackmin helps in integrating with slack involving minimum efforts (hence the name, Slackmin).
 
 ## Demo
 Let's first see some quick demos of the functionality which can be easily implemented using Slackmin.
@@ -34,7 +44,8 @@ User enters the new phone numner and submits the modal. After the updation, a su
 ![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171860401-b64a2dae-03a3-4c89-9807-04fba756e5f7.gif)
 
 ## Prerequisites
-[Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
+- [Node.js](https://nodejs.org/en/)
+- [NPM](https://www.npmjs.com/package/npm)
 
 ## Slack app setup
 First, we need to setup a slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
@@ -403,8 +414,3 @@ A modal UI is created and opened using our Modal wrapper. Hidden parameters are 
 #### Part 4
 On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
-## Contributors
-- [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/)
-- [Shraddha Falane](https://plgworks.com/blog/author/shraddha/)
-- [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/)
-- [Parv Saxena](https://plgworks.com/blog/author/parv/)
