@@ -414,4 +414,7 @@ A modal UI is created and opened using our Modal wrapper. Hidden parameters are 
 #### Part 4
 On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
-Built with :heart: by PLG Works
+## Contribution
+We welcome more helping hands to make Slackmin better. Feel free to report issues, raise PRs for fixes & enhancements.
+
+<p align="left">Built with :heart: by <a href="https://plgworks.com/" target="_blank">PLG Works</a></p>
