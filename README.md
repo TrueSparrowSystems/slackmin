@@ -414,3 +414,4 @@ A modal UI is created and opened using our Modal wrapper. Hidden parameters are 
 #### Part 4
 On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
+Built with :heart: by PLG Works
