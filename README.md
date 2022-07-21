@@ -29,19 +29,9 @@ Additionally, Slackmin provides following **built-in security** features as midd
 - Slack app’s **workspace domain** validation is also exposed as a middleware.
 
 ## Demo
-Let's first see some quick demos of the functionality which can be easily implemented using Slackmin.
 
-### Slash Command
-In the following, you can see a working slash command which is used to fetch user info from the server.
+https://user-images.githubusercontent.com/7627517/180136585-5085aaba-ee26-4f44-8981-a54bfde066ba.mp4
 
-![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171859730-6bdbeb0b-7e1b-4723-826c-b22660952f37.gif)
-
-### Open Modal
-Along with the user information which is fetch by the above slash command, the message also has a button for "Update Phone".
-In the following demo, we can see that a confirmation popup comes on pressing the button. When we confirm, a modal with input for the new phone number opens.
-User enters the new phone numner and submits the modal. After the updation, a success message is sent.
-
-![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171860401-b64a2dae-03a3-4c89-9807-04fba756e5f7.gif)
 
 ## Prerequisites
 - [Node.js](https://nodejs.org/en/)
