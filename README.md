@@ -30,6 +30,8 @@ Additionally, Slackmin provides following **built-in security** features as midd
 
 ## Demo
 
+As a demo of Slackmin, let's take an example use case: Customer Support Team received a complaint on broken product. They want to check on user’s order history and issues refunds to the original Payment Method accordingly. Following video shows the demo in action.
+
 https://user-images.githubusercontent.com/7627517/180136585-5085aaba-ee26-4f44-8981-a54bfde066ba.mp4
 
 
