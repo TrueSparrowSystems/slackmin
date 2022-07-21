@@ -30,9 +30,9 @@ Additionally, Slackmin provides following **built-in security** features as midd
 
 ## Demo
 
-As a demo of Slackmin, let's take an example use case: Customer Support Team received a complaint on broken product. They want to check on user’s order history and issues refunds to the original Payment Method accordingly.
+As a demo of Slackmin, let's take an example use case: Customer Support Team received a complaint on broken product. They want to check on user’s order history and issue refund.
 
-The customer support executive gets the order details using a slach command. Then she clicks on "User Order History" button to get a sheet URL, which has all the past orders from that user. She checks the order history excel depending on the business logic. Then she clicks on "Issue Refund" button to open the issue refund modal and fills in required information and clicks "Submit". This issues the refund and also sends in an activity log message in the channel, which helps in tracking.
+The customer support executive gets the order details using a slash command. Then she clicks on "User Order History" button to get a sheet URL, which has all the past orders from that user. She checks the order history. Then she clicks on "Issue Refund" button to open the issue refund modal, provide the  required information and clicks "Submit". Voila! Refund issued with a log message in the channel, which brings in transparency.
 
 Following video shows the demo in action.
 
