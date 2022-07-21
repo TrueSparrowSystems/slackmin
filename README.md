@@ -34,8 +34,6 @@ As a demo of Slackmin, let's take an example use case: Customer Support Team rec
 
 The customer support executive gets the order details using a slash command. Then she clicks on "User Order History" button to get a sheet URL, which has all the past orders from that user. She checks the order history. Then she clicks on "Issue Refund" button to open the issue refund modal, provide the  required information and clicks "Submit". Voila! Refund issued with a log message in the channel, which brings in transparency.
 
-Following video shows the demo in action.
-
 https://user-images.githubusercontent.com/7627517/180136585-5085aaba-ee26-4f44-8981-a54bfde066ba.mp4
 
 
