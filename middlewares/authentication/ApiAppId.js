@@ -28,8 +28,6 @@ class ValidateSlackApiAppId extends SlackAuthenticationBase {
     const oThis = this;
 
     oThis.apiAppId = oThis.slackRequestParams.api_app_id;
-
-    console.log('API App ID: ', oThis.apiAppId);
   }
 
   /**
@@ -62,8 +60,6 @@ class ValidateSlackApiAppId extends SlackAuthenticationBase {
     if (!CommonValidators.validateNonEmptyObject(appConfig)) {
       throw new Error(`Invalid  apiAppId :: ${oThis.apiAppId}`);
     }
-
-    console.log('_validateSlackApiAppId : ', oThis.apiAppId);
   }
 }
 

@@ -23,8 +23,6 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
     const oThis = this;
 
     oThis.channelId = oThis.slackRequestParams.channel_id;
-
-    console.log('Channel ID: ', oThis.channelId);
   }
 
   /**
@@ -53,7 +51,6 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
     if (!whitelistedChannelIds.includes(oThis.channelId)) {
       throw new Error(`Invalid  channelId :: ${oThis.channelId}`);
     }
-    console.log('whitelistedChannelIds :: ', whitelistedChannelIds);
   }
 }
 
