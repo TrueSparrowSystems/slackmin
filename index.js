@@ -3,6 +3,7 @@ const rootPrefix = '.',
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
   slackWrapper = require(rootPrefix + '/lib/slack/Wrapper'),
   formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
+  assignRawBody = require(rootPrefix + '/middlewares/assignRawBody'),
   assignParams = require(rootPrefix + '/middlewares/assignParams'),
   sanitizer = require(rootPrefix + '/lib/helpers/sanitizer'),
   extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
@@ -37,37 +38,13 @@ class SlackAdmin {
   }
 
   /**
-   * Slack admin middlewares
-   *
-   * @returns {{validateSignature: Authenticator.validateSlackSignature, assignParams, extractResponseUrlFromPayload, extractResponseUrlFromBody, validateSlackChannel: Authenticator.validateSlackChannel, extractText, extractSlackParams, validateSlackApiAppId: Authenticator.validateSlackApiAppId, formatPayload, sanitizeHeaderParams: Sanitizer.sanitizeHeaderParams, parseApiParameters, sanitizeBodyAndQuery: Sanitizer.sanitizeBodyAndQuery, sanitizeDynamicUrlParams: Sanitizer.sanitizeDynamicUrlParams, validateSlackUser: Authenticator.validateSlackUser, extractTriggerId}}
-   */
-  get middlewares() {
-    return {
-      formatPayload: formatPayload,
-      sanitizeBodyAndQuery: sanitizer.sanitizeBodyAndQuery,
-      assignParams: assignParams,
-      sanitizeDynamicUrlParams: sanitizer.sanitizeDynamicUrlParams,
-      sanitizeHeaderParams: sanitizer.sanitizeHeaderParams,
-      extractSlackParams: extractSlackParams,
-      validateSignature: authenticator.validateSlackSignature,
-      validateSlackUser: authenticator.validateSlackUser,
-      validateSlackChannel: authenticator.validateSlackChannel,
-      validateSlackApiAppId: authenticator.validateSlackApiAppId,
-      extractResponseUrlFromPayload: extractResponseUrlFromPayload,
-      extractText: extractText,
-      extractResponseUrlFromBody: extractResponseUrlFromBody,
-      parseApiParameters: parseApiParameters,
-      extractTriggerId: extractTriggerId
-    };
-  }
-
-  /**
    * Slack admin common middlewares
    *
    * @returns {(*|Sanitizer.sanitizeBodyAndQuery|Authenticator.validateSlackSignature)[]}
    */
   get commonMiddlewares() {
     return [
+      assignRawBody,
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
       assignParams,
