@@ -68,7 +68,6 @@ class Authenticator {
    * @returns {Promise<void>}
    */
   async validateSlackSignature(req, res, next) {
-    console.log('req================', req.rawBody, req.headers, req.body);
     const authResponse = await new ValidateSlackSignature({
       rawBody: req.rawBody,
       requestHeaders: req.headers,

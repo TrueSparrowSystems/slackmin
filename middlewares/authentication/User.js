@@ -29,8 +29,6 @@ class ValidateSlackUser extends SlackAuthenticationBase {
 
     oThis.slackId = oThis.slackRequestParams.slack_id;
 
-    console.log('Slack ID: ', oThis.slackId);
-
     oThis.adminData = {};
   }
 

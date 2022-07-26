@@ -6,6 +6,23 @@ class AssignParams {
   constructor() {}
 
   /**
+   * Get request params
+   *
+   * @param req
+   * @returns {{}|*}
+   * @private
+   */
+  _getRequestParams(req) {
+    if (req.method === 'POST') {
+      return req.body;
+    } else if (req.method === 'GET') {
+      return req.query;
+    }
+
+    return {};
+  }
+
+  /**
    * Assign params.
    *
    * @param {object} req
@@ -13,10 +30,10 @@ class AssignParams {
    * @param {function} next
    */
   assignParams(req, res, next) {
-    // IMPORTANT NOTE: Don't assign parameters before sanitization.
-    // And assign it to req.decodedParams
-    req.decodedParams = req.decodedParams || {};
+    const oThis = this;
 
+    req.decodedParams = oThis._getRequestParams(req) || {};
+    req.internalDecodedParams = {};
     next();
   }
 }

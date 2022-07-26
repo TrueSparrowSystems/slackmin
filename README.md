@@ -1,43 +1,48 @@
-# Slackmin
+![Group 11088](https://user-images.githubusercontent.com/7627517/179924973-20755a21-db85-428c-9f25-a0b693d0ab87.png)
+
 ![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
 
-Slackmin helps in easy integration with slack to use [slash commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), format and send messages, design and use modals. One use case of Slackmin is to implement admin functionality over slack.
+Slackmin allows you to easily integrate slack [slash (/) commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), message formatting & custom modals in your Node.js application. You can build and setup custom tailored tools for your daily ops like different analytics reports, content management interfaces, customer support modules and much more. Also send alerts and notifications over Slack for your team to take actions on critical events in your application.
 
-## Why Slackmin?
-- Slackmin provides Message and Modal wrappers that help in easy formatting & sending of messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals).
-- Slackmin's multiple slack app support helps in overcoming the 25 slash commands limitation in slack apps. Also, you can create applications to manage content management systems, user management systems, order management systems, and many more.
-- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed.
+## Business Benefits
+- Use **Slack’s Web, Desktop and Mobile apps** to manage your Content, Orders, Reports, Customers and much more.
+- **Focus** on your Product instead of building custom solutions for your admin needs. Use Slack to manage everything and save valuable time.
+- **Spend Less $** on Admin Tools. Use the tool you already have, use Slack!
+- Use public and private channels in Slack to **manage access** to certain types of data and features. Additionally, you can whitelist slack users for specific functionalities.
+- Leverage the robust **Search** features in Slack so your team has easy access to historical data.
+- Users can setup their own push **notifications** in Slack to get alerts about the data they need most.
+- **Logs for actions** taken by your admins like updated product details, Customer queries, Payment notifications and much more are easily searchable and accessible.
 
-Additionally, Slackmin provides following built-in security features:
-- **Sanitize unwanted HTML tags** from parameters obtained in request body, query, headers. [HTML sanitization](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization) is recommended by Open Web Application Security Project (OWASP)
+## Developer Benefits
+- Slackmin is **open source**. Developers can use (as it is) or modify Slackmin for their custom needs, for free!
+- Slack has built a **secure platform**. Slackmin uses this secure infrastructure instead of you building your own security layers.
+- Slackmin provides **Message and Modal wrappers** that help in easy formatting & sending messages, sending system alerts and [creating modals](https://slack.dev/bolt-js/concepts#creating-modals). No need to create complex data structures for message and modal layout.
+- Slackmin's multiple slack app support helps in overcoming the 25 slash commands limitation per slack app. You can also create multiple applications for better access control.
+- The [block actions payload](https://api.slack.com/reference/interaction-payloads/block-actions) and [view submission payload](https://api.slack.com/reference/interaction-payloads/views#view_submission) are validated and parsed into a key-value pair of parameters.
+
+Additionally, Slackmin provides following **built-in security** features as middlewares:
+- **Sanitize unwanted HTML tags** from parameters obtained in the request body, query and headers. [HTML sanitization](https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html#html-sanitization) is recommended by Open Web Application Security Project (OWASP)
 - **Signature / signed secret verification** is provided as a middleware ready to be plugged in and used for all the requests coming from slack. This [guide](https://api.slack.com/authentication/verifying-requests-from-slack) gives a detailed description of signature verification.
-- **Slack app id** is validated against whitelisted app ids. This validation is also provided via middleware.
-- **Slack channel** validation is done to only allow requests from whitelisted slack channels. For example, there can be one admin channel, in which we add all the admins and they can execute slash commands from there. Requests coming from other channels will be outright rejected. This validation is also provided via middleware.
-- **User authentication** helps in validating whether the user has admin rights or not. We validate the slack id of the user against whitelisted slack ids. This validation is also provided via middleware.
+- **Slack app id** is validated against whitelisted app ids.
+- **Slack channel** validation is done to only allow requests from whitelisted slack channels.
+- **User authentication** helps in validating whether the slack user has the correct privileges or not.
 - Slack app’s **workspace domain** validation is also exposed as a middleware.
 
-Thus Slackmin helps in integrating with slack involving minimum efforts (hence the name, Slackmin).
-
 ## Demo
-Let's first see some quick demos of the functionality which can be easily implemented using Slackmin.
 
-### Slash Command
-In the following, you can see a working slash command which is used to fetch user info from the server.
+As a demo of Slackmin, let's take an example use case: Customer Support Team receives a complaint on broken product. They want to check on the user’s order history and issue refund.
 
-![Slash Command Demo](https://user-images.githubusercontent.com/72125392/171859730-6bdbeb0b-7e1b-4723-826c-b22660952f37.gif)
+The customer support executive gets the order details using a slash command. Then the executive clicks on the "User Order History" button to get a sheet URL, which has all the past orders from that user. After checking the order history, executive clicks on the "Issue Refund" button to open the issue refund modal, provides the required information and clicks "Submit". Voila! Refund issued along with a log message in the channel, which brings in transparency.
 
-### Open Modal
-Along with the user information which is fetch by the above slash command, the message also has a button for "Update Phone".
-In the following demo, we can see that a confirmation popup comes on pressing the button. When we confirm, a modal with input for the new phone number opens.
-User enters the new phone numner and submits the modal. After the updation, a success message is sent.
+https://user-images.githubusercontent.com/7627517/180136585-5085aaba-ee26-4f44-8981-a54bfde066ba.mp4
 
-![Interactive Component Demo](https://user-images.githubusercontent.com/72125392/171860401-b64a2dae-03a3-4c89-9807-04fba756e5f7.gif)
 
 ## Prerequisites
-[Express.js routing](https://expressjs.com/en/guide/routing.html) knowledge is required.
+- [Node.js](https://nodejs.org/en/)
+- [NPM](https://www.npmjs.com/package/npm)
 
 ## Slack app setup
-First, we need to setup a slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
+First things first, setup a slack app as mentioned in [this guide](https://api.slack.com/authentication/basics). Following are the major steps involved:
 
 - Create a slack app. Visit https://api.slack.com/apps.
 - Configure request URL for interactive components. Click [here](https://api.slack.com/interactivity/handling) for details.
@@ -45,7 +50,7 @@ First, we need to setup a slack app as mentioned in [this guide](https://api.sla
 - Add scopes [chat:write](https://api.slack.com/scopes/chat:write) and [chat:write:public](https://api.slack.com/scopes/chat:write.public) to the bot token scopes. Know more about [Slack Scopes](https://api.slack.com/scopes).
 - Then [install](https://api.slack.com/authentication/basics#installing) the app to your workspace.
 
-Keep a note of your App ID and Signing Secret from "Basic Information" section of your app. Also note the Bot User OAuth Token from "OAuth & Permissions" section of your app. These will be required in further steps.
+Keep a note of your App ID and Signing Secret from the "Basic Information" section of your app. Also note the Bot User OAuth Token from the "OAuth & Permissions" section of your app. These details will be required later.
 
 ## Install NPM
 
@@ -88,7 +93,7 @@ module.exports = slackmin;
 **1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
 
 - **id**: This is your slack app id.
-- **secret**: Your app's signing secret. This is used to do request signature verification.
+- **secret**: Your app's signing secret. It is required for signature verification.
 - **slack_bot_user_oauth_token**: This is the Bot User OAuth Token.
 
 <br>
@@ -105,7 +110,7 @@ module.exports = slackmin;
 
 ## Middlewares
 
-Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload, and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation, and slack member id validation.
+Slackmin middlewares are used with slash commands as well as with interactive routes. These middlewares format and preprocess the Slack payload and sanitize unwanted HTML tags from parameters obtained in the request body, query and headers. Slackmin has a built-in security layer for request verification, app id validation, channel id validation and slack member id validation.
 
 ### Interactive Component Middlewares
 ```js
@@ -169,12 +174,12 @@ router.post(
 
 ## Interactive Components
 
-Slack provides a range of visual components, called Block Kit, used to layout complex information. Each block is represented in slack APIs as a JSON object. You can include up to 50 blocks in a message and 100 blocks in modals.
+Slack provides a range of visual components (Block Kit) used to layout complex information. These blocks are represented as JSON objects. You can include up to 50 blocks in a message and 100 blocks in a modal.
 You can find the Block Kit reference [here](https://api.slack.com/reference/block-kit/blocks).
 
 ### Message Wrapper
 
-Slackmin Message wrapper provides simple methods to create and format complex message layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
+Slackmin Message wrapper provides simple methods to create and format complex message layouts thus simplifying the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
 
 **Methods**
 
@@ -228,8 +233,7 @@ Output of above code is shown in the screenshot below.
 <img width="473" alt="Sync Message / System Alert" src="https://user-images.githubusercontent.com/7627517/171800304-5b3ddd5c-0deb-4a71-828d-a2259fe2e985.png">
 
 #### Example 2 - Async Message
-In the following example, we are sending asynchronous response.
-While sending asynchronous response, we have to use the [response url](https://api.slack.com/interactivity/handling#message_responses) on which the message can be sent within 30 minutes of initial slack interaction.
+The following example explains how to send an asynchronous response using the [response URL](https://api.slack.com/interactivity/handling#message_responses), obtained from the initial slack interaction. These response URLs expire after 30 minutes.
 
 ```js
 const responseUrl = 'Response URL HERE';
@@ -276,7 +280,7 @@ Output of above code is shown in the screenshot below. On clicking of the button
 <img width="636" alt="Message wrapper async example" src="https://user-images.githubusercontent.com/7627517/171792168-df189989-0790-4326-b54a-1ff79b0c6c1f.png">
 
 ### Modal Wrapper
-Slackmin Modal wrapper provides simple methods to create and format complex [modal](https://api.slack.com/surfaces/modals) layouts thus simplifies the creation of [block elements](https://api.slack.com/reference/block-kit/block-elements).
+Slackmin Modal Wrapper simplifies the [block elements](https://api.slack.com/reference/block-kit/block-elements) by providing easy to use methods to create and format complex [modal](https://api.slack.com/surfaces/modals) layouts.
 
 **Methods**
 
@@ -294,18 +298,18 @@ Slackmin Modal wrapper provides simple methods to create and format complex [mod
   - Description: Adds [divider](https://api.slack.com/reference/block-kit/blocks#divider) block.
 - `addTextbox`
   - Parameters: labelText (string), multiline (boolean), isOptional (boolean), initialText (string), placeHolderText (string)
-  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [plain-text](https://api.slack.com/reference/block-kit/block-elements#input).
+  - Description: Adds an [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [plain-text](https://api.slack.com/reference/block-kit/block-elements#input).
   `labelText` is the input block label text. `multiline` indicates whether the input will be a single line (false) or a larger textarea (true), defaults set to true.
   `isOptional` is a boolean that indicates whether the input element may be empty when a user submits the modal, defaults to false. 
   `initialText` is the initial value, defaults to empty. `placeHolderText` is the placeholder or help text, defaults to 'Write Something'.
 - `addCheckBoxes`
   - Parameters: labelText (string), options (Array of objects, each object with keys text, value), initialOptions (Array of objects, each object with keys text, value)
-  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
+  - Description: Adds an [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [checkboxes](https://api.slack.com/reference/block-kit/block-elements#checkboxes). 
     `labelText` is the input block label text. `text` is the individual checkbox option label text. `value` is a unique string that specifies the value of the checkbox option.
 - `addRadioButtons`
   - Parameters: labelText (string), optionsArray (Array of objects, each object with keys text, value), initialOption (object with keys text and value)
-  - Description: Adds a [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio). 
-   `labelText` is the input block label text. `text` is the radio button label text. `value` is a unique string value that will be passed to your app when any option is chosen. You can set `initial_option` in the element for selecting radio button option by default.
+  - Description: Adds an [input](https://api.slack.com/reference/block-kit/blocks#input) block with an element type [radio buttons](https://api.slack.com/reference/block-kit/block-elements#radio). 
+   `labelText` is the input block label text. `text` is the radio button label text. `value` is a unique string value that will be passed to your app when any option is chosen. You can set `initial_option` in the element for selecting the radio button option by default.
 - `addParamsMeta`
   - Parameters: paramsMeta (array of strings)
   - Description: To specify parameter names for the subsequent [input](https://api.slack.com/reference/block-kit/blocks#input) block elements such as [plain-text](https://api.slack.com/reference/block-kit/block-elements#input),
@@ -313,7 +317,7 @@ Slackmin Modal wrapper provides simple methods to create and format complex [mod
     `paramsMeta` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
 - `addHiddenParamsMeta`
   - Parameters: hiddenParamsMeta (object)
-  - Description: To pass on internal parameters on modal submit. `hiddenParamsMeta` contains hidden parameters which has to pass for next modal action.
+  - Description: To pass on internal parameters on modal submit. `hiddenParamsMeta` contains hidden parameters which have to be passed to the next modal action.
       `hiddenParamsMeta` is sent in [private_metadata](https://api.slack.com/reference/surfaces/views) in modal submissions.
 - `addAction`
   - Parameters: actionName (string)
@@ -377,7 +381,7 @@ In this section, we will go through an example of our convention if handling hid
 
 Following are the different parts of our example:
 #### Part 1
-A slash command which sends a message with interactive buttons in it (refer Message Wrapper documentation for creating of message UI).
+A slash command which sends a message with interactive buttons in it (refer Message Wrapper documentation to create message UI).
 The hidden parameters (user_id in our example) must be present in the value of the button element as shown in the following snippet.
 
 ```js
@@ -389,12 +393,12 @@ const testButton1 = {
         "{\"action\":\"testModal1Open\",\"hiddenParams\":{\"user_id\":\"123\"}}"
     };
 
-// Refer the snippet given in section "Example 1 - Async Message" for the complete idea.
+// Refer to the snippet given in section "Example 1 - Async Message" for the complete idea.
 actionButtons.push(testButton1);
 ```
 
 #### Part 2
-When the button in the message is clicked, a confirmation popup is shown. On confirmation, a POST API call comes from slack to the interactive request URL (which was set in "Slack app setup" section above).
+When the button in the message is clicked, a confirmation popup is shown. On confirmation, a POST API call comes from slack to the interactive request URL (which was setup in the "Slack app setup" section above).
 The block submission payload which comes from slack is converted to api parameters and assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
 #### Part 3
@@ -403,8 +407,7 @@ A modal UI is created and opened using our Modal wrapper. Hidden parameters are 
 #### Part 4
 On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
 
-## Contributors
-- [Divyajyoti Ukirde](https://plgworks.com/blog/author/divyajyoti/)
-- [Shraddha Falane](https://plgworks.com/blog/author/shraddha/)
-- [Kedar Chandrayan](https://plgworks.com/blog/author/kedar/)
-- [Parv Saxena](https://plgworks.com/blog/author/parv/)
+## Contribution
+We welcome more helping hands to make Slackmin better. Feel free to report issues, raise PRs for fixes & enhancements.
+
+<p align="left">Built with :heart: by <a href="https://plgworks.com/" target="_blank">PLG Works</a></p>

@@ -48,8 +48,6 @@ class ParseApiParams {
 
     const apiParamsData = apiParamsResponse.data;
 
-    console.log('The apiParamsData data is : ', apiParamsData);
-
     // Assign apiParams to internalDecodedParams.
     const internalDecodedApiParams = {};
     Object.assign(internalDecodedApiParams, apiParamsData.hiddenParams);
