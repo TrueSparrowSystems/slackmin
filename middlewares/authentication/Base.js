@@ -47,7 +47,7 @@ class SlackAuthenticationBase {
 
       await oThis._performSpecificValidations();
     } catch (error) {
-      console.log('Slack authentication failed.');
+      console.error('Slack authentication failed.');
 
       return responseHelper.error({
         internal_error_identifier: 'l_a_sr_p_1',
