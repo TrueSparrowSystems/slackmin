@@ -1,3 +1,8 @@
+## Slackmin v2.1.1
+- Readme changed to include Business and Developer benefit sections.
+- Middleware for reading request raw body added in common middlewares.
+- Removed un-necessary logs.
+
 ## Slackmin v2.1.0
 - Added functionality of adding placeholder (helper) text and initial value in Modal text input field. 
 - Added functionality of checkboxes to be checked on initial Modal page load.
