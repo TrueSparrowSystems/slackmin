@@ -1,3 +1,6 @@
+## Slackmin v2.1.2
+- Typo in the readme demo video corrected.
+
 ## Slackmin v2.1.1
 - Readme changed to include Business and Developer benefit sections.
 - Middleware for reading request raw body added in common middlewares.
