@@ -94,6 +94,7 @@ module.exports = slackmin;
 - **id**: This is your slack app id.
 - **secret**: Your app's signing secret. It is required for signature verification.
 - **slack_bot_user_oauth_token**: This is the Bot User OAuth Token.
+- **slack_domain**: (optional) This is your slack app's workspace domain. It should only be sent if you have multiple domains.
 
 <br>
 
@@ -101,7 +102,7 @@ module.exports = slackmin;
 
 <br>
 
-**3. `slackDomain`** is your slack app's workspace domain. It could be a team workspace or individual workspace.
+**3. `slackDomain`** (optional) is your slack app's workspace domain. It could be a team workspace or individual workspace. Send as `null` in case of multiple domains.
 
 <br>
 
