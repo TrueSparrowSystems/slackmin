@@ -39,12 +39,6 @@ class SlackAuthenticationBase {
     const oThis = this;
 
     try {
-      await oThis._validateRawBodyParams();
-
-      await oThis._validateRequestParams();
-
-      await oThis._validateRequestHeaders();
-
       await oThis._performSpecificValidations();
     } catch (error) {
       console.error('Slack authentication failed.');
@@ -57,86 +51,6 @@ class SlackAuthenticationBase {
     }
 
     return oThis._prepareResponse();
-  }
-
-  /**
-   * Validate raw body params.
-   *
-   * @return {Promise<*>}
-   * @private
-   */
-  async _validateRawBodyParams() {
-    const oThis = this;
-
-    if (!CommonValidators.validateString(oThis.rawBody)) {
-      throw new Error(`Invalid raw Body Input :: ${oThis.rawBody}`);
-    }
-  }
-
-  /**
-   * Validate request params.
-   *
-   * @returns {Promise<never|result>}
-   * @private
-   */
-  async _validateRequestParams() {
-    const oThis = this;
-
-    if (!CommonValidators.validateNonEmptyObject(oThis.slackRequestParams)) {
-      throw new Error(`Invalid slack request params :: ${oThis.slackRequestParams}`);
-    }
-
-    let domain;
-    if (oThis.requestPayload) {
-      domain = oThis.requestPayload.team.domain;
-    } else {
-      domain = oThis.slackRequestParams.team_domain;
-    }
-
-    const isValidSlackDomain = domain === configProvider.getFor('domain');
-
-    if (!isValidSlackDomain) {
-      throw new Error(`Invalid slack request params :: ${oThis.slackRequestParams}`);
-    }
-  }
-
-  /**
-   * Validate request headers.
-   *
-   * @return {Promise<*>}
-   * @private
-   */
-  async _validateRequestHeaders() {
-    const oThis = this;
-
-    if (!CommonValidators.validateNonEmptyObject(oThis.requestHeaders)) {
-      throw new Error(`Invalid slack request header params :: ${oThis.requestHeaders}`);
-    }
-
-    await oThis._validateRequestTimestamp();
-  }
-
-  /**
-   * Validate request timestamp.
-   *
-   * @returns {Promise<result>}
-   * @private
-   */
-  async _validateRequestTimestamp() {
-    const oThis = this;
-
-    const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
-
-    const requestTimestamp = Number(oThis.requestHeaders['x-slack-request-timestamp']);
-    const eventExpiryTimestamp = 5 * 60;
-
-    if (
-      !CommonValidators.validateTimestamp(requestTimestamp) ||
-      requestTimestamp > currentTimestampInSeconds ||
-      requestTimestamp < currentTimestampInSeconds - eventExpiryTimestamp
-    ) {
-      throw new Error(`Invalid  request timstamp :: ${requestTimestamp}`);
-    }
   }
 
   /**

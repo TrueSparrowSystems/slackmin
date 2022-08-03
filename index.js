@@ -49,6 +49,9 @@ class SlackAdmin {
       sanitizer.sanitizeBodyAndQuery,
       assignParams,
       extractSlackParams,
+      authenticator.validateRawBodyParams,
+      authenticator.validateRequestHeaders,
+      authenticator.validateRequestDomain,
       authenticator.validateSlackSignature,
       authenticator.validateSlackUser
     ];

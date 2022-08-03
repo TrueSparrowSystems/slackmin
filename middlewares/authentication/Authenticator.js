@@ -1,8 +1,13 @@
 const rootPrefix = '../..',
+  CommonValidators = require(rootPrefix + '/lib/validator/Common'),
+  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
   ValidateSlackApiAppId = require(rootPrefix + '/middlewares/authentication/ApiAppId'),
   ValidateSlackChannel = require(rootPrefix + '/middlewares/authentication/Channel'),
   ValidateSlackSignature = require(rootPrefix + '/middlewares/authentication/Signature'),
-  ValidateSlackUser = require(rootPrefix + '/middlewares/authentication/User');
+  ValidateSlackUser = require(rootPrefix + '/middlewares/authentication/User'),
+  ValidateRawBodyParams = require(rootPrefix + '/middlewares/authentication/RawBodyParams'),
+  ValidateRequestHeaders = require(rootPrefix + '/middlewares/authentication/RequestHeaders'),
+  ValidateRequestDomain = require(rootPrefix + '/middlewares/authentication/RequestDomain');
 
 /**
  * Class for Authenticator.
@@ -94,6 +99,47 @@ class Authenticator {
     const authResponse = await new ValidateSlackUser({
       rawBody: req.rawBody,
       requestHeaders: req.headers,
+      slackRequestParams: req.body
+    }).perform();
+
+    if (authResponse.isFailure()) {
+      return res.status(200).json('Something went wrong.');
+    }
+    next();
+  }
+
+  /**
+   * Function to validate raw body params
+   *
+   * @param req
+   * @param res
+   * @param next
+   * @returns {Promise<void>}
+   */
+  async validateRawBodyParams(req, res, next) {
+    const authResponse = await new ValidateRawBodyParams({
+      rawBody: req.rawBody
+    }).perform();
+
+    if (authResponse.isFailure()) {
+      return res.status(200).json('Something went wrong.');
+    }
+    next();
+  }
+
+  async validateRequestHeaders(req, res, next) {
+    const authResponse = await new ValidateRequestHeaders({
+      requestHeaders: req.headers
+    }).perform();
+
+    if (authResponse.isFailure()) {
+      return res.status(200).json('Something went wrong.');
+    }
+    next();
+  }
+
+  async validateRequestDomain() {
+    const authResponse = await new ValidateRequestDomain({
       slackRequestParams: req.body
     }).perform();
 
