@@ -1,6 +1,4 @@
 const rootPrefix = '../..',
-  CommonValidators = require(rootPrefix + '/lib/validator/Common'),
-  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
   ValidateSlackApiAppId = require(rootPrefix + '/middlewares/authentication/ApiAppId'),
   ValidateSlackChannel = require(rootPrefix + '/middlewares/authentication/Channel'),
   ValidateSlackSignature = require(rootPrefix + '/middlewares/authentication/Signature'),
@@ -127,6 +125,14 @@ class Authenticator {
     next();
   }
 
+  /**
+   * Function to validate request headers
+   *
+   * @param req
+   * @param res
+   * @param next
+   * @returns {Promise<*>}
+   */
   async validateRequestHeaders(req, res, next) {
     const authResponse = await new ValidateRequestHeaders({
       requestHeaders: req.headers
@@ -138,7 +144,15 @@ class Authenticator {
     next();
   }
 
-  async validateRequestDomain() {
+  /**
+   * Function to validate request domain
+   *
+   * @param req
+   * @param res
+   * @param next
+   * @returns {Promise<*>}
+   */
+  async validateRequestDomain(req, res, next) {
     const authResponse = await new ValidateRequestDomain({
       slackRequestParams: req.body
     }).perform();
