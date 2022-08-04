@@ -1,5 +1,4 @@
 const rootPrefix = '../..',
-  SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
   configProvider = require(rootPrefix + '/lib/configProvider'),
   responseHelper = require(rootPrefix + '/lib/formatter/responseHelper');
 
@@ -9,23 +8,21 @@ const rootPrefix = '../..',
  * @class ValidateSlackUser
  *
  * @param {object} params
- * @param {string} params.rawBody
- * @param {object} params.requestHeaders
  * @param {object} params.slackRequestParams
  * @param {string} params.slackRequestParams.slack_id
  *
- * @augments SlackAuthenticationBase
+ * @class ValidateSlackUser
  */
-class ValidateSlackUser extends SlackAuthenticationBase {
+class ValidateSlackUser {
   /**
    * Constructor to validate slack user.
    *
    * @constructor
    */
   constructor(params) {
-    super(params);
-
     const oThis = this;
+
+    oThis.slackRequestParams = params.slackRequestParams;
 
     oThis.slackId = oThis.slackRequestParams.slack_id;
 
@@ -33,15 +30,27 @@ class ValidateSlackUser extends SlackAuthenticationBase {
   }
 
   /**
-   * Perform slack user validation specific operations.
+   * Perform slack user validation.
    *
    * @returns {Promise<result>}
    * @private
    */
-  async _performSpecificValidations() {
+  async perform() {
     const oThis = this;
 
-    return oThis._validateSlackUser();
+    const whiteListedUser = configProvider.getFor('whitelisted_users');
+
+    if (!whiteListedUser.includes(oThis.slackId)) {
+      console.error(`Invalid  SlackId :: ${oThis.slackId}`);
+
+      return responseHelper.error({
+        internal_error_identifier: 'm_a_u_p',
+        api_error_identifier: 'unauthorized_api_request',
+        debug_options: { slackRequestParams: oThis.slackRequestParams, slackId: oThis.slackId }
+      });
+    }
+
+    return oThis._prepareResponse();
   }
 
   /**
@@ -54,24 +63,6 @@ class ValidateSlackUser extends SlackAuthenticationBase {
     const oThis = this;
 
     return responseHelper.successWithData({});
-  }
-
-  /**
-   * Validates if slack member id is present in 'whitelistedUsers' list.
-   *
-   * @sets oThis.adminData
-   *
-   * @returns {Promise<never|result>}
-   * @private
-   */
-  async _validateSlackUser() {
-    const oThis = this;
-
-    const whiteListedUser = configProvider.getFor('whitelisted_users');
-
-    if (!whiteListedUser.includes(oThis.slackId)) {
-      throw new Error(`Invalid  SlackId :: ${oThis.slackId}`);
-    }
   }
 }
 
