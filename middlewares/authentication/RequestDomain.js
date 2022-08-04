@@ -45,12 +45,12 @@ class ValidateSlackRequestDomain {
       const appDomain = configProvider.getFor('domain');
       let isValidSlackDomain = 0;
 
-      if (appDomain && domain == appDomain) {
+      if (appDomain && domain === appDomain) {
         isValidSlackDomain = 1;
       } else if (!appDomain) {
         const appConfig = configProvider.getFor('app_config');
         for (let index = 0; index < appConfig.length; index++) {
-          if (appConfig.slack_domain == domain) {
+          if (appConfig.slack_domain === domain) {
             isValidSlackDomain = 1;
             break;
           }

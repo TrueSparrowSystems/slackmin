@@ -103,6 +103,7 @@ class Authenticator {
     if (authResponse.isFailure()) {
       return res.status(200).json('Something went wrong.');
     }
+
     next();
   }
 
@@ -122,6 +123,7 @@ class Authenticator {
     if (authResponse.isFailure()) {
       return res.status(200).json('Something went wrong.');
     }
+
     next();
   }
 
@@ -141,6 +143,7 @@ class Authenticator {
     if (authResponse.isFailure()) {
       return res.status(200).json('Something went wrong.');
     }
+
     next();
   }
 
@@ -160,6 +163,7 @@ class Authenticator {
     if (authResponse.isFailure()) {
       return res.status(200).json('Something went wrong.');
     }
+
     next();
   }
 }

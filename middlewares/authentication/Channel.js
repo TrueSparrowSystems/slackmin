@@ -39,6 +39,7 @@ class ValidateSlackChannel {
         debug_options: { slackRequestParams: oThis.slackRequestParams, channelId: oThis.channelId }
       });
     }
+
     return oThis._prepareResponse();
   }
 
