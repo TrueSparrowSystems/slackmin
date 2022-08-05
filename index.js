@@ -33,6 +33,10 @@ class SlackAdmin {
     configProvider.set('whitelisted_channel_ids', whitelistedChannelIds);
     configProvider.set('domain', domain);
     configProvider.set('whitelisted_users', whitelistedUsers);
+    console.log('app_config------------>>>>>>>>', app_config);
+    console.log('whitelisted_channel_ids------->', whitelisted_channel_ids);
+    console.log('domain-------->', domain);
+    console.log('whitelisted_users-------->', whitelisted_users);
     slackAppConstants.setSlackAppConfigById();
     slackWrapper.init();
   }

@@ -56,6 +56,7 @@ class ValidateSlackRequestDomain {
           }
         }
 
+        console.log(`appDomain::::::: ${appDomain} domain:::::::::::: ${domain}`);
         if (!isValidSlackDomain) {
           throw new Error(`Invalid slack request domain :: ${oThis.slackRequestParams}`);
         }

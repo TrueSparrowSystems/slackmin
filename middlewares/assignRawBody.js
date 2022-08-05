@@ -19,6 +19,7 @@ class AssignRawBody {
    */
   assignRawBody(req, res, next) {
     req.rawBody = qs.stringify(req.body, { format: 'RFC1738' });
+    console.log('assignRawBody middleware success---------------------');
 
     next();
   }

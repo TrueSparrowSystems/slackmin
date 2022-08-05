@@ -33,6 +33,7 @@ class ValidateSlackChannel {
 
     const whitelistedChannelIds = configProvider.getFor('whitelisted_channel_ids');
     if (!whitelistedChannelIds.includes(oThis.channelId)) {
+      console.error(`Slack authentication failed. Invalid whitelistedChannelIds: ${whitelistedChannelIds}`);
       return responseHelper.error({
         internal_error_identifier: 'm_a_c_p',
         api_error_identifier: 'unauthorized_api_request',

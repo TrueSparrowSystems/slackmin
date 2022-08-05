@@ -47,7 +47,7 @@ class ValidateSlackApiAppId {
         throw new Error(`Invalid  apiAppId :: ${oThis.apiAppId}`);
       }
     } catch (error) {
-      console.error('Slack authentication failed. Invalid Api App Id');
+      console.error(`Slack authentication failed. Invalid Api App Id: ${oThis.apiAppId}`);
 
       return responseHelper.error({
         internal_error_identifier: 'm_a_aai_p',
