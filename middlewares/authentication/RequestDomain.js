@@ -49,8 +49,11 @@ class ValidateSlackRequestDomain {
         isValidSlackDomain = 1;
       } else if (!appDomain) {
         const appConfig = configProvider.getFor('app_config');
+        console.log('appConfig in slack domain validation======', appConfig);
         for (let index = 0; index < appConfig.length; index++) {
           if (appConfig.slack_domain === domain) {
+            console.log('I am here');
+
             isValidSlackDomain = 1;
             break;
           }
