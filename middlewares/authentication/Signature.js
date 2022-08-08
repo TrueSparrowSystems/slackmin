@@ -55,6 +55,7 @@ class ValidateSlackSignature {
 
       await oThis._validateSignature(requestTimestamp, version, signature);
     } catch (error) {
+      console.log('Error==========================>>>>', error);
       console.error('Slack authentication failed. Invalid slack signature');
 
       return responseHelper.error({
@@ -98,7 +99,7 @@ class ValidateSlackSignature {
       .digest('hex');
 
     if (!crypto.timingSafeEqual(Buffer.from(signature, 'utf-8'), Buffer.from(computedSignature, 'utf-8'))) {
-      console.error('Invalid signature');
+      console.error(`Invalid signature :: ${signature}`);
       throw new Error(`Invalid signature :: ${signature}`);
     }
   }
