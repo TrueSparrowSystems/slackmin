@@ -58,7 +58,7 @@ class PayloadFormatter {
       return payload;
     }
 
-    return {};
+    return null;
   }
 }
 
