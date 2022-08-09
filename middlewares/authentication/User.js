@@ -40,6 +40,10 @@ class ValidateSlackUser {
 
     const whiteListedUser = configProvider.getFor('whitelisted_users');
 
+    if (whiteListedUser.length === 0) {
+      return;
+    }
+
     if (!whiteListedUser.includes(oThis.slackId)) {
       console.error(`Invalid  SlackId :: ${oThis.slackId}`);
 
