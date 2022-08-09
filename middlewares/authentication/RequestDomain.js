@@ -42,27 +42,19 @@ class ValidateSlackRequestDomain {
         domain = oThis.slackRequestParams.team_domain;
       }
 
-      const appDomain = configProvider.getFor('domain');
       let isValidSlackDomain = 0;
 
-      if (appDomain && domain == appDomain) {
-        isValidSlackDomain = 1;
-      } else if (!appDomain) {
-        const appConfig = configProvider.getFor('app_config');
-        console.log('appConfig in slack domain validation======', appConfig);
-        for (let index = 0; index < appConfig.length; index++) {
-          if (appConfig[index].slack_domain === domain) {
-            console.log('I am here');
-
-            isValidSlackDomain = 1;
-            break;
-          }
+      const appConfig = configProvider.getFor('app_config');
+      console.log('appConfig in slack domain validation======', appConfig);
+      for (let index = 0; index < appConfig.length; index++) {
+        if (appConfig[index].slack_domain === domain) {
+          isValidSlackDomain = 1;
+          break;
         }
-
-        console.log(`appDomain::::::: ${appDomain} domain:::::::::::: ${domain}`);
-        if (!isValidSlackDomain) {
-          throw new Error(`Invalid slack request domain :: ${oThis.slackRequestParams}`);
-        }
+      }
+      console.log(`appDomain::::::: ${appDomain} domain:::::::::::: ${domain}`);
+      if (!isValidSlackDomain) {
+        throw new Error(`Invalid slack request domain :: ${oThis.slackRequestParams}`);
       }
     } catch (error) {
       console.error('Slack authentication failed. Invalid slack domain');

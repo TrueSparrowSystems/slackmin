@@ -27,14 +27,12 @@ const rootPrefix = '.',
  *
  */
 class SlackAdmin {
-  constructor(appConfigs, whitelistedChannelIds, domain, whitelistedUsers) {
+  constructor(appConfigs, whitelistedChannelIds, whitelistedUsers) {
     configProvider.set('app_config', appConfigs);
     configProvider.set('whitelisted_channel_ids', whitelistedChannelIds);
-    configProvider.set('domain', domain);
     configProvider.set('whitelisted_users', whitelistedUsers);
-    console.log('app_configs------------>>>>>>>>', appConfigs);
+    console.log('app_configs------------>', appConfigs);
     console.log('whitelisted_channel_ids------->', whitelistedChannelIds);
-    console.log('domain-------->', domain);
     console.log('whitelisted_users-------->', whitelistedUsers);
     slackAppConstants.setSlackAppConfigById();
     slackWrapper.init();

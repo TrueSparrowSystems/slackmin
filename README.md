@@ -68,13 +68,12 @@ const appConfigs = [
   {
     id: '<slack_app_id>',
     secret: '<slack_signing_secret>',
-    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
+    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>',
+    slack_domain: '<your_slack_domain>'
   }
 ];
 
 const whiteListedChannels = ['<slack_channel_id>', '<slack_channel_id>', '<slack_channel_id>'];
-
-const slackDomain = '<your_slack_domain>';
 
 const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>'];
 
@@ -89,20 +88,16 @@ module.exports = slackmin;
 ```
 
 ### Initialization Params
-**1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
+**1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret, token and domain.
 
 - **id**: This is your slack app id.
 - **secret**: Your app's signing secret. It is required for signature verification.
 - **slack_bot_user_oauth_token**: This is the Bot User OAuth Token.
-- **slack_domain**: (optional) This is your slack app's workspace domain. Apps can reside on different slack domains. If not passed, then global slack app domain is considered.
+- **slack_domain**: This is your slack app's workspace domain. Apps can reside on different slack domains. 
 
 <br>
 
 **2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
-
-<br>
-
-**3. `slackDomain`** (optional) is your global slack workspace domain. Send as `null` in case of multiple slack domains.
 
 <br>
 
@@ -208,8 +203,9 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Parameters: responseUrl (string), isTemporary (boolean)
   - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). `responseUrl` is the response URL. `isTemporary` is true for [ephemeral message] (https://api.slack.com/messaging/managing#ephemeral), otherwise false.
 - `sendMessageToChannel`
-  - Parameters: postMessageParams (object with keys - channel, text)
+  - Parameters: postMessageParams (object with keys - channel, text, slackDomain)
   - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id or your slack channel name. `text` is the message title text.
+  `slackDomain` is you slack app's workspace domain.
 
 #### Example 1 - Sync Message / System Alert
 When responding to a slash command or any other interaction, we have 2 choices - synchronous response and asynchronous response. If the generation of the message body is simple, then the response can be sent synchronously. Following is an example of the same.
@@ -220,6 +216,7 @@ const text = 'TITLE TEXT';
 const slackMessageParams = {};
 slackMessageParams.text = text;
 slackMessageParams.channel = 'CHANNEL ID OR CHANNEL NAME HERE';
+slackMessageParams.slackDomain = 'SLACK DOMAIN';
 
 const message = new slackmin.interactiveElements.Message();
 message.addDivider();
