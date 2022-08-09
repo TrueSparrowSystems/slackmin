@@ -101,7 +101,7 @@ module.exports = slackmin;
 
 <br>
 
-**4. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. If you want to skip whitelisted users validation, pass `whitelistedUsers` as empty array.
+**3. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. If you want to skip whitelisted users validation, pass `whitelistedUsers` as empty array.
 
 ## Middlewares
 
