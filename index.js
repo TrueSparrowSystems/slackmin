@@ -46,7 +46,7 @@ class SlackAdmin {
    */
   get validators() {
     return {
-      common: CommonMiddlewares.CommonMiddleWareMethod()
+      common: CommonMiddlewares.CommonMiddleWareMethod
     };
   }
 
