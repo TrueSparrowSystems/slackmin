@@ -58,18 +58,20 @@ class SlackAdmin {
   get commonMiddlewares() {
     const oThis = this;
 
-    return function(req, res, next) {
+    return async function(req, res, next) {
       let response;
       try {
-        response = oThis.validators.common(req.body, req.rawBody, req.query, req.headers, req.method);
+        response = await oThis.validators.common(req.body, req.rawBody, req.query, req.headers, req.method);
       } catch {
         return res.status(200).json('Something went wrong.');
       }
 
+      console.log('response=============>', JSON.stringify(response));
       req.body = response.requestBody;
       req.query = response.requestQuery;
       req.internalDecodedParams = response.internalDecodedParams;
       req.decodedParams = response.decodedParams;
+      console.log('req.body=============>', JSON.stringify(req.body));
 
       next();
     };
