@@ -12,7 +12,7 @@ const rootPrefix = '.',
   parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
   extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
   authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
-  CommonMiddlewareMethod = require(rootPrefix + '/lib/middlewareMethods/Common'),
+  CommonMiddlewares = require(rootPrefix + '/lib/middlewareMethods/Common'),
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
 
@@ -46,8 +46,8 @@ class SlackAdmin {
    */
   get validators() {
     return {
-      common : CommonMiddlewareMethod
-    }
+      common: CommonMiddlewares.CommonMiddleWareMethod()
+    };
   }
 
   /**
@@ -61,7 +61,7 @@ class SlackAdmin {
     return function(req, res, next) {
       let response;
       try {
-        response = oThis.validators.common(req.body, req.rawBody, req.query, req.headers, req.method)
+        response = oThis.validators.common(req.body, req.rawBody, req.query, req.headers, req.method);
       } catch {
         return res.status(200).json('Something went wrong.');
       }
