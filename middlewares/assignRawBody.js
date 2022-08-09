@@ -18,17 +18,7 @@ class AssignRawBody {
    * @param {function} next
    */
   assignRawBody(req, res, next) {
-    //req.rawBody = qs.stringify(req.body, { format: 'RFC1738' });
-
-    let data = '';
-    req.on('data', function(chunk) {
-      data += chunk;
-    });
-    req.on('end', function() {
-      req.rawBody = data;
-      console.log('req.rawBody from assignRawBody============================', req.rawBody);
-    });
-
+    req.rawBody = qs.stringify(req.body, { format: 'RFC1738' });
     console.log('assignRawBody middleware success---------------------');
 
     next();
