@@ -49,6 +49,7 @@ class PayloadFormatter {
   formatPayload(req, res, next) {
     const oThis = this;
     if (req.body.payload) {
+      console.log('req.body formatPayload=========', JSON.stringify(req.body));
       const payload = JSON.parse(req.body.payload);
 
       req.body.payload = oThis._preprocessSlackPayload(payload);
