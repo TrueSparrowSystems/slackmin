@@ -48,7 +48,7 @@ class SlackAdmin {
    */
   get commonMiddlewares() {
     return [
-      // assignRawBody,
+      assignRawBody,
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
       assignParams,
