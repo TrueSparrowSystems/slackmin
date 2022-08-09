@@ -47,19 +47,19 @@ class PayloadFormatter {
    */
   formatPayload(requestBody) {
     const oThis = this;
+    console.log('requestBody===========>', JSON.stringify(requestBody));
     if (requestBody.payload) {
       const payload = JSON.parse(requestBody.payload);
+      console.log('payload===========>', payload);
 
-      console.log('formatPayload success------------>>>>>>>>');
-      return oThis._preprocessSlackPayload(payload);
+      const formattedPayload = oThis._preprocessSlackPayload(payload);
+      console.log('formatPayload success------------>>>>>>>>', formattedPayload);
+
+      return payload;
     }
 
     return {};
   }
 }
 
-const _instance = new PayloadFormatter();
-
-module.exports = (...args) => {
-  _instance.formatPayload(...args);
-};
+module.exports = new PayloadFormatter();
