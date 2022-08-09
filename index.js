@@ -3,7 +3,6 @@ const rootPrefix = '.',
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
   slackWrapper = require(rootPrefix + '/lib/slack/Wrapper'),
   formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
-  assignRawBody = require(rootPrefix + '/middlewares/assignRawBody'),
   assignParams = require(rootPrefix + '/middlewares/assignParams'),
   sanitizer = require(rootPrefix + '/lib/helpers/sanitizer'),
   extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
@@ -48,7 +47,6 @@ class SlackAdmin {
    */
   get commonMiddlewares() {
     return [
-      //assignRawBody,
       formatPayload,
       sanitizer.sanitizeBodyAndQuery,
       assignParams,
