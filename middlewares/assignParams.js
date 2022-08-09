@@ -39,8 +39,4 @@ class AssignParams {
   }
 }
 
-const _instance = new AssignParams();
-
-module.exports = (...args) => {
-  _instance.assignParams(...args);
-};
+module.exports = new AssignParams();
