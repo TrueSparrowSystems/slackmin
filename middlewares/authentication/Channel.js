@@ -34,7 +34,7 @@ class ValidateSlackChannel {
     const whitelistedChannelIds = configProvider.getFor('whitelisted_channel_ids');
 
     if (whitelistedChannelIds.length === 0) {
-      return;
+      return oThis._prepareResponse();
     }
 
     if (!whitelistedChannelIds.includes(oThis.channelId)) {
