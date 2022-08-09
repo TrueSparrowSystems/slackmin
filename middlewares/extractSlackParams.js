@@ -43,8 +43,4 @@ class ExtractSlackParams {
   }
 }
 
-const _instance = new ExtractSlackParams();
-
-module.exports = (...args) => {
-  _instance.extractSlackParams(...args);
-};
+module.exports = new ExtractSlackParams();
