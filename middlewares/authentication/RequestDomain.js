@@ -48,11 +48,13 @@ class ValidateSlackRequestDomain {
       console.log('appConfig in slack domain validation======', appConfig);
       for (let index = 0; index < appConfig.length; index++) {
         if (appConfig[index].slack_domain === domain) {
+          console.log(`domain:::::::::::: ${domain}`);
+          console.log(`appConfig[index].slack_domain:::::::::::: ${appConfig[index].slack_domain}`);
+
           isValidSlackDomain = 1;
           break;
         }
       }
-      console.log(`appDomain::::::: ${appDomain} domain:::::::::::: ${domain}`);
       if (!isValidSlackDomain) {
         throw new Error(`Invalid slack request domain :: ${oThis.slackRequestParams}`);
       }
