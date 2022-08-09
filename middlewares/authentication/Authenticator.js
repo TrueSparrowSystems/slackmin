@@ -64,107 +64,89 @@ class Authenticator {
   /**
    * Function to validate slack signature.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   *
+   * @param {object} requestRawBody
+   * @param {object} requestHeaders
+   * @param {object} requestBody
    * @returns {Promise<void>}
    */
-  async validateSlackSignature(req, res, next) {
+  async validateSlackSignature(requestRawBody, requestHeaders, requestBody) {
     const authResponse = await new ValidateSlackSignature({
-      rawBody: req.rawBody,
-      requestHeaders: req.headers,
-      slackRequestParams: req.body
+      rawBody: requestRawBody,
+      requestHeaders: requestHeaders,
+      slackRequestParams: requestBody
     }).perform();
 
     if (authResponse.isFailure()) {
-      return res.status(200).json('Something went wrong.');
+      throw new Error('Invalid Slack Signature')
     }
-
-    next();
   }
 
   /**
    * Function to validate slack user.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   *
+   * @param {object} requestRawBody
+   * @param {object} requestHeaders
+   * @param {object} requestBody
    * @returns {Promise<void>}
    */
-  async validateSlackUser(req, res, next) {
+  async validateSlackUser(requestRawBody, requestHeaders, requestBody) {
     const authResponse = await new ValidateSlackUser({
-      rawBody: req.rawBody,
-      requestHeaders: req.headers,
-      slackRequestParams: req.body
+      rawBody: requestRawBody,
+      requestHeaders: requestHeaders,
+      slackRequestParams: requestBody
     }).perform();
 
     if (authResponse.isFailure()) {
-      return res.status(200).json('Something went wrong.');
+      throw new Error('Invalid Slack User')
     }
-
-    next();
   }
 
   /**
    * Function to validate raw body params
    *
-   * @param req
-   * @param res
-   * @param next
+   * @param {object} requestRawBody
    * @returns {Promise<void>}
    */
-  async validateRawBodyParams(req, res, next) {
+  async validateRawBodyParams(requestRawBody) {
     const authResponse = await new ValidateRawBodyParams({
-      rawBody: req.rawBody
+      rawBody: requestRawBody
     }).perform();
 
     if (authResponse.isFailure()) {
-      return res.status(200).json('Something went wrong.');
+      throw new Error('Invalid raw body params')
     }
-
-    next();
   }
 
   /**
    * Function to validate request headers
    *
-   * @param req
-   * @param res
-   * @param next
-   * @returns {Promise<*>}
+   * @param {object} requestHeaders
+   * @returns {Promise<void>}
    */
-  async validateRequestHeaders(req, res, next) {
+  async validateRequestHeaders(requestHeaders) {
     const authResponse = await new ValidateRequestHeaders({
-      requestHeaders: req.headers
+      requestHeaders: requestHeaders
     }).perform();
 
     if (authResponse.isFailure()) {
-      return res.status(200).json('Something went wrong.');
+      throw new Error('Invalid request headers')
     }
-
-    next();
   }
 
   /**
    * Function to validate request domain
    *
-   * @param req
-   * @param res
-   * @param next
-   * @returns {Promise<*>}
+   * @param {object} requestBody
+   * @returns {Promise<void>}
    */
-  async validateRequestDomain(req, res, next) {
+  async validateRequestDomain(requestBody) {
     const authResponse = await new ValidateRequestDomain({
-      slackRequestParams: req.body
+      slackRequestParams: requestBody
     }).perform();
 
     if (authResponse.isFailure()) {
-      return res.status(200).json('Something went wrong.');
+      throw new Error('Invalid request domain')
     }
-
-    next();
   }
 }
 

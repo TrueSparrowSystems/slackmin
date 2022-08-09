@@ -40,22 +40,21 @@ class PayloadFormatter {
   }
 
   /**
-   * Convert string to JSON.
+   * Format slack payload.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {object} requestBody
+   * @returns {string|boolean|number|Array|*}
    */
-  formatPayload(req, res, next) {
+  formatPayload(requestBody) {
     const oThis = this;
-    if (req.body.payload) {
-      const payload = JSON.parse(req.body.payload);
+    if (requestBody.payload) {
+      const payload = JSON.parse(requestBody.payload);
 
-      req.body.payload = oThis._preprocessSlackPayload(payload);
       console.log('formatPayload success------------>>>>>>>>');
+      return oThis._preprocessSlackPayload(payload);
     }
 
-    next();
+    return {};
   }
 }
 

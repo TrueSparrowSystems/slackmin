@@ -12,6 +12,7 @@ const rootPrefix = '.',
   parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
   extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
   authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
+  CommonMiddlewareMethod = require(rootPrefix + '/lib/middlewareMethods/Common'),
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
 
@@ -39,22 +40,39 @@ class SlackAdmin {
   }
 
   /**
+   * Validator with middleware logic.
+   *
+   * @returns {{common}}
+   */
+  get validators() {
+    return {
+      common : CommonMiddlewareMethod
+    }
+  }
+
+  /**
    * Slack admin common middlewares
    *
    * @returns {(*|Sanitizer.sanitizeBodyAndQuery|Authenticator.validateSlackSignature)[]}
    */
   get commonMiddlewares() {
-    return [
-      formatPayload,
-      sanitizer.sanitizeBodyAndQuery,
-      assignParams,
-      extractSlackParams,
-      authenticator.validateRawBodyParams,
-      authenticator.validateRequestHeaders,
-      authenticator.validateRequestDomain,
-      authenticator.validateSlackSignature,
-      authenticator.validateSlackUser
-    ];
+    const oThis = this;
+
+    return function(req, res, next) {
+      let response;
+      try {
+        response = oThis.validators.common(req.body, req.rawBody, req.query, req.headers, req.method)
+      } catch {
+        return res.status(200).json('Something went wrong.');
+      }
+
+      req.body = response.requestBody;
+      req.query = response.requestQuery;
+      req.internalDecodedParams = response.internalDecodedParams;
+      req.decodedParams = response.decodedParams;
+
+      next();
+    };
   }
 
   /**
