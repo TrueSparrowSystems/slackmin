@@ -93,7 +93,7 @@ class SlackAdmin {
       } catch (err) {
         console.log('interactiveEndpoint error ------>', JSON.stringify(err), typeof err);
 
-        return res.status(200).json('something went wrong-1');
+        return res.status(200).json(err);
       }
 
       console.log('interactive response=============>', JSON.stringify(response));
