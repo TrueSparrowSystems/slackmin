@@ -46,6 +46,8 @@ class ParseApiParams {
       return apiParamsResponse;
     }
 
+    return apiParamsResponse;
+
     const apiParamsData = apiParamsResponse.data;
 
     // Assign apiParams to internalDecodedParams.
