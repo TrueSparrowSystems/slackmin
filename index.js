@@ -91,9 +91,9 @@ class SlackAdmin {
           req.internalDecodedParams
         );
       } catch (err) {
-        console.log('interactiveEndpoint error ------>', err, typeof err);
+        console.log('interactiveEndpoint error ------>', JSON.stringify(err), typeof err);
 
-        return res.status(200).json(err);
+        return res.status(200).json('something went wrong-1');
       }
 
       console.log('interactive response=============>', JSON.stringify(response));
