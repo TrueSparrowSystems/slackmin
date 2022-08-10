@@ -23,6 +23,14 @@ class ParseApiParams {
 
     let apiParamsResponse;
 
+    const errorObj = responseHelper.error({
+      internal_error_identifier: 'Testing_error',
+      api_error_identifier: 'invalid_params',
+      debug_options: { slackPayload: payload }
+    });
+    // check if errorConfig required
+    return errorObj;
+
     if (payload.type === slackConstants.viewSubmissionPayloadType) {
       apiParamsResponse = await new ParseViewSubmissionApiParams({
         payload: requestBody.payload
@@ -45,8 +53,6 @@ class ParseApiParams {
     if (apiParamsResponse.isFailure()) {
       return apiParamsResponse;
     }
-
-    return apiParamsResponse;
 
     const apiParamsData = apiParamsResponse.data;
 
