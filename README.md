@@ -80,7 +80,6 @@ const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_memb
 const slackmin = new Slackmin(
   appConfigs,
   whiteListedChannels,
-  slackDomain,
   whitelistedUsers
 );
 

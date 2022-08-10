@@ -1,3 +1,6 @@
+## Slackmin v3.0.0
+- 
+
 ## Slackmin v2.1.2
 - Typo in the readme demo video corrected.
 

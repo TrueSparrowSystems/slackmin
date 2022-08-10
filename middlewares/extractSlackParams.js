@@ -36,10 +36,7 @@ class ExtractSlackParams {
     console.log('requestBody==============>', JSON.stringify(requestBody));
     console.log('internalDecodedParams==============>', internalDecodedParams);
 
-    return {
-      requestBody: requestBody,
-      internalDecodedParams: internalDecodedParams
-    };
+    return { requestBody, internalDecodedParams };
   }
 }
 
