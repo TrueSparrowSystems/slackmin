@@ -41,17 +41,6 @@ class Authenticator {
    * Function to validate slack channel.
    * This method won't be called in case of interactive routes. This will be called only for slash commands routes.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
-   *
-   * @returns {Promise<void>}
-   */
-
-  /**
-   * Function to validate slack channel.
-   * This method won't be called in case of interactive routes. This will be called only for slash commands routes.
-   *
    * @param {object} requestRawBody
    * @param {object} requestHeaders
    * @param {object} requestBody
@@ -66,7 +55,7 @@ class Authenticator {
     }).perform();
 
     if (authResponse.isFailure()) {
-      throw new Error('Invalid slack channel')
+      throw new Error('Invalid slack channel');
     }
   }
 
@@ -86,7 +75,7 @@ class Authenticator {
     }).perform();
 
     if (authResponse.isFailure()) {
-      throw new Error('Invalid Slack Signature')
+      throw new Error('Invalid Slack Signature');
     }
   }
 
@@ -106,7 +95,7 @@ class Authenticator {
     }).perform();
 
     if (authResponse.isFailure()) {
-      throw new Error('Invalid Slack User')
+      throw new Error('Invalid Slack User');
     }
   }
 
@@ -122,7 +111,7 @@ class Authenticator {
     }).perform();
 
     if (authResponse.isFailure()) {
-      throw new Error('Invalid raw body params')
+      throw new Error('Invalid raw body params');
     }
   }
 
@@ -138,7 +127,7 @@ class Authenticator {
     }).perform();
 
     if (authResponse.isFailure()) {
-      throw new Error('Invalid request headers')
+      throw new Error('Invalid request headers');
     }
   }
 
@@ -154,7 +143,7 @@ class Authenticator {
     }).perform();
 
     if (authResponse.isFailure()) {
-      throw new Error('Invalid request domain')
+      throw new Error('Invalid request domain');
     }
   }
 }
