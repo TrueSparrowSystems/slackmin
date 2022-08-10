@@ -5,15 +5,16 @@ class ExtractTriggerId {
    * Extract trigger_id from interactive routes. This middleware should only be used with interactive routes.
    * This middleware will not fetch triggerId for view_submission type interactions.
    *
-   * @param requestBody
-   * @returns {string|null}
+   * @param {object} requestBody
+   * @param {object} decodedParams
+   * @returns {*}
    */
-  extractTriggerId(requestBody) {
+  extractTriggerId(requestBody, decodedParams) {
     if (requestBody.payload) {
-      return requestBody.payload.trigger_id;
+      decodedParams.trigger_id = requestBody.payload.trigger_id;
     }
 
-    return null;
+    return decodedParams;
   }
 }
 
