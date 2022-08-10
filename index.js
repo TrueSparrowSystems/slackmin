@@ -2,17 +2,8 @@ const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
   slackWrapper = require(rootPrefix + '/lib/slack/Wrapper'),
-  formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
-  assignParams = require(rootPrefix + '/middlewares/assignParams'),
-  sanitizer = require(rootPrefix + '/lib/helpers/sanitizer'),
-  extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
-  extractText = require(rootPrefix + '/middlewares/extractText'),
-  extractResponseUrlFromBody = require(rootPrefix + '/middlewares/extractResponseUrlFromBody'),
-  extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams'),
-  parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
-  extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
-  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
   CommonMiddlewares = require(rootPrefix + '/lib/middlewareMethods/Common'),
+  InteractiveMiddlewares = require(rootPrefix + '/lib/middlewareMethods/Interactive'),
   SlashCommandMiddlewares = require(rootPrefix + '/lib/middlewareMethods/SlashCommand'),
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
@@ -48,6 +39,7 @@ class SlackAdmin {
   get validators() {
     return {
       common: CommonMiddlewares.CommonMiddleWareMethod,
+      interactive: InteractiveMiddlewares.InteractiveMiddleWareMethod,
       slashCommands: SlashCommandMiddlewares.SlashCommandMiddlewareMethod
     };
   }
@@ -85,14 +77,34 @@ class SlackAdmin {
    * @returns {(Sanitizer.sanitizeDynamicUrlParams|Sanitizer.sanitizeHeaderParams|Authenticator.validateSlackApiAppId|*)[]}
    */
   get interactiveEndpointMiddlewares() {
-    return [
-      sanitizer.sanitizeDynamicUrlParams,
-      sanitizer.sanitizeHeaderParams,
-      authenticator.validateSlackApiAppId,
-      extractTriggerId,
-      extractResponseUrlFromPayload,
-      parseApiParameters
-    ];
+    const oThis = this;
+
+    return async function(req, res, next) {
+      let response;
+      try {
+        response = await oThis.validators.interactive(
+          req.params,
+          req.body,
+          req.rawBody,
+          req.headers,
+          req.decodedParams,
+          req.internalDecodedParams
+        );
+      } catch (err) {
+        console.log('interactiveEndpoint error ------>', err, typeof err);
+
+        return res.status(200).json(err);
+      }
+
+      console.log('interactive response=============>', JSON.stringify(response));
+      //decodedParams, internalDecodedParams, requestParams
+      req.params = response.requestParams;
+      req.sanitizedHeaders = response.internalDecodedParams.headers;
+      req.internalDecodedParams = response.internalDecodedParams;
+      req.decodedParams = response.decodedParams;
+
+      next();
+    };
   }
 
   /**

@@ -18,18 +18,18 @@ class ParseApiParams {
    *
    * @returns {Promise<void>}
    */
-  async parse(req, res, next) {
-    const payload = req.body.payload;
+  async parse(requestBody, decodedParams, internalDecodedParams) {
+    const payload = requestBody.payload;
 
     let apiParamsResponse;
 
     if (payload.type === slackConstants.viewSubmissionPayloadType) {
       apiParamsResponse = await new ParseViewSubmissionApiParams({
-        payload: req.body.payload
+        payload: requestBody.payload
       }).perform();
     } else if (payload.type === slackConstants.blockActionsPayloadType) {
       apiParamsResponse = await new ParseBlockActionsApiParams({
-        payload: req.body.payload
+        payload: requestBody.payload
       }).perform();
     } else {
       const errorObj = responseHelper.error({
@@ -38,12 +38,12 @@ class ParseApiParams {
         debug_options: { slackPayload: payload }
       });
       // check if errorConfig required
-      return responseHelper.renderApiResponse(errorObj, res);
+      return errorObj;
     }
 
     // check if errorConfig required
     if (apiParamsResponse.isFailure()) {
-      return responseHelper.renderApiResponse(apiParamsResponse, res);
+      return apiParamsResponse;
     }
 
     const apiParamsData = apiParamsResponse.data;
@@ -56,16 +56,12 @@ class ParseApiParams {
     }
 
     // eslint-disable-next-line require-atomic-updates
-    req.internalDecodedParams.apiName = apiParamsData.action;
+    internalDecodedParams.apiName = apiParamsData.action;
     // eslint-disable-next-line require-atomic-updates
-    Object.assign(req.decodedParams, internalDecodedApiParams);
+    Object.assign(decodedParams, internalDecodedApiParams);
 
-    next();
+    return responseHelper.successWithData({ decodedParams, internalDecodedParams });
   }
 }
 
-const _instance = new ParseApiParams();
-
-module.exports = (...args) => {
-  _instance.parse(...args);
-};
+module.exports = new ParseApiParams();
