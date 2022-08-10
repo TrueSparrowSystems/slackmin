@@ -58,7 +58,12 @@ class SlackAdmin {
       console.log('req.rawBody===================>>>>>>>>', req.rawBody);
       console.log('req.body===================>>>>>>>>', req.body);
       console.log('qs.stringify(req.body)===================>>>>>>>>', qs.stringify(req.body));
-      console.log('compare=======================>>>>>>>>', req.rawBody === qs.stringify(req.body));
+
+      const a = qs.stringify(req.body);
+      const body = a.replace(/%20/g, '+');
+      console.log('body=======================>>>>>>>>', body);
+      console.log('compare =======================>>>>>>>>', body === req.rawBody);
+      req.rawBody = body;
 
       let response;
       try {
