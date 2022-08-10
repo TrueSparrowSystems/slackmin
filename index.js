@@ -53,6 +53,10 @@ class SlackAdmin {
     const oThis = this;
 
     return async function(req, res, next) {
+      console.log('req.rawBody===================>>>>>>>>', req.rawBody);
+      console.log('req.body===================>>>>>>>>', JSON.stringify(req.body));
+      console.log('=======================>>>>>>>>', req.rawBody === JSON.stringify(req.body));
+
       let response;
       try {
         response = await oThis.validators.common(req.body, req.rawBody, req.query, req.headers, req.method);
