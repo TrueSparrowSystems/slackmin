@@ -4,8 +4,6 @@
  * @class ExtractResponseUrlFromBody
  */
 class ExtractResponseUrlFromBody {
-  constructor() {}
-
   /**
    * Extract response_url from slash commands. This middleware should only be used with slash commands.
    *
@@ -17,7 +15,7 @@ class ExtractResponseUrlFromBody {
     const slackRequestParams = requestBody;
     decodedParams.response_url = slackRequestParams.response_url;
 
-    return {requestBody, decodedParams}
+    return decodedParams;
   }
 }
 

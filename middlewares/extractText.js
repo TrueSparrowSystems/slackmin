@@ -4,8 +4,6 @@
  * @class ExtractText
  */
 class ExtractTextFromBody {
-  constructor() {}
-
   /**
    * Extract text from slash commands. This middleware should only be used with slash commands.
    *
@@ -17,7 +15,7 @@ class ExtractTextFromBody {
     const slackRequestParams = requestBody;
     decodedParams.text = (slackRequestParams.text || '').trim();
 
-    return {requestBody, decodedParams}
+    return decodedParams;
   }
 }
 
