@@ -101,7 +101,7 @@ class SlackAdmin {
    * @returns {(Authenticator.validateSlackChannel|*)[]}
    */
   get slashCommandMiddlewares() {
-    return [authenticator.validateSlackChannel, extractText, extractResponseUrlFromBody];
+    const oThis = this;
 
     return async function(req, res, next) {
       let response;
