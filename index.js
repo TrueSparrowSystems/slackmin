@@ -13,6 +13,7 @@ const rootPrefix = '.',
   extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
   authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
   CommonMiddlewares = require(rootPrefix + '/lib/middlewareMethods/Common'),
+  SlashCommandMiddlewares = require(rootPrefix + '/lib/middlewareMethods/SlashCommand'),
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
 
@@ -46,7 +47,8 @@ class SlackAdmin {
    */
   get validators() {
     return {
-      common: CommonMiddlewares.CommonMiddleWareMethod
+      common: CommonMiddlewares.CommonMiddleWareMethod,
+      slashCommands: SlashCommandMiddlewares.SlashCommandMiddlewareMethod
     };
   }
 
@@ -100,6 +102,22 @@ class SlackAdmin {
    */
   get slashCommandMiddlewares() {
     return [authenticator.validateSlackChannel, extractText, extractResponseUrlFromBody];
+
+    return async function(req, res, next) {
+      let response;
+      try {
+        response = await oThis.validators.slashCommands(req.body, req.rawBody, req.headers, req.decodedParams);
+      } catch {
+        return res.status(200).json('Something went wrong.');
+      }
+
+      console.log('slashCommandMiddlewares :: response=============>', JSON.stringify(response));
+      req.body = response.requestBody;
+      req.decodedParams = response.decodedParams;
+      console.log('slashCommandMiddlewares :: req.body=============>', JSON.stringify(req.body));
+
+      next();
+    };
   }
 
   /**

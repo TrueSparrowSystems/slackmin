@@ -47,18 +47,27 @@ class Authenticator {
    *
    * @returns {Promise<void>}
    */
-  async validateSlackChannel(req, res, next) {
+
+  /**
+   * Function to validate slack channel.
+   * This method won't be called in case of interactive routes. This will be called only for slash commands routes.
+   *
+   * @param {object} requestRawBody
+   * @param {object} requestHeaders
+   * @param {object} requestBody
+   *
+   * @returns {Promise<void>}
+   */
+  async validateSlackChannel(requestRawBody, requestHeaders, requestBody) {
     const authResponse = await new ValidateSlackChannel({
-      rawBody: req.rawBody,
-      requestHeaders: req.headers,
-      slackRequestParams: req.body
+      rawBody: requestRawBody,
+      requestHeaders: requestHeaders,
+      slackRequestParams: requestBody
     }).perform();
 
     if (authResponse.isFailure()) {
-      return res.status(200).json('Something went wrong.');
+      throw new Error('Invalid slack channel')
     }
-
-    next();
   }
 
   /**

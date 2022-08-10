@@ -3,26 +3,22 @@
  *
  * @class ExtractText
  */
-class ExtractText {
+class ExtractTextFromBody {
   constructor() {}
 
   /**
    * Extract text from slash commands. This middleware should only be used with slash commands.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {object} requestBody
+   * @param {object} decodedParams
+   * @returns {{decodedParams: *, requestBody: *}}
    */
-  extractText(req, res, next) {
-    const slackRequestParams = req.body;
-    req.decodedParams.text = (slackRequestParams.text || '').trim();
+  extractText(requestBody, decodedParams) {
+    const slackRequestParams = requestBody;
+    decodedParams.text = (slackRequestParams.text || '').trim();
 
-    next();
+    return {requestBody, decodedParams}
   }
 }
 
-const _instance = new ExtractText();
-
-module.exports = (...args) => {
-  _instance.extractText(...args);
-};
+module.exports = new ExtractTextFromBody();
