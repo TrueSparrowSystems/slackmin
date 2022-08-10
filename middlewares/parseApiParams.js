@@ -1,6 +1,5 @@
 const rootPrefix = '..',
   slackConstants = require(rootPrefix + '/lib/constants/slackConstants'),
-  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
   ParseViewSubmissionApiParams = require(rootPrefix + '/lib/slack/ParseViewActionsApiParams'),
   ParseBlockActionsApiParams = require(rootPrefix + '/lib/slack/ParseBlockActionsApiParams');
 
@@ -32,18 +31,11 @@ class ParseApiParams {
         payload: requestBody.payload
       }).perform();
     } else {
-      const errorObj = responseHelper.error({
-        internal_error_identifier: 'r_a_s_i_gap_1',
-        api_error_identifier: 'invalid_params',
-        debug_options: { slackPayload: payload }
-      });
-      // check if errorConfig required
-      return errorObj;
+      throw new Error('Invalid payload type');
     }
 
-    // check if errorConfig required
     if (apiParamsResponse.isFailure()) {
-      return apiParamsResponse;
+      throw new Error('Parsing api params failed');
     }
 
     const apiParamsData = apiParamsResponse.data;
@@ -60,7 +52,7 @@ class ParseApiParams {
     // eslint-disable-next-line require-atomic-updates
     Object.assign(decodedParams, internalDecodedApiParams);
 
-    return responseHelper.successWithData({ decodedParams, internalDecodedParams });
+    return { decodedParams, internalDecodedParams };
   }
 }
 
