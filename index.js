@@ -1,3 +1,5 @@
+const qs = require('qs');
+
 const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
@@ -54,8 +56,9 @@ class SlackAdmin {
 
     return async function(req, res, next) {
       console.log('req.rawBody===================>>>>>>>>', req.rawBody);
-      console.log('req.body===================>>>>>>>>', JSON.stringify(req.body));
-      console.log('=======================>>>>>>>>', req.rawBody === JSON.stringify(req.body));
+      console.log('req.body===================>>>>>>>>', req.body);
+      console.log('qs.stringify(req.body)===================>>>>>>>>', qs.stringify(req.body));
+      console.log('compare=======================>>>>>>>>', req.rawBody === qs.stringify(req.body));
 
       let response;
       try {
