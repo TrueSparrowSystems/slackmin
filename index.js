@@ -49,7 +49,7 @@ class SlackAdmin {
   /**
    * Slack admin common middlewares
    *
-   * @returns {(*|Sanitizer.sanitizeBodyAndQuery|Authenticator.validateSlackSignature)[]}
+   * @returns {function(...[*]=)}
    */
   get commonMiddlewares() {
     const oThis = this;
@@ -77,7 +77,7 @@ class SlackAdmin {
   /**
    * Slack admin interactive endpoints middlewares
    *
-   * @returns {(Sanitizer.sanitizeDynamicUrlParams|Sanitizer.sanitizeHeaderParams|Authenticator.validateSlackApiAppId|*)[]}
+   * @returns {function(...[*]=)}
    */
   get interactiveEndpointMiddlewares() {
     const oThis = this;
@@ -112,7 +112,7 @@ class SlackAdmin {
   /**
    * Slack command middlewares
    *
-   * @returns {(Authenticator.validateSlackChannel|*)[]}
+   * @returns {function(...[*]=)}
    */
   get slashCommandMiddlewares() {
     const oThis = this;
