@@ -17,15 +17,11 @@ class Authenticator {
    * Function to validate slack Api app ID.
    * This method won't be called in case of slash command routes routes. This will be called only for interactive routes.
    *
-   * @param {object} requestRawBody
-   * @param {object} requestHeaders
    * @param {object} requestBody
    * @returns {Promise<void>}
    */
-  async validateSlackApiAppId(requestRawBody, requestHeaders, requestBody) {
+  async validateSlackApiAppId(requestBody) {
     const authResponse = await new ValidateSlackApiAppId({
-      rawBody: requestRawBody,
-      requestHeaders: requestHeaders,
       slackRequestParams: requestBody
     }).perform();
 

@@ -1,5 +1,3 @@
-const qs = require('qs');
-
 const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
@@ -34,11 +32,11 @@ class SlackAdmin {
   }
 
   /**
-   * Middleware methods : Exposed methods for common, slash command and interactive endpoint middlewares
+   * Validator methods : Exposed methods for common, slash command and interactive endpoint validations
    *
    * @returns {{common: *, slashCommands: *, interactive: *}}
    */
-  get middlewareMethods() {
+  get validators() {
     return {
       common: CommonMiddlewares.CommonMiddleWareMethod,
       interactive: InteractiveMiddlewares.InteractiveMiddleWareMethod,
@@ -57,7 +55,7 @@ class SlackAdmin {
     return async function(req, res, next) {
       let response;
       try {
-        response = await oThis.middlewareMethods.common(req.body, req.rawBody, req.query, req.headers, req.method);
+        response = await oThis.validators.common(req.body, req.query, req.headers, req.method);
       } catch (errorMessage) {
         console.error('Common middleaware error--------', errorMessage);
         return res.status(200).json('Something went wrong.');
@@ -85,10 +83,9 @@ class SlackAdmin {
     return async function(req, res, next) {
       let response;
       try {
-        response = await oThis.middlewareMethods.interactive(
+        response = await oThis.validators.interactive(
           req.params,
           req.body,
-          req.rawBody,
           req.headers,
           req.decodedParams,
           req.internalDecodedParams
@@ -121,7 +118,7 @@ class SlackAdmin {
       let response;
       try {
         console.log(' Started executing slash command middlewares=======================');
-        response = await oThis.middlewareMethods.slashCommands(req.body, req.rawBody, req.headers, req.decodedParams);
+        response = await oThis.validators.slashCommands(req.body, req.rawBody, req.headers, req.decodedParams);
       } catch (err) {
         console.error('Slash command middleware error-------------', JSON.stringify(err));
         return res.status(200).json('Something went wrong.');
