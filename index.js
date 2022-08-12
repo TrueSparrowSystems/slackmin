@@ -53,22 +53,21 @@ class SlackAdmin {
     const oThis = this;
 
     return async function(req, res, next) {
-      let response;
       try {
-        response = await oThis.validators.common(req.body, req.query, req.headers, req.method);
+        const response = await oThis.validators.common(req.body, req.query, req.headers, req.method);
+
+        console.log('response=============>', JSON.stringify(response));
+        req.body = response.requestBody;
+        req.query = response.requestQuery;
+        req.internalDecodedParams = response.internalDecodedParams;
+        req.decodedParams = response.decodedParams;
+        console.log('req.body=============>', JSON.stringify(req.body));
+
+        next();
       } catch (errorMessage) {
         console.error('Common middleaware error--------', errorMessage);
         return res.status(200).json('Something went wrong.');
       }
-
-      console.log('response=============>', JSON.stringify(response));
-      req.body = response.requestBody;
-      req.query = response.requestQuery;
-      req.internalDecodedParams = response.internalDecodedParams;
-      req.decodedParams = response.decodedParams;
-      console.log('req.body=============>', JSON.stringify(req.body));
-
-      next();
     };
   }
 
@@ -81,28 +80,27 @@ class SlackAdmin {
     const oThis = this;
 
     return async function(req, res, next) {
-      let response;
       try {
-        response = await oThis.validators.interactive(
+        const response = await oThis.validators.interactive(
           req.params,
           req.body,
           req.headers,
           req.decodedParams,
           req.internalDecodedParams
         );
+
+        console.log('interactive response=============>', JSON.stringify(response));
+        req.params = response.requestParams;
+        req.sanitizedHeaders = response.internalDecodedParams.headers;
+        req.internalDecodedParams = response.internalDecodedParams;
+        req.decodedParams = response.decodedParams;
+
+        next();
       } catch (err) {
         console.error('Interactive endpoint middleware error-------------', JSON.stringify(err));
 
         return res.status(200).json('something_went_wrong');
       }
-
-      console.log('interactive response=============>', JSON.stringify(response));
-      req.params = response.requestParams;
-      req.sanitizedHeaders = response.internalDecodedParams.headers;
-      req.internalDecodedParams = response.internalDecodedParams;
-      req.decodedParams = response.decodedParams;
-
-      next();
     };
   }
 
@@ -115,21 +113,20 @@ class SlackAdmin {
     const oThis = this;
 
     return async function(req, res, next) {
-      let response;
       try {
         console.log(' Started executing slash command middlewares=======================');
-        response = await oThis.validators.slashCommands(req.body, req.rawBody, req.headers, req.decodedParams);
+        const response = await oThis.validators.slashCommands(req.body, req.rawBody, req.headers, req.decodedParams);
+
+        console.log('slashCommandMiddlewares :: response=============>', JSON.stringify(response));
+        req.body = response.requestBody;
+        req.decodedParams = response.decodedParams;
+        console.log('slashCommandMiddlewares :: req.body=============>', JSON.stringify(req.body));
+
+        next();
       } catch (err) {
         console.error('Slash command middleware error-------------', JSON.stringify(err));
         return res.status(200).json('Something went wrong.');
       }
-
-      console.log('slashCommandMiddlewares :: response=============>', JSON.stringify(response));
-      req.body = response.requestBody;
-      req.decodedParams = response.decodedParams;
-      console.log('slashCommandMiddlewares :: req.body=============>', JSON.stringify(req.body));
-
-      next();
     };
   }
 
