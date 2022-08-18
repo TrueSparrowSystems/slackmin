@@ -55,8 +55,7 @@ class ValidateSlackSignature {
 
       await oThis._validateSignature(requestTimestamp, version, signature);
     } catch (error) {
-      console.log('Error==========================>>>>', error);
-      console.error('Slack authentication failed. Invalid slack signature');
+      console.error('Slack authentication failed. Invalid slack signature', error);
 
       return responseHelper.error({
         internal_error_identifier: 'm_a_s_p',

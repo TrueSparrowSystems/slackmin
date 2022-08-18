@@ -47,10 +47,8 @@ class PayloadFormatter {
    */
   formatPayload(requestBody) {
     const oThis = this;
-    console.log('requestBody===========>', JSON.stringify(requestBody));
     if (requestBody.payload) {
       const payload = JSON.parse(requestBody.payload);
-      console.log('payload===========>', payload);
 
       return oThis._preprocessSlackPayload(payload);
     }
