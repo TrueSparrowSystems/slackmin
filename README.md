@@ -181,6 +181,8 @@ Validators methods exposed for easy integration with non Express frameworks.
     - Parameters: requestBody, requestRawBody, requestHeaders, decodedParams
     - Description: This method can be used for slash command middleware for slash command route.
 
+Refer validators methods usage [here](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Koa)
+
 ## Interactive Components
 
 Slack provides a range of visual components (Block Kit) used to layout complex information. These blocks are represented as JSON objects. You can include up to 50 blocks in a message and 100 blocks in a modal.
