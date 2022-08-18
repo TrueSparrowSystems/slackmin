@@ -450,52 +450,36 @@ app.post('/api/slack/interactive-endpoint', slackmin.interactiveEndpointMiddlewa
   const apiName = req.internalDecodedParams.apiName;
 
   if (apiName === 'getUserOrderHistory') {
-    return getUserOrderHistoryHandler(req, res, next); // NOTE: Defined in later step
+    return getUserOrderHistoryHandler(req, res, next);
   } else if (apiName === 'issueRefundModalOpen') {
-    return issueRefundModalOpenHandler(req, res, next); // NOTE: Defined in later step
+    return issueRefundModalOpenHandler(req, res, next);
   } else if (apiName === 'issueRefundModalSubmit') {
-    return issueRefundModalSubmitHandler(req, res, next); // NOTE: Defined in later step
+    return issueRefundModalSubmitHandler(req, res, next);
   } else if (apiName === 'revenueModalSubmit') {
-    return revenueModalSubmitHandler(req, res, next); // NOTE: Defined in later step
+    return revenueModalSubmitHandler(req, res, next);
   } else if (apiName === 'editSellerModalOpen') {
-    return editSellerModalOpenHandler(req, res, next); // NOTE: Defined in later step
+    return editSellerModalOpenHandler(req, res, next);
   } else if (apiName === 'editSellerModalSubmit') {
-    return editSellerModalSubmitHandler(req, res, next); // NOTE: Defined in later step
+    return editSellerModalSubmitHandler(req, res, next);
   }
 
   throw new Error(`unknown apiName ${apiName}`);
 });
 
-// Configure slash command endpoint to get user order details  with slash common middlewares
+// Configure slash command endpoint to get user order details  with slash command middlewares
 //customer support
-app.post(
-  '/api/slack/order',
-  slackmin.slashCommandMiddlewares,
-  getOrderDetailsCommandHandler // NOTE: Defined in later step
-);
+app.post('/api/slack/order', slackmin.slashCommandMiddlewares, getOrderDetailsCommandHandler);
 
-// Configure slash command endpoint to get revenue  with slash common middlewares
+// Configure slash command endpoint to get revenue  with slash command middlewares
 // Analytics
-app.post(
-  '/api/slack/revenue',
-  slackmin.slashCommandMiddlewares,
-  revenueSlashCommandHandler // NOTE: Defined in later step
-);
+app.post('/api/slack/revenue', slackmin.slashCommandMiddlewares, revenueSlashCommandHandler);
 
-// Configure slash command endpoint to get and edit seller details with slash common middlewares
+// Configure slash command endpoint to get and edit seller details with slash command middlewares
 // Content Management
-app.post(
-  '/api/slack/seller',
-  slackmin.slashCommandMiddlewares,
-  getSellerSlashCommandHandler // NOTE: Defined in later step
-);
+app.post('/api/slack/seller', slackmin.slashCommandMiddlewares, getSellerSlashCommandHandler);
 
-// Configure slash command endpoint to get report according to report type with slash common middlewares
+// Configure slash command endpoint to get report according to report type with slash command middlewares
 // Analytics
-app.post(
-  '/api/slack/report',
-  slackmin.slashCommandMiddlewares,
-  getReportCommandHandler // NOTE: Defined in later step
-);
+app.post('/api/slack/report', slackmin.slashCommandMiddlewares, getReportCommandHandler);
 
 app.listen(3000);
