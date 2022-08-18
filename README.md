@@ -165,6 +165,21 @@ router.post(
 ```
 **Important Note**: `req.decodedParams` contains sanitized parameters and must be used to read data for further business logic.
 
+## Validators Middleware Methods
+
+Validators methods exposed for easy integration with non Express frameworks.
+
+**Methods**
+
+- `common`
+    - Parameters: requestBody, requestQuery, requestHeaders, requestMethod
+    - Description: This method can be used for common middleware for slash command and interactive-endpoint routes.
+- `interactive`
+    - Parameters: requestParams, requestBody, requestHeaders, decodedParams, internalDecodedParams
+    - Description: This method can be used for interactive endpoint middleware for interactive-endpoint route.
+- `slashCommands`
+    - Parameters: requestBody, requestRawBody, requestHeaders, decodedParams
+    - Description: This method can be used for slash command middleware for slash command route.
 
 ## Interactive Components
 
@@ -402,6 +417,14 @@ A modal UI is created and opened using our Modal wrapper. Hidden parameters are 
 
 #### Part 4
 On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
+
+## Examples
+
+We have added code snippets for all demo slackmin commands available on https://plgworks.com/slackmin
+
+**1**. Refer [Express code snippets](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Express) to integrate slackmin with [Express](https://expressjs.com/)<br>
+**2**. Refer [Fastify code snippets](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Fastify) to integrate slackmin with [Fastify](https://www.fastify.io/docs/latest/)<br>
+**3**. Refer [Koa code snippets](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Koa) to integrate slackmin with [Koa](https://koajs.com/)
 
 ## Contribution
 We welcome more helping hands to make Slackmin better. Feel free to report issues, raise PRs for fixes & enhancements.

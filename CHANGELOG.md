@@ -1,6 +1,6 @@
 ## Slackmin v3.0.0
 - Multi-workspace support added. Now the slack apps can be from different workspaces.
-- Validator methods exposed for easy integration with non Express frameworks.
+- Validators methods exposed for easy integration with non Express frameworks.
 - Whitelisted channels validation made optional. Pass `whiteListedChannels` as empty array when initializing Slackmin.
 - Whitelisted users validation made optional. Pass `whitelistedUsers` as empty array when initializing Slackmin.
 
