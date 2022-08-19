@@ -424,9 +424,9 @@ On submission of the modal, the hidden parameters are obtained in the view submi
 
 We have added code snippets for all demo slackmin commands available on https://plgworks.com/slackmin
 
-**1**. Refer [Express code snippets](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Express) to integrate slackmin with [Express](https://expressjs.com/)<br>
-**2**. Refer [Fastify code snippets](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Fastify) to integrate slackmin with [Fastify](https://www.fastify.io/docs/latest/)<br>
-**3**. Refer [Koa code snippets](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Koa) to integrate slackmin with [Koa](https://koajs.com/)
+**1**. Refer [Express code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/express) to integrate Slackmin with [Express](https://expressjs.com/)<br>
+**2**. Refer [Fastify code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/fastify) to integrate Slackmin with [Fastify](https://www.fastify.io/docs/latest/)<br>
+**3**. Refer [Koa code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/koa) to integrate Slackmin with [Koa](https://koajs.com/)
 
 ## Contribution
 We welcome more helping hands to make Slackmin better. Feel free to report issues, raise PRs for fixes & enhancements.
