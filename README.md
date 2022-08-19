@@ -221,7 +221,7 @@ Slackmin Message wrapper provides simple methods to create and format complex me
 - `sendMessageToChannel`
   - Parameters: postMessageParams (object with keys - channel, text), slackDomain (string) 
   - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id or your slack channel name. `text` is the message title text.
-  `slackDomain` is you slack app's workspace domain. It is optional parameter if not passed, then the first app's domain is taken.
+  `slackDomain` is you slack app's workspace domain. `slackDomain` is optional parameter if not passed, then the first app's domain is taken.
 
 #### Example 1 - Sync Message / System Alert
 When responding to a slash command or any other interaction, we have 2 choices - synchronous response and asynchronous response. If the generation of the message body is simple, then the response can be sent synchronously. Following is an example of the same.
