@@ -96,11 +96,11 @@ module.exports = slackmin;
 
 <br>
 
-**2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. If you want to skip whitelisted channel ids validation, pass `whiteListedChannels` as empty array.
+**2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. Pass `whiteListedChannels` as an empty array to skip this validation.
 
 <br>
 
-**3. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. If you want to skip whitelisted users validation, pass `whitelistedUsers` as empty array.
+**3. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. Pass `whitelistedUsers` as an empty array to skip this validation.
 
 ## Middlewares
 
@@ -165,23 +165,23 @@ router.post(
 ```
 **Important Note**: `req.decodedParams` contains sanitized parameters and must be used to read data for further business logic.
 
-## Validators Middleware Methods
+## Validators
 
-Validators methods exposed for easy integration with non Express frameworks.
+Validators are functions which expose the middleware functionality which can be used in non express Node js frameworks like Koa, Fastify, etc.
 
 **Methods**
 
-- `common`
+- `common` - function accessed as `slackmin.validators.common`
     - Parameters: requestBody, requestQuery, requestHeaders, requestMethod
-    - Description: This method can be used for common middleware for slash command and interactive-endpoint routes.
-- `interactive`
+    - Description: This method can be used for implementing common middleware for slash command and interactive-endpoint routes.
+- `interactive` - function accessed as `slackmin.validators.interactive`
     - Parameters: requestParams, requestBody, requestHeaders, decodedParams, internalDecodedParams
-    - Description: This method can be used for interactive endpoint middleware for interactive-endpoint route.
-- `slashCommands`
+    - Description: This method can be used for implementing interactive endpoint middleware for interactive-endpoint route.
+- `slashCommands` - function accessed as `slackmin.validators.slashCommands`
     - Parameters: requestBody, requestRawBody, requestHeaders, decodedParams
-    - Description: This method can be used for slash command middleware for slash command route.
+    - Description: This method can be used for implementing slash command middleware for slash command route.
 
-Refer validators methods usage [here](https://github.com/PLG-Works/slackmin/tree/middleware_refactoring/Examples/Koa)
+Refer validators methods usage examples [here](https://github.com/PLG-Works/slackmin/tree/master/examples/koa)
 
 ## Interactive Components
 
