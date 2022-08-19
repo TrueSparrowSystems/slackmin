@@ -1,29 +1,27 @@
+// Create a file {appRoot}/slackmin.js with the following code
+// This helps in maintaining a singleton instance of Slackmin.
+// Replace actual values for <slack_app_id>, <slack_signing_secret>,  <slack_bot_user_oauth_token>, <slack_channel_id>, <slack_domain>, <slack_member_id>
+
 const Slackmin = require('@plgworks/slackmin');
 const appConfigs = [
   {
-    id: process.env.SLACKMIN_APP1_ID,
-    secret: process.env.SLACKMIN_APP1_SIGNING_SECRET,
-    slack_bot_user_oauth_token: process.env.SLACKMIN_APP1_BOT_TOKEN,
-    slack_domain: process.env.SLACKMIN_APP1_SLACK_DOMAIN
+    id: '<slack_app1_id>',
+    secret: '<slack_signing_secret_for_app1>',
+    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token_for_app1>',
+    slack_domain: '<slack_app1_domain>'
   },
   {
-    id: process.env.SLACKMIN_APP2_ID,
-    secret: process.env.SLACKMIN_APP2_SIGNING_SECRET,
-    slack_bot_user_oauth_token: process.env.SLACKMIN_APP2_BOT_TOKEN,
-    slack_domain: process.env.SLACKMIN_APP2_SLACK_DOMAIN
-  },
-  {
-    id: process.env.SLACKMIN_APP3_ID,
-    secret: process.env.SLACKMIN_APP3_SIGNING_SECRET,
-    slack_bot_user_oauth_token: process.env.SLACKMIN_APP3_BOT_TOKEN,
-    slack_domain: process.env.SLACKMIN_APP3_SLACK_DOMAIN
+    id: '<slack_app2_id>',
+    secret: '<slack_signing_secret_for_app2>',
+    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token_for_app2>',
+    slack_domain: '<slack_app2_domain>'
   }
 ];
 
-const whiteListedChannels = [process.env.SLACKMIN_CHANNEL1_ID, process.env.SLACKMIN_CHANNEL2_ID];
+const whiteListedChannels = ['<slack_channel_id_app1>', '<slack_channel_id_app2>'];
 
 // Whitelisted users should come from database as there will be many admins. Following is just for example.
-const whitelistedUsers = [process.env.SLACKMIN_WHITELISTED_USER1_ID, process.env.SLACKMIN_WHITELISTED_USER2_ID];
+const whitelistedUsers = ['<slack_member_id_for_app1>', '<slack_member_id_for_app2>'];
 
 const slackmin = new Slackmin(appConfigs, whiteListedChannels, whitelistedUsers);
 module.exports = slackmin;
