@@ -1,8 +1,8 @@
 ## Slackmin v3.0.0
-- Multi-workspace support added. Now the slack apps can be from different workspaces.
-- Validators methods exposed for easy integration with non Express frameworks.
-- Whitelisted channels validation made optional. Pass `whiteListedChannels` as empty array when initializing Slackmin.
-- Whitelisted users validation made optional. Pass `whitelistedUsers` as empty array when initializing Slackmin.
+- Multi-workspace support added. Now the slack apps can be from different slack workspaces / domains.
+- Validators functions exposed for easy integration with non Express frameworks like Koa, Fastify, etc.
+- Whitelisted channels validation made optional. Pass `whiteListedChannels` as an empty array when initializing Slackmin to skip this validation.
+- Whitelisted users validation made optional. Pass `whitelistedUsers` as an empty array when initializing Slackmin to skip this validation.
 
 ## Slackmin v2.1.2
 - Typo in the readme demo video corrected.
