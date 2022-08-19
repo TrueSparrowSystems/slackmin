@@ -11,7 +11,6 @@ app.use(bodyParser());
 // Slackmin common middleware methods middleware
 app.use(async function(ctx, next) {
   try {
-    console.log('Common middleaware starting----------------------');
     const response = await slackmin.validators.common(
       ctx.request.body,
       ctx.request.query,
@@ -25,7 +24,7 @@ app.use(async function(ctx, next) {
     ctx.request.decodedParams = response.decodedParams;
     next();
   } catch (errorMessage) {
-    console.error('Common middleaware error--------', errorMessage);
+    console.error('Common middleware error:', errorMessage);
     return (ctx.status = 200);
   }
 });
@@ -33,7 +32,6 @@ app.use(async function(ctx, next) {
 // Slackmin slash command  middleware methods middleware
 async function slashCommands(ctx, next) {
   try {
-    console.log(' Started executing slash command middlewares----------------');
     const response = await slackmin.validators.slashCommands(
       ctx.request.body,
       ctx.request.rawBody,
@@ -45,7 +43,7 @@ async function slashCommands(ctx, next) {
     ctx.request.decodedParams = response.decodedParams;
     next();
   } catch (errorMessage) {
-    console.error('Slash command middleware error-------------', JSON.stringify(err));
+    console.error('Slash command middleware error:', JSON.stringify(err));
     return (ctx.status = 200);
   }
 }
@@ -53,7 +51,6 @@ async function slashCommands(ctx, next) {
 // Slackmin Interactive endpoint middleware methods middleware
 async function interactiveEndpoint(ctx, next) {
   try {
-    console.log('Interactive endpoint middleware starting---------');
     const response = await slackmin.validators.interactive(
       ctx.request.params,
       ctx.request.body,
@@ -68,7 +65,7 @@ async function interactiveEndpoint(ctx, next) {
     ctx.request.decodedParams = response.decodedParams;
     next();
   } catch (errorMessage) {
-    console.error('Interactive endpoint middleware error-------------', JSON.stringify(err));
+    console.error('Interactive endpoint middleware error:', JSON.stringify(err));
     return (ctx.status = 200);
   }
 }
