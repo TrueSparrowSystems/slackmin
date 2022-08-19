@@ -1,6 +1,8 @@
 // Create a file {appRoot}/slackmin.js with the following code
 // This helps in maintaining a singleton instance of Slackmin.
 // Replace actual values for <slack_app_id>, <slack_signing_secret>,  <slack_bot_user_oauth_token>, <slack_channel_id>, <slack_domain>, <slack_member_id>
+// You can configure slack slash commands in different applications across same as well as multiple workspaces.
+// Provide app configuration values here
 
 const Slackmin = require('@plgworks/slackmin');
 const appConfigs = [
