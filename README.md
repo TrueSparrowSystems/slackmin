@@ -68,20 +68,18 @@ const appConfigs = [
   {
     id: '<slack_app_id>',
     secret: '<slack_signing_secret>',
-    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>'
+    slack_bot_user_oauth_token: '<slack_bot_user_oauth_token>',
+    slack_domain: '<your_slack_domain>'
   }
 ];
 
 const whiteListedChannels = ['<slack_channel_id>', '<slack_channel_id>', '<slack_channel_id>'];
-
-const slackDomain = '<your_slack_domain>';
 
 const whitelistedUsers = ['<slack_member_id>', '<slack_member_id>', '<slack_member_id>'];
 
 const slackmin = new Slackmin(
   appConfigs,
   whiteListedChannels,
-  slackDomain,
   whitelistedUsers
 );
 
@@ -89,23 +87,20 @@ module.exports = slackmin;
 ```
 
 ### Initialization Params
-**1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret and token.
+**1. `appConfigs`** is an array of app config objects allowing Slackmin to support multiple apps. Each app config consists of id, secret, token and domain.
 
 - **id**: This is your slack app id.
 - **secret**: Your app's signing secret. It is required for signature verification.
 - **slack_bot_user_oauth_token**: This is the Bot User OAuth Token.
+- **slack_domain**: This is your slack app's workspace domain. Apps can reside on different slack domains. 
 
 <br>
 
-**2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
+**2. `whiteListedChannels`** is an array of whitelisted channel ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. Pass `whiteListedChannels` as an empty array to skip this validation.
 
 <br>
 
-**3. `slackDomain`** is your slack app's workspace domain. It could be a team workspace or individual workspace.
-
-<br>
-
-**4. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels.
+**3. `whitelistedUsers`** is an array of whitelisted slack member ids. Only whitelisted users are allowed to execute slash commands in the whitelisted channels. Pass `whitelistedUsers` as an empty array to skip this validation.
 
 ## Middlewares
 
@@ -170,6 +165,23 @@ router.post(
 ```
 **Important Note**: `req.decodedParams` contains sanitized parameters and must be used to read data for further business logic.
 
+## Validators
+
+Validators are functions which expose the middleware functionality which can be used in non express Node js frameworks like Koa, Fastify, etc.
+
+**Methods**
+
+- `common` - function accessed as `slackmin.validators.common`
+    - Parameters: requestBody, requestQuery, requestHeaders, requestMethod
+    - Description: This method can be used for implementing common middleware for slash command and interactive-endpoint routes.
+- `interactive` - function accessed as `slackmin.validators.interactive`
+    - Parameters: requestParams, requestBody, requestHeaders, decodedParams, internalDecodedParams
+    - Description: This method can be used for implementing interactive endpoint middleware for interactive-endpoint route.
+- `slashCommands` - function accessed as `slackmin.validators.slashCommands`
+    - Parameters: requestBody, requestRawBody, requestHeaders, decodedParams
+    - Description: This method can be used for implementing slash command middleware for slash command route.
+
+Refer validators methods usage examples [here](https://github.com/PLG-Works/slackmin/tree/master/examples/koa)
 
 ## Interactive Components
 
@@ -207,8 +219,9 @@ Slackmin Message wrapper provides simple methods to create and format complex me
   - Parameters: responseUrl (string), isTemporary (boolean)
   - Description: Method for sending message using [response url](https://api.slack.com/interactivity/handling#message_responses). `responseUrl` is the response URL. `isTemporary` is true for [ephemeral message] (https://api.slack.com/messaging/managing#ephemeral), otherwise false.
 - `sendMessageToChannel`
-  - Parameters: postMessageParams (object with keys - channel, text)
+  - Parameters: postMessageParams (object with keys - channel, text), slackDomain (string) 
   - Description: Utilizes slack's [Web API method](https://api.slack.com/methods/chat.postMessage) `chat.postMessage` to send message to channel. `channel` is the channel id or your slack channel name. `text` is the message title text.
+  `slackDomain` is you slack app's workspace domain. `slackDomain` is optional parameter if not passed, then the first app's domain is taken.
 
 #### Example 1 - Sync Message / System Alert
 When responding to a slash command or any other interaction, we have 2 choices - synchronous response and asynchronous response. If the generation of the message body is simple, then the response can be sent synchronously. Following is an example of the same.
@@ -405,6 +418,14 @@ A modal UI is created and opened using our Modal wrapper. Hidden parameters are 
 
 #### Part 4
 On submission of the modal, the hidden parameters are obtained in the view submission payload, which is parsed and parameters are assigned to `req.decodedParams` by our Interactive Component Middlewares.
+
+## Examples
+
+We have added code snippets for all demo slackmin commands available on https://plgworks.com/slackmin
+
+**1**. Refer [Express code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/express) to integrate Slackmin with [Express](https://expressjs.com/)<br>
+**2**. Refer [Fastify code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/fastify) to integrate Slackmin with [Fastify](https://www.fastify.io/docs/latest/)<br>
+**3**. Refer [Koa code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/koa) to integrate Slackmin with [Koa](https://koajs.com/)
 
 ## Contribution
 We welcome more helping hands to make Slackmin better. Feel free to report issues, raise PRs for fixes & enhancements.

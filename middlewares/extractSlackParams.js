@@ -12,33 +12,29 @@ class ExtractSlackParams {
   /**
    * Extract slack id and slack token.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {object} requestBody
+   * @param {object} internalDecodedParams
+   * @returns {{internalDecodedParams: *, requestBody: ({payload}|*)}}
    */
-  extractSlackParams(req, res, next) {
-    const slackRequestParams = req.body;
-    if (req.body.payload) {
+  extractSlackParams(requestBody, internalDecodedParams) {
+    const slackRequestParams = requestBody;
+    if (requestBody.payload) {
       // Interactive action related routes.
-      req.body.slack_id = slackRequestParams.payload.user.id;
-      req.body.team_domain = slackRequestParams.payload.team.domain;
-      req.body.api_app_id = slackRequestParams.payload.api_app_id;
+      requestBody.slack_id = slackRequestParams.payload.user.id;
+      requestBody.team_domain = slackRequestParams.payload.team.domain;
+      requestBody.api_app_id = slackRequestParams.payload.api_app_id;
     } else {
       // Command routes.
-      req.body.slack_id = slackRequestParams.user_id;
-      req.body.team_domain = slackRequestParams.team_domain;
-      req.body.channel_id = slackRequestParams.channel_id;
-      req.body.response_url = slackRequestParams.response_url;
+      requestBody.slack_id = slackRequestParams.user_id;
+      requestBody.team_domain = slackRequestParams.team_domain;
+      requestBody.channel_id = slackRequestParams.channel_id;
+      requestBody.response_url = slackRequestParams.response_url;
     }
 
-    req.internalDecodedParams.api_app_id = req.body.api_app_id;
+    internalDecodedParams.api_app_id = requestBody.api_app_id;
 
-    next();
+    return { requestBody, internalDecodedParams };
   }
 }
 
-const _instance = new ExtractSlackParams();
-
-module.exports = (...args) => {
-  _instance.extractSlackParams(...args);
-};
+module.exports = new ExtractSlackParams();

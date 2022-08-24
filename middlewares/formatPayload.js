@@ -40,26 +40,21 @@ class PayloadFormatter {
   }
 
   /**
-   * Convert string to JSON.
+   * Format slack payload.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {object} requestBody
+   * @returns {string|boolean|number|Array|*}
    */
-  formatPayload(req, res, next) {
+  formatPayload(requestBody) {
     const oThis = this;
-    if (req.body.payload) {
-      const payload = JSON.parse(req.body.payload);
+    if (requestBody.payload) {
+      const payload = JSON.parse(requestBody.payload);
 
-      req.body.payload = oThis._preprocessSlackPayload(payload);
+      return oThis._preprocessSlackPayload(payload);
     }
 
-    next();
+    return null;
   }
 }
 
-const _instance = new PayloadFormatter();
-
-module.exports = (...args) => {
-  _instance.formatPayload(...args);
-};
+module.exports = new PayloadFormatter();

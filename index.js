@@ -2,17 +2,9 @@ const rootPrefix = '.',
   configProvider = require(rootPrefix + '/lib/configProvider'),
   slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
   slackWrapper = require(rootPrefix + '/lib/slack/Wrapper'),
-  formatPayload = require(rootPrefix + '/middlewares/formatPayload'),
-  assignRawBody = require(rootPrefix + '/middlewares/assignRawBody'),
-  assignParams = require(rootPrefix + '/middlewares/assignParams'),
-  sanitizer = require(rootPrefix + '/lib/helpers/sanitizer'),
-  extractResponseUrlFromPayload = require(rootPrefix + '/middlewares/extractResponseUrlFromPayload'),
-  extractText = require(rootPrefix + '/middlewares/extractText'),
-  extractResponseUrlFromBody = require(rootPrefix + '/middlewares/extractResponseUrlFromBody'),
-  extractSlackParams = require(rootPrefix + '/middlewares/extractSlackParams'),
-  parseApiParameters = require(rootPrefix + '/middlewares/parseApiParams'),
-  extractTriggerId = require(rootPrefix + '/middlewares/extractTriggerId'),
-  authenticator = require(rootPrefix + '/middlewares/authentication/Authenticator'),
+  CommonMiddlewares = require(rootPrefix + '/lib/middlewareMethods/Common'),
+  InteractiveMiddlewares = require(rootPrefix + '/lib/middlewareMethods/Interactive'),
+  SlashCommandMiddlewares = require(rootPrefix + '/lib/middlewareMethods/SlashCommand'),
   Message = require(rootPrefix + '/lib/slack/Message'),
   Modal = require(rootPrefix + '/lib/slack/Modal');
 
@@ -28,55 +20,100 @@ const rootPrefix = '.',
  *
  */
 class SlackAdmin {
-  constructor(appConfigs, whitelistedChannelIds, domain, whitelistedUsers) {
+  constructor(appConfigs, whitelistedChannelIds, whitelistedUsers) {
     configProvider.set('app_config', appConfigs);
     configProvider.set('whitelisted_channel_ids', whitelistedChannelIds);
-    configProvider.set('domain', domain);
     configProvider.set('whitelisted_users', whitelistedUsers);
     slackAppConstants.setSlackAppConfigById();
     slackWrapper.init();
   }
 
   /**
+   * Validator methods : Exposed methods for common, slash command and interactive endpoint validations
+   *
+   * @returns {{common: *, slashCommands: *, interactive: *}}
+   */
+  get validators() {
+    return {
+      common: CommonMiddlewares.CommonMiddleWareMethod,
+      interactive: InteractiveMiddlewares.InteractiveMiddleWareMethod,
+      slashCommands: SlashCommandMiddlewares.SlashCommandMiddlewareMethod
+    };
+  }
+
+  /**
    * Slack admin common middlewares
    *
-   * @returns {(*|Sanitizer.sanitizeBodyAndQuery|Authenticator.validateSlackSignature)[]}
+   * @returns {function(...[*]=)}
    */
   get commonMiddlewares() {
-    return [
-      assignRawBody,
-      formatPayload,
-      sanitizer.sanitizeBodyAndQuery,
-      assignParams,
-      extractSlackParams,
-      authenticator.validateSlackSignature,
-      authenticator.validateSlackUser
-    ];
+    const oThis = this;
+
+    return async function(req, res, next) {
+      try {
+        const response = await oThis.validators.common(req.body, req.query, req.headers, req.method);
+
+        req.body = response.requestBody;
+        req.query = response.requestQuery;
+        req.internalDecodedParams = response.internalDecodedParams;
+        req.decodedParams = response.decodedParams;
+        next();
+      } catch (errorMessage) {
+        console.error('Common middleaware error:', errorMessage);
+        return res.status(200).json('Something went wrong.');
+      }
+    };
   }
 
   /**
    * Slack admin interactive endpoints middlewares
    *
-   * @returns {(Sanitizer.sanitizeDynamicUrlParams|Sanitizer.sanitizeHeaderParams|Authenticator.validateSlackApiAppId|*)[]}
+   * @returns {function(...[*]=)}
    */
   get interactiveEndpointMiddlewares() {
-    return [
-      sanitizer.sanitizeDynamicUrlParams,
-      sanitizer.sanitizeHeaderParams,
-      authenticator.validateSlackApiAppId,
-      extractTriggerId,
-      extractResponseUrlFromPayload,
-      parseApiParameters
-    ];
+    const oThis = this;
+
+    return async function(req, res, next) {
+      try {
+        const response = await oThis.validators.interactive(
+          req.params,
+          req.body,
+          req.headers,
+          req.decodedParams,
+          req.internalDecodedParams
+        );
+        req.params = response.requestParams;
+        req.sanitizedHeaders = response.internalDecodedParams.headers;
+        req.internalDecodedParams = response.internalDecodedParams;
+        req.decodedParams = response.decodedParams;
+
+        next();
+      } catch (err) {
+        console.error('Interactive endpoint middleware error:', JSON.stringify(err));
+        return res.status(200).json('something_went_wrong');
+      }
+    };
   }
 
   /**
    * Slack command middlewares
    *
-   * @returns {(Authenticator.validateSlackChannel|*)[]}
+   * @returns {function(...[*]=)}
    */
   get slashCommandMiddlewares() {
-    return [authenticator.validateSlackChannel, extractText, extractResponseUrlFromBody];
+    const oThis = this;
+
+    return async function(req, res, next) {
+      try {
+        const response = await oThis.validators.slashCommands(req.body, req.rawBody, req.headers, req.decodedParams);
+        req.body = response.requestBody;
+        req.decodedParams = response.decodedParams;
+        next();
+      } catch (err) {
+        console.error('Slash command middleware error:', JSON.stringify(err));
+        return res.status(200).json('Something went wrong.');
+      }
+    };
   }
 
   /**
