@@ -1,5 +1,5 @@
 const rootPrefix = '../..',
-  SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
+  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
   configProvider = require(rootPrefix + '/lib/configProvider');
 
 /**
@@ -8,19 +8,16 @@ const rootPrefix = '../..',
  * @class ValidateSlackChannel
  *
  * @param {object} params
- * @param {string} params.rawBody
- * @param {object} params.requestHeaders
  * @param {object} params.slackRequestParams
- * @param {string} params.slackRequestParams.channel_id
  *
- * @augments SlackAuthenticationBase
+ * @class ValidateSlackChannel
  *
  */
-class ValidateSlackChannel extends SlackAuthenticationBase {
+class ValidateSlackChannel {
   constructor(params) {
-    super(params);
-
     const oThis = this;
+
+    oThis.slackRequestParams = params.slackRequestParams;
 
     oThis.channelId = oThis.slackRequestParams.channel_id;
   }
@@ -31,26 +28,35 @@ class ValidateSlackChannel extends SlackAuthenticationBase {
    * @returns {Promise<result|never>}
    * @private
    */
-  async _performSpecificValidations() {
-    const oThis = this;
-
-    return oThis._validateSlackChannel();
-  }
-
-  /**
-   * Validates if slack channel is present in whitelisted_channel_ids list.
-   *
-   * @returns {Promise<never|result>}
-   * @private
-   */
-  async _validateSlackChannel() {
+  async perform() {
     const oThis = this;
 
     const whitelistedChannelIds = configProvider.getFor('whitelisted_channel_ids');
 
-    if (!whitelistedChannelIds.includes(oThis.channelId)) {
-      throw new Error(`Invalid  channelId :: ${oThis.channelId}`);
+    if (whitelistedChannelIds.length === 0) {
+      return oThis._prepareResponse();
     }
+
+    if (!whitelistedChannelIds.includes(oThis.channelId)) {
+      console.error(`Slack authentication failed. Invalid channelId: ${oThis.channelId}`);
+      return responseHelper.error({
+        internal_error_identifier: 'm_a_c_p',
+        api_error_identifier: 'unauthorized_api_request',
+        debug_options: { slackRequestParams: oThis.slackRequestParams, channelId: oThis.channelId }
+      });
+    }
+
+    return oThis._prepareResponse();
+  }
+
+  /**
+   * Prepare response.
+   *
+   * @returns {result}
+   * @private
+   */
+  _prepareResponse() {
+    return responseHelper.successWithData({});
   }
 }
 

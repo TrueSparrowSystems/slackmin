@@ -1,6 +1,5 @@
 const rootPrefix = '..',
   slackConstants = require(rootPrefix + '/lib/constants/slackConstants'),
-  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper'),
   ParseViewSubmissionApiParams = require(rootPrefix + '/lib/slack/ParseViewActionsApiParams'),
   ParseBlockActionsApiParams = require(rootPrefix + '/lib/slack/ParseBlockActionsApiParams');
 
@@ -18,32 +17,25 @@ class ParseApiParams {
    *
    * @returns {Promise<void>}
    */
-  async parse(req, res, next) {
-    const payload = req.body.payload;
+  async parse(requestBody, decodedParams, internalDecodedParams) {
+    const payload = requestBody.payload;
 
     let apiParamsResponse;
 
     if (payload.type === slackConstants.viewSubmissionPayloadType) {
       apiParamsResponse = await new ParseViewSubmissionApiParams({
-        payload: req.body.payload
+        payload: requestBody.payload
       }).perform();
     } else if (payload.type === slackConstants.blockActionsPayloadType) {
       apiParamsResponse = await new ParseBlockActionsApiParams({
-        payload: req.body.payload
+        payload: requestBody.payload
       }).perform();
     } else {
-      const errorObj = responseHelper.error({
-        internal_error_identifier: 'r_a_s_i_gap_1',
-        api_error_identifier: 'invalid_params',
-        debug_options: { slackPayload: payload }
-      });
-      // check if errorConfig required
-      return responseHelper.renderApiResponse(errorObj, res);
+      throw new Error('Invalid payload type');
     }
 
-    // check if errorConfig required
     if (apiParamsResponse.isFailure()) {
-      return responseHelper.renderApiResponse(apiParamsResponse, res);
+      throw new Error('Parsing api params failed');
     }
 
     const apiParamsData = apiParamsResponse.data;
@@ -56,16 +48,12 @@ class ParseApiParams {
     }
 
     // eslint-disable-next-line require-atomic-updates
-    req.internalDecodedParams.apiName = apiParamsData.action;
+    internalDecodedParams.apiName = apiParamsData.action;
     // eslint-disable-next-line require-atomic-updates
-    Object.assign(req.decodedParams, internalDecodedApiParams);
+    Object.assign(decodedParams, internalDecodedApiParams);
 
-    next();
+    return { decodedParams, internalDecodedParams };
   }
 }
 
-const _instance = new ParseApiParams();
-
-module.exports = (...args) => {
-  _instance.parse(...args);
-};
+module.exports = new ParseApiParams();

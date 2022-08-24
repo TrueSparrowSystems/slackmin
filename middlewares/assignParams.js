@@ -8,15 +8,17 @@ class AssignParams {
   /**
    * Get request params
    *
-   * @param req
+   * @param {string} requestMethod
+   * @param {object} requestBody
+   * @param {object} requestQuery
    * @returns {{}|*}
    * @private
    */
-  _getRequestParams(req) {
-    if (req.method === 'POST') {
-      return req.body;
-    } else if (req.method === 'GET') {
-      return req.query;
+  _getRequestParams(requestMethod, requestBody, requestQuery) {
+    if (requestMethod === 'POST') {
+      return requestBody;
+    } else if (requestMethod === 'GET') {
+      return requestQuery;
     }
 
     return {};
@@ -25,21 +27,16 @@ class AssignParams {
   /**
    * Assign params.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {string} requestMethod
+   * @param {object} requestBody
+   * @param {object} requestQuery
+   * @returns {{}|*|{}}
    */
-  assignParams(req, res, next) {
+  assignParams(requestMethod, requestBody, requestQuery) {
     const oThis = this;
 
-    req.decodedParams = oThis._getRequestParams(req) || {};
-    req.internalDecodedParams = {};
-    next();
+    return oThis._getRequestParams(requestMethod, requestBody, requestQuery) || {};
   }
 }
 
-const _instance = new AssignParams();
-
-module.exports = (...args) => {
-  _instance.assignParams(...args);
-};
+module.exports = new AssignParams();

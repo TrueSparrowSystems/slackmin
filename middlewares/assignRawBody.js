@@ -1,31 +1,21 @@
-// Express has qs as it's dependency. No need to add it in package.json
 const qs = require('qs');
-
 /**
- * Class for assigning raw body.
- * Note: Use this before sanitization as body will change after it.
- *
+ * Class for assigning raw body
  * @class AssignRawBody
  */
 class AssignRawBody {
   constructor() {}
 
   /**
-   * Assign raw body
+   * Assign RawBody.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {object}
    */
-  assignRawBody(req, res, next) {
-    req.rawBody = qs.stringify(req.body, { format: 'RFC1738' });
-
-    next();
+  assignRawBody(requestBody) {
+    const oThis = this;
+    const requestRawBody = qs.stringify(requestBody).replace(/%20/g, '+');
+    return requestRawBody;
   }
 }
 
-const _instance = new AssignRawBody();
-
-module.exports = (...args) => {
-  _instance.assignRawBody(...args);
-};
+module.exports = new AssignRawBody();

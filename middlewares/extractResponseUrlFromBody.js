@@ -4,25 +4,19 @@
  * @class ExtractResponseUrlFromBody
  */
 class ExtractResponseUrlFromBody {
-  constructor() {}
-
   /**
    * Extract response_url from slash commands. This middleware should only be used with slash commands.
    *
-   * @param {object} req
-   * @param {object} res
-   * @param {function} next
+   * @param {object} requestBody
+   * @param {object} decodedParams
+   * @returns {{decodedParams: *, requestBody: *}}
    */
-  extractResponseUrlFromBody(req, res, next) {
-    const slackRequestParams = req.body;
-    req.decodedParams.response_url = slackRequestParams.response_url;
+  extractResponseUrl(requestBody, decodedParams) {
+    const slackRequestParams = requestBody;
+    decodedParams.response_url = slackRequestParams.response_url;
 
-    next();
+    return decodedParams;
   }
 }
 
-const _instance = new ExtractResponseUrlFromBody();
-
-module.exports = (...args) => {
-  _instance.extractResponseUrlFromBody(...args);
-};
+module.exports = new ExtractResponseUrlFromBody();

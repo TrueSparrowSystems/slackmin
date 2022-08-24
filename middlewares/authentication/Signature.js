@@ -2,42 +2,73 @@ const crypto = require('crypto');
 
 const rootPrefix = '../..',
   CommonValidators = require(rootPrefix + '/lib/validator/Common'),
-  SlackAuthenticationBase = require(rootPrefix + '/middlewares/authentication/Base'),
-  slackAppConstants = require(rootPrefix + '/lib/constants/slackApp');
+  slackAppConstants = require(rootPrefix + '/lib/constants/slackApp'),
+  responseHelper = require(rootPrefix + '/lib/formatter/responseHelper');
 
 /**
  * Class to validate signature request from slack.
  *
  * @class ValidateSlackSignature
- *
- * @augments SlackAuthenticationBase
  */
-class ValidateSlackSignature extends SlackAuthenticationBase {
+class ValidateSlackSignature {
   /**
-   * Perform signature validation specific operations.
+   * Constructor for ValidateSlackSignature class to validate requests from slack.
+   *
+   * @constructor
+   */
+  constructor(params) {
+    const oThis = this;
+
+    oThis.rawBody = params.rawBody;
+    oThis.requestHeaders = params.requestHeaders;
+    oThis.slackRequestParams = params.slackRequestParams;
+
+    oThis.requestPayload = oThis.slackRequestParams.payload || null;
+  }
+
+  /**
+   * Perform slack signature validation.
    *
    * @returns {Promise<result|never>}
    * @private
    */
-  async _performSpecificValidations() {
+  async perform() {
     const oThis = this;
 
-    const requestTimestamp = oThis.requestHeaders['x-slack-request-timestamp'];
+    try {
+      const oThis = this;
 
-    const requestHeaderSignature = oThis.requestHeaders['x-slack-signature'];
-    const splitRequestHeaderSignature = requestHeaderSignature.split('='),
-      version = splitRequestHeaderSignature[0],
-      signature = splitRequestHeaderSignature[1];
+      const requestTimestamp = oThis.requestHeaders['x-slack-request-timestamp'];
 
-    if (version !== 'v0') {
-      throw new Error(`Invalid slack api version :: ${version}`);
+      const requestHeaderSignature = oThis.requestHeaders['x-slack-signature'];
+      const splitRequestHeaderSignature = requestHeaderSignature.split('='),
+        version = splitRequestHeaderSignature[0],
+        signature = splitRequestHeaderSignature[1];
+
+      if (version !== 'v0') {
+        throw new Error(`Invalid slack api version :: ${version}`);
+      }
+
+      if (!CommonValidators.validateString(signature)) {
+        throw new Error(`Invalid slack api signature :: ${signature}`);
+      }
+
+      await oThis._validateSignature(requestTimestamp, version, signature);
+    } catch (error) {
+      console.error('Slack authentication failed. Invalid slack signature', error);
+
+      return responseHelper.error({
+        internal_error_identifier: 'm_a_s_p',
+        api_error_identifier: 'unauthorized_api_request',
+        debug_options: {
+          body: oThis.rawBody,
+          headers: oThis.requestHeaders,
+          slackRequestParams: oThis.slackRequestParams
+        }
+      });
     }
 
-    if (!CommonValidators.validateString(signature)) {
-      throw new Error(`Invalid slack api signature :: ${signature}`);
-    }
-
-    return oThis._validateSignature(requestTimestamp, version, signature);
+    return oThis._prepareResponse();
   }
 
   /**
@@ -67,9 +98,19 @@ class ValidateSlackSignature extends SlackAuthenticationBase {
       .digest('hex');
 
     if (!crypto.timingSafeEqual(Buffer.from(signature, 'utf-8'), Buffer.from(computedSignature, 'utf-8'))) {
-      console.error('Invalid signature');
+      console.error(`Invalid signature :: ${signature}`);
       throw new Error(`Invalid signature :: ${signature}`);
     }
+  }
+
+  /**
+   * Prepare response.
+   *
+   * @returns {result}
+   * @private
+   */
+  _prepareResponse() {
+    return responseHelper.successWithData({});
   }
 }
 
