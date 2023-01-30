@@ -1,6 +1,6 @@
 ![Group 11088](https://user-images.githubusercontent.com/7627517/179924973-20755a21-db85-428c-9f25-a0b693d0ab87.png)
 
-![npm version](https://img.shields.io/npm/v/@plgworks/slackmin.svg?style=flat)
+![npm version](https://img.shields.io/npm/v/@truesparrow/slackmin.svg?style=flat)
 
 Slackmin allows you to easily integrate slack [slash (/) commands](https://api.slack.com/interactivity/slash-commands), [interactive components](https://api.slack.com/interactivity/components), message formatting & custom modals in your Node.js application. You can build and setup custom tailored tools for your daily ops like different analytics reports, content management interfaces, customer support modules and much more. Also send alerts and notifications over Slack for your team to take actions on critical events in your application.
 
@@ -54,7 +54,7 @@ Keep a note of your App ID and Signing Secret from the "Basic Information" secti
 ## Install NPM
 
 ```shell script
-npm install @plgworks/slackmin --save
+npm install @truesparrow/slackmin --save
 ```
 
 ## Initialize
@@ -62,7 +62,7 @@ While using the package, create a singleton object of Slackmin and then use it a
 Example snippet for the Slackmin singleton object is given below.
 
 ```js
-const Slackmin = require('@plgworks/slackmin');
+const Slackmin = require('@truesparrow/slackmin');
 
 const appConfigs = [
   {
@@ -181,7 +181,7 @@ Validators are functions which expose the middleware functionality which can be 
     - Parameters: requestBody, requestRawBody, requestHeaders, decodedParams
     - Description: This method can be used for implementing slash command middleware for slash command route.
 
-Refer validators methods usage examples [here](https://github.com/PLG-Works/slackmin/tree/master/examples/koa)
+Refer validators methods usage examples [here](https://github.com/TrueSparrowSystems/slackmin/tree/master/examples/koa)
 
 ## Interactive Components
 
@@ -421,13 +421,13 @@ On submission of the modal, the hidden parameters are obtained in the view submi
 
 ## Examples
 
-We have added code snippets for all demo slackmin commands available on https://plgworks.com/slackmin
+We have added code snippets for all demo slackmin commands available on https://truesparrow.com/slackmin
 
-**1**. Refer [Express code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/express) to integrate Slackmin with [Express](https://expressjs.com/)<br>
-**2**. Refer [Fastify code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/fastify) to integrate Slackmin with [Fastify](https://www.fastify.io/docs/latest/)<br>
-**3**. Refer [Koa code snippets](https://github.com/PLG-Works/slackmin/tree/master/examples/koa) to integrate Slackmin with [Koa](https://koajs.com/)
+**1**. Refer [Express code snippets](https://github.com/TrueSparrowSystems/slackmin/tree/master/examples/express) to integrate Slackmin with [Express](https://expressjs.com/)<br>
+**2**. Refer [Fastify code snippets](https://github.com/TrueSparrowSystems/slackmin/tree/master/examples/fastify) to integrate Slackmin with [Fastify](https://www.fastify.io/docs/latest/)<br>
+**3**. Refer [Koa code snippets](https://github.com/TrueSparrowSystems/slackmin/tree/master/examples/koa) to integrate Slackmin with [Koa](https://koajs.com/)
 
 ## Contribution
 We welcome more helping hands to make Slackmin better. Feel free to report issues, raise PRs for fixes & enhancements.
 
-<p align="left">Built with :heart: by <a href="https://plgworks.com/" target="_blank">PLG Works</a></p>
+<p align="left">Built with :heart: by <a href="https://truesparrow.com/" target="_blank">True Sparrow</a></p>

@@ -1,6 +1,6 @@
 {
-  "name": "@plgworks/slackmin",
-  "version": "3.0.0",
+  "name": "@truesparrow/slackmin",
+  "version": "4.0.0",
   "description": "Easy integration to slack for sending messages, opening modals, interactive endpoints and much more.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PLG-Works/slackmin.git"
+    "url": "git+https://github.com/TrueSparrowSystems/slackmin.git"
   },
   "keywords": [
     "slackmin",
@@ -18,14 +18,14 @@
     "slack modal",
     "slack message"
   ],
-  "author": "PLG Works",
+  "author": "True Sparrow",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/PLG-Works/slackmin/issues"
+    "url": "https://github.com/TrueSparrowSystems/slackmin/issues"
   },
-  "homepage": "https://github.com/PLG-Works/slackmin#readme",
+  "homepage": "https://github.com/TrueSparrowSystems/slackmin#readme",
   "dependencies": {
-    "@plgworks/base": "^1.0.0",
+    "@truesparrow/base": "^2.0.0",
     "sanitize-html": "2.7.0",
     "uuid": "8.3.2",
     "@slack/bolt": "3.2.0",
