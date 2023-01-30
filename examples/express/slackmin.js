@@ -4,7 +4,7 @@
 // You can configure slack slash commands in different applications across same as well as multiple workspaces.
 // Provide app configuration values here
 
-const Slackmin = require('@plgworks/slackmin');
+const Slackmin = require('@truesparrow/slackmin');
 const appConfigs = [
   {
     id: '<slack_app1_id>',

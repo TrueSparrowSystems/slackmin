@@ -1,3 +1,6 @@
+## Slackmin v4.0.0
+- Republished package under True Sparrow organisation.
+
 ## Slackmin v3.0.0
 - Multi-workspace support added. Now the slack apps can be from different slack workspaces / domains.
 - Validators functions exposed for easy integration with non Express frameworks like Koa, Fastify, etc.
