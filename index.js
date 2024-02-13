@@ -51,7 +51,13 @@ class SlackAdmin {
 
     return async function(req, res, next) {
       try {
-        const response = await oThis.validators.common(req.body, req.query, req.headers, req.method);
+        const response = await oThis.validators.common(
+          req.body, 
+          req.rawBody,
+          req.query, 
+          req.headers, 
+          req.method
+        );
 
         req.body = response.requestBody;
         req.query = response.requestQuery;
