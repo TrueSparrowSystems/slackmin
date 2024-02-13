@@ -96,8 +96,9 @@ class ValidateSlackSignature {
       .update(signatureString)
       .digest('hex');
     
-    console.log('computedSignature: ------- ', computedSignature);
     console.log('signatureString: ------- ', signatureString);
+    console.log('computedSignature: ------- ', computedSignature);
+    console.log('signature: ------- ', signature);
 
     if (!crypto.timingSafeEqual(Buffer.from(signature, 'utf-8'), Buffer.from(computedSignature, 'utf-8'))) {
       console.error(`Invalid signature :: ${signature}`);
