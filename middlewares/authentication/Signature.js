@@ -19,11 +19,10 @@ class ValidateSlackSignature {
   constructor(params) {
     const oThis = this;
 
-    oThis.rawBody = params.rawBody;
-    oThis.requestHeaders = params.requestHeaders;
-    oThis.slackRequestParams = params.slackRequestParams;
-
-    oThis.requestPayload = oThis.slackRequestParams.payload || null;
+    oThis.req = params.req;
+    oThis.reqHeaders = req.headers;
+    oThis.apiAppId = req.body.api_app_id;
+    oThis.reqRawBody = req.rawBody;
   }
 
   /**
@@ -38,9 +37,9 @@ class ValidateSlackSignature {
     try {
       const oThis = this;
 
-      const requestTimestamp = oThis.requestHeaders['x-slack-request-timestamp'];
+      const requestTimestamp = oThis.reqHeaders['x-slack-request-timestamp'];
 
-      const requestHeaderSignature = oThis.requestHeaders['x-slack-signature'];
+      const requestHeaderSignature = oThis.reqHeaders['x-slack-signature'];
       const splitRequestHeaderSignature = requestHeaderSignature.split('='),
         version = splitRequestHeaderSignature[0],
         signature = splitRequestHeaderSignature[1];
@@ -61,9 +60,8 @@ class ValidateSlackSignature {
         internal_error_identifier: 'm_a_s_p',
         api_error_identifier: 'unauthorized_api_request',
         debug_options: {
-          body: oThis.rawBody,
-          headers: oThis.requestHeaders,
-          slackRequestParams: oThis.slackRequestParams
+          rawBody: oThis.reqRawBody,
+          headers: oThis.reqHeaders,
         }
       });
     }
@@ -88,10 +86,9 @@ class ValidateSlackSignature {
   async _validateSignature(requestTimestamp, version, signature) {
     const oThis = this;
 
-    const appId = oThis.slackRequestParams.api_app_id;
-    const signingSecret = slackAppConstants.getSigningSecretForAppId(appId);
+    const signingSecret = slackAppConstants.getSigningSecretForAppId(oThis.apiAppId);
 
-    const signatureString = `${version}:${requestTimestamp}:${oThis.rawBody}`;
+    const signatureString = `${version}:${requestTimestamp}:${oThis.reqRawBody}`;
     const computedSignature = crypto
       .createHmac('sha256', signingSecret)
       .update(signatureString)
