@@ -28,7 +28,7 @@ class ValidateRawBodyParams {
     const oThis = this;
 
     if (!CommonValidators.validateString(oThis.rawBody)) {
-      console.error(`Slack authentication failed. Invalid raw Body Input ${oThis.rawBody}`);
+      console.error(`Slack authentication failed. Invalid raw Body Input ${JSON.stringify(oThis.rawBody)}`);
       return responseHelper.error({
         internal_error_identifier: 'm_a_rbp_p',
         api_error_identifier: 'unauthorized_api_request',
