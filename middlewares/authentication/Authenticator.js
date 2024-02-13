@@ -59,7 +59,7 @@ class Authenticator {
    * @returns {Promise<void>}
    */
   async validateSlackSignature(req) {
-    const authResponse = await new ValidateSlackSignature(req).perform();
+    const authResponse = await new ValidateSlackSignature({ req: req }).perform();
 
     if (authResponse.isFailure()) {
       throw new Error('Invalid Slack Signature');
