@@ -93,7 +93,7 @@ class ValidateSlackSignature {
     const signatureString = `${version}:${requestTimestamp}:${oThis.requestRawBody}`;
     const computedSignature = crypto
       .createHmac('sha256', signingSecret)
-      .update(signatureString)
+      .update(signatureString, 'utf-8')
       .digest('hex');
     
     console.log('signatureString: ------- ', signatureString);
