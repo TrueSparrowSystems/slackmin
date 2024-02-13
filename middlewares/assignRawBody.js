@@ -13,9 +13,12 @@ class AssignRawBody {
    */
   assignRawBody(requestBody) {
     const oThis = this;
-    console.log('Not replacing %20 with +');
-    // const requestRawBody = qs.stringify(requestBody).replace(/%20/g, '+');
-    return requestBody;
+    console.log('before replacing + requestRawBody: ----->', requestBody);
+
+    const requestRawBody = qs.stringify(requestBody).replace(/%20/g, '+');
+
+    console.log('after replacing + requestRawBody: ----->', requestRawBody);
+    return requestRawBody;
   }
 }
 
