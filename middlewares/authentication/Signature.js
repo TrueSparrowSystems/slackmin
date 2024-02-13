@@ -23,7 +23,8 @@ class ValidateSlackSignature {
     oThis.requestRawBody = params.requestRawBody;
     oThis.requestHeaders = params.requestHeaders;
 
-    oThis.apiAppId = requestBody.api_app_id;
+    console.log('requestBody.payload: ------- ', requestBody.payload);
+    oThis.apiAppId = requestBody.payload.api_app_id;
   }
 
   /**
