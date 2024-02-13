@@ -87,6 +87,7 @@ class ValidateSlackSignature {
   async _validateSignature(requestTimestamp, version, signature) {
     const oThis = this;
 
+    console.log('oThis.requestRawBody: ------- ', oThis.requestRawBody);
     const signingSecret = slackAppConstants.getSigningSecretForAppId(oThis.apiAppId);
 
     const signatureString = `${version}:${requestTimestamp}:${oThis.requestRawBody}`;
@@ -94,6 +95,9 @@ class ValidateSlackSignature {
       .createHmac('sha256', signingSecret)
       .update(signatureString)
       .digest('hex');
+    
+    console.log('computedSignature: ------- ', computedSignature);
+    console.log('signatureString: ------- ', signatureString);
 
     if (!crypto.timingSafeEqual(Buffer.from(signature, 'utf-8'), Buffer.from(computedSignature, 'utf-8'))) {
       console.error(`Invalid signature :: ${signature}`);
