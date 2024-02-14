@@ -20,7 +20,7 @@ class ValidateSlackSignature {
     const oThis = this;
 
     console.log('type of params.requestBody: ------- ', typeof params.requestBody);
-    const requestBody = JSON.parse(params.requestBody); // Parse the request body to get the payload
+    const requestBody = params.requestBody
     oThis.requestRawBody = params.requestRawBody;
     oThis.requestHeaders = params.requestHeaders;
 
