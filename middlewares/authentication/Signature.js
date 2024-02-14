@@ -20,7 +20,9 @@ class ValidateSlackSignature {
     const oThis = this;
 
     console.log('type of params.requestBody: ------- ', typeof params.requestBody);
-    const requestBody = params.requestBody
+
+    console.log('Payload keys: ------- ', Object.keys(params.requestBody.payload));
+    const requestBody = params.requestBody;
     oThis.requestRawBody = params.requestRawBody;
     oThis.requestHeaders = params.requestHeaders;
 
@@ -30,6 +32,7 @@ class ValidateSlackSignature {
       console.log('requestBody.payload.type: ------- ', requestBody.payload.type);
       console.log('requestBody.payload.user: ------- ', requestBody.payload.user);
       console.log('requestBody.payload.token: ------- ', requestBody.payload.token);
+      console.log('Payload keys in if: ------- ', Object.keys(requestBody.payload));
       oThis.apiAppId = requestBody.payload.api_app_id;
     } else {
       oThis.apiAppId = requestBody.api_app_id;
