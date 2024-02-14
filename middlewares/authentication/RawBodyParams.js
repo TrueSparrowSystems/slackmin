@@ -16,8 +16,6 @@ class ValidateRawBodyParams {
   constructor(params) {
     const oThis = this;
 
-    console.log('type of params.rawBody: ------- ', typeof params.rawBody);
-    console.log('params: ------- ', params);
     oThis.rawBody = params.rawBody;
   }
 

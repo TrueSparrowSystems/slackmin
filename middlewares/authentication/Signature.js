@@ -21,7 +21,6 @@ class ValidateSlackSignature {
 
     console.log('type of params.requestBody: ------- ', typeof params.requestBody);
 
-    console.log('Payload keys: ------- ', Object.keys(params.requestBody.payload));
     const requestBody = params.requestBody;
     oThis.requestRawBody = params.requestRawBody;
     oThis.requestHeaders = params.requestHeaders;
@@ -29,12 +28,8 @@ class ValidateSlackSignature {
     console.log('requestBody.payload: ------- ', requestBody.payload);
     if (requestBody.payload) {
       const parsedPayload = JSON.parse(requestBody.payload);
-      console.log('requestBody.payload.api_app_id: ------- ', parsedPayload.payload.api_app_id);
-      console.log('parsedPayload.payload.type: ------- ', parsedPayload.payload.type);
-      console.log('parsedPayload.payload.user: ------- ', parsedPayload.payload.user);
-      console.log('parsedPayload.payload.token: ------- ', parsedPayload.payload.token);
-      console.log('Payload keys in if: ------- ', Object.keys(parsedPayload.payload));
-      oThis.apiAppId = parsedPayload.payload.api_app_id;
+      console.log('parsedPayload.api_app_id: ------- ', parsedPayload.api_app_id);
+      oThis.apiAppId = parsedPayload.api_app_id;
     } else {
       oThis.apiAppId = requestBody.api_app_id;
     }

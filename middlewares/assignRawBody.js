@@ -13,11 +13,9 @@ class AssignRawBody {
    */
   assignRawBody(requestBody) {
     const oThis = this;
-    console.log('before replacing + requestRawBody: ----->', requestBody);
 
     const requestRawBody = qs.stringify(requestBody).replace(/%20/g, '+');
 
-    console.log('after replacing + requestRawBody: ----->', requestRawBody);
     return requestRawBody;
   }
 }
