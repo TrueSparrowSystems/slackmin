@@ -52,10 +52,10 @@ class SlackAdmin {
     return async function(req, res, next) {
       try {
         const response = await oThis.validators.common(
-          req.body, 
+          req.body,
           req.rawBody,
-          req.query, 
-          req.headers, 
+          req.query,
+          req.headers,
           req.method
         );
 
@@ -65,7 +65,7 @@ class SlackAdmin {
         req.decodedParams = response.decodedParams;
         next();
       } catch (errorMessage) {
-        console.error('Common middleaware error:', errorMessage);
+        console.error('Common middleware error:', errorMessage);
         return res.status(200).json('Something went wrong.');
       }
     };
