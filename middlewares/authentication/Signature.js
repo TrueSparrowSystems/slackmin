@@ -26,6 +26,10 @@ class ValidateSlackSignature {
 
     console.log('requestBody.payload: ------- ', requestBody.payload);
     if (requestBody.payload) {
+      console.log('requestBody.payload.api_app_id: ------- ', requestBody.payload.api_app_id);
+      console.log('requestBody.payload.type: ------- ', requestBody.payload.type);
+      console.log('requestBody.payload.user: ------- ', requestBody.payload.user);
+      console.log('requestBody.payload.token: ------- ', requestBody.payload.token);
       oThis.apiAppId = requestBody.payload.api_app_id;
     } else {
       oThis.apiAppId = requestBody.api_app_id;
