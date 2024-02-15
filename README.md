@@ -113,13 +113,13 @@ const slackmin = require('path-to-your-slackmin-singletone-provider');
 const router = express.Router();
 
 // common middlewares
-// This set of middlewares can be used with slash commands as well as with interactive routes.
+// Before utilizing the slash command middleware and interactive middleware, it is mandatory to use these common middleware.
 router.use(
   slackmin.commonMiddlewares
 );
 
 //  interactive-endpoint middlewares
-// This set of middlewares can be used with interactive routes.
+// The use of this set of middlewares is required for interactive routes
 router.use(
   slackmin.interactiveEndpointMiddlewares
 );
@@ -141,13 +141,13 @@ const slackmin = require('path-to-your-slackmin-singletone-provider');
 const router = express.Router();
 
 // common middlewares
-// This set of middlewares can be used with slash commands as well as with interactive routes.
+// Before utilizing the slash command middleware and interactive middleware, it is mandatory to use these common middleware.
 router.use(
   slackmin.commonMiddlewares
 );
 
 // slash ('/') command middlewares
-// This set of middlewares can be used with Slash commands.
+// The use of this set of middlewares is required for slash command's routes
 router.use(
   slackmin.slashCommandMiddlewares
 );
@@ -172,7 +172,7 @@ Validators are functions which expose the middleware functionality which can be 
 **Methods**
 
 - `common` - function accessed as `slackmin.validators.common`
-    - Parameters: requestBody, requestQuery, requestHeaders, requestMethod
+    - Parameters: requestBody, requestRawBody,requestQuery, requestHeaders, requestMethod
     - Description: This method can be used for implementing common middleware for slash command and interactive-endpoint routes.
 - `interactive` - function accessed as `slackmin.validators.interactive`
     - Parameters: requestParams, requestBody, requestHeaders, decodedParams, internalDecodedParams
