@@ -95,6 +95,7 @@ class SlackAdmin {
 
         next();
       } catch (err) {
+        console.log('Error in interactive endpoint middleware:', err);
         console.error('Interactive endpoint middleware error:', JSON.stringify(err));
         return res.status(200).json('something_went_wrong');
       }
