@@ -51,7 +51,13 @@ class SlackAdmin {
 
     return async function(req, res, next) {
       try {
-        const response = await oThis.validators.common(req.body, req.query, req.headers, req.method);
+        const response = await oThis.validators.common(
+          req.body,
+          req.rawBody,
+          req.query,
+          req.headers,
+          req.method
+        );
 
         req.body = response.requestBody;
         req.query = response.requestQuery;
@@ -59,7 +65,7 @@ class SlackAdmin {
         req.decodedParams = response.decodedParams;
         next();
       } catch (errorMessage) {
-        console.error('Common middleaware error:', errorMessage);
+        console.error('Common middleware error:', errorMessage);
         return res.status(200).json('Something went wrong.');
       }
     };
@@ -89,6 +95,7 @@ class SlackAdmin {
 
         next();
       } catch (err) {
+        console.log('Error in interactive endpoint middleware:', err);
         console.error('Interactive endpoint middleware error:', JSON.stringify(err));
         return res.status(200).json('something_went_wrong');
       }

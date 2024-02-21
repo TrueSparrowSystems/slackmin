@@ -13,7 +13,9 @@ class AssignRawBody {
    */
   assignRawBody(requestBody) {
     const oThis = this;
+
     const requestRawBody = qs.stringify(requestBody).replace(/%20/g, '+');
+
     return requestRawBody;
   }
 }

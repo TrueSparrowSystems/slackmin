@@ -19,11 +19,16 @@ class ValidateSlackSignature {
   constructor(params) {
     const oThis = this;
 
-    oThis.rawBody = params.rawBody;
+    const requestBody = params.requestBody;
+    oThis.requestRawBody = params.requestRawBody;
     oThis.requestHeaders = params.requestHeaders;
-    oThis.slackRequestParams = params.slackRequestParams;
 
-    oThis.requestPayload = oThis.slackRequestParams.payload || null;
+    if (requestBody.payload) {
+      const parsedPayload = JSON.parse(requestBody.payload);
+      oThis.apiAppId = parsedPayload.api_app_id;
+    } else {
+      oThis.apiAppId = requestBody.api_app_id;
+    }
   }
 
   /**
@@ -61,9 +66,8 @@ class ValidateSlackSignature {
         internal_error_identifier: 'm_a_s_p',
         api_error_identifier: 'unauthorized_api_request',
         debug_options: {
-          body: oThis.rawBody,
+          rawBody: oThis.requestRawBody,
           headers: oThis.requestHeaders,
-          slackRequestParams: oThis.slackRequestParams
         }
       });
     }
@@ -88,14 +92,13 @@ class ValidateSlackSignature {
   async _validateSignature(requestTimestamp, version, signature) {
     const oThis = this;
 
-    const appId = oThis.slackRequestParams.api_app_id;
-    const signingSecret = slackAppConstants.getSigningSecretForAppId(appId);
+    const signingSecret = slackAppConstants.getSigningSecretForAppId(oThis.apiAppId);
 
-    const signatureString = `${version}:${requestTimestamp}:${oThis.rawBody}`;
+    const signatureString = `${version}:${requestTimestamp}:${oThis.requestRawBody}`;
     const computedSignature = crypto
-      .createHmac('sha256', signingSecret)
-      .update(signatureString)
-      .digest('hex');
+    .createHmac('sha256', signingSecret)
+    .update(signatureString, 'utf8')
+    .digest('hex');
 
     if (!crypto.timingSafeEqual(Buffer.from(signature, 'utf-8'), Buffer.from(computedSignature, 'utf-8'))) {
       console.error(`Invalid signature :: ${signature}`);

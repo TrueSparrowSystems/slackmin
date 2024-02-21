@@ -55,17 +55,15 @@ class Authenticator {
   /**
    * Function to validate slack signature.
    *
-   * @param {object} requestRawBody
-   * @param {object} requestHeaders
-   * @param {object} requestBody
+   * @param {object} req
    * @returns {Promise<void>}
    */
-  async validateSlackSignature(requestRawBody, requestHeaders, requestBody) {
-    const authResponse = await new ValidateSlackSignature({
-      rawBody: requestRawBody,
-      requestHeaders: requestHeaders,
-      slackRequestParams: requestBody
-    }).perform();
+  async validateSlackSignature(requestBody, requestRawBody, requestHeaders) {
+    const authResponse = await new ValidateSlackSignature({ 
+      requestBody: requestBody,
+      requestRawBody: requestRawBody,
+      requestHeaders: requestHeaders
+     }).perform();
 
     if (authResponse.isFailure()) {
       throw new Error('Invalid Slack Signature');
@@ -80,10 +78,8 @@ class Authenticator {
    * @param {object} requestBody
    * @returns {Promise<void>}
    */
-  async validateSlackUser(requestRawBody, requestHeaders, requestBody) {
+  async validateSlackUser(requestBody) {
     const authResponse = await new ValidateSlackUser({
-      rawBody: requestRawBody,
-      requestHeaders: requestHeaders,
       slackRequestParams: requestBody
     }).perform();
 
