@@ -26,7 +26,7 @@
   "homepage": "https://github.com/TrueSparrowSystems/slackmin#readme",
   "dependencies": {
     "@truesparrow/base": "^2.0.0",
-    "sanitize-html": "2.7.0",
+    "sanitize-html": "2.12.1",
     "uuid": "8.3.2",
     "@slack/bolt": "3.2.0",
     "bignumber.js": "9.0.0"
